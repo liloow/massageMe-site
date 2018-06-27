@@ -1,29 +1,47 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <nav-bar></nav-bar>
+    <router-view class="main"></router-view>
+    <footer-vue></footer-vue>
   </div>
 </template>
+<script>
+import Home from '@/views/Home';
+import BookingWrapper from '@/views/BookingWrapper';
+import NavBar from '@/components/HighCompo/NavBar2.0';
+import FooterVue from '@/components/HighCompo/FooterVue';
 
-<style lang="scss">
+export default {
+  name: 'app',
+  data() {
+    return {
+      dyno: null,
+    };
+  },
+  methods: {},
+  created() {},
+  components: {
+    Home,
+    BookingWrapper,
+    NavBar,
+    FooterVue,
+  },
+};
+</script>
+<style type="text/scss">
+@import './assets/stylesheets/typo.css';
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  background-color: #fafafa;
+  --mm: #044169;
+  --nav: 8vh;
+  --foot: 20vh;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.main {
+  margin-top: var(--nav);
+  min-height: calc(100vh - var(--nav) - var(--foot));
 }
 </style>
