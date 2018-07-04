@@ -6,13 +6,18 @@
   </div>
 </template>
 <script>
-import Home from '@/views/Home';
-import BookingWrapper from '@/views/BookingWrapper';
 import NavBar from '@/components/HighCompo/NavBar2.0';
 import FooterVue from '@/components/HighCompo/FooterVue';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'app',
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+      isLoggedIn: 'getLoggedInStatus',
+    }),
+  },
   data() {
     return {
       dyno: null,
@@ -21,8 +26,6 @@ export default {
   methods: {},
   created() {},
   components: {
-    Home,
-    BookingWrapper,
     NavBar,
     FooterVue,
   },

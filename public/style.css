@@ -411,8 +411,13 @@ html {
 }
 .container-flex {
   max-width: 90%;
-  margin: 2em auto;
+  margin: auto;
   display: flex;
+}
+.container-fluid {
+  width: 100%;
+  padding: 1em;
+  margin: auto;
 }
 
 .cards {
@@ -420,6 +425,42 @@ html {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+.hero {
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+@media print,screen and (min-width: 769px) {
+.hero.is-small .hero-body {
+    padding-bottom: 1.5rem;
+    padding-top: 1.5rem
+}
+
+@media print,screen and (min-width: 769px) {
+    .hero.is-medium .hero-body {
+        padding-bottom:9rem;
+        padding-top: 9rem
+    }
+}
+
+@media print,screen and (min-width: 769px) {
+    .hero.is-large .hero-body {
+        padding-bottom:18rem;
+        padding-top: 18rem
+    }
 }
 
 /* ========================================================================== */
@@ -438,7 +479,7 @@ html {
   transition: all 0.2s ease;
   position: relative;
   display: block;
-  font-size: 18px;
+  font-size: 16px;
   margin: 1em auto;
 }
 
@@ -447,9 +488,14 @@ html {
 }
 
 .btn.btn-filled:hover {
-  opacity: 0.8;
+  background-color: #2b5676;
+  opacity: 1;
   -webkit-box-shadow: 0 8px 25px -8px var(--mm);
   box-shadow: 0 8px 25px -8px var(--mm);
+}
+
+.btn[disabled] {
+  opacity: 0.3;
 }
 
 /* ========================================================================== */

@@ -1,6 +1,6 @@
 <template>
   <section>
-    <!-- <booking-progress></booking-progress> -->
+    <booking-progress></booking-progress>
     <!-- <booking-adress></booking-adress> -->
     <booking-steps></booking-steps>
   </section>

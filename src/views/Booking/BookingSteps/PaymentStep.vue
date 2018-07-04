@@ -98,10 +98,6 @@
   </section>
 </template>
 <script>
-const stripe = Stripe('pk_test_hRfWeiE7MuT5fINhdlIWyh9n');
-const elements = stripe.elements({
-  locale: 'auto',
-});
 export default {
   name: 'PaymentStep',
 
@@ -125,6 +121,10 @@ export default {
     },
   },
   mounted() {
+    const stripe = Stripe('pk_test_hRfWeiE7MuT5fINhdlIWyh9n');
+    const elements = stripe.elements({
+      locale: 'auto',
+    });
     // Floating labels
     const inputs = document.querySelectorAll('.payment-method .input');
     Array.prototype.forEach.call(inputs, input => {

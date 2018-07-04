@@ -11,9 +11,8 @@
         </div>
       </div>
       <div class="wrapper">
-        <div class="calendar ui-draggable" style="left: 0px;" @mousedown="handleDrag($event)">
-          <div v-for="day in toAppend.days" class="cal-cell cell" :date-id="`${day.fullYear}-${day.monthNumber +
-        1}-${day.day}`" :month-id="`${day.fullYear}-${day.monthNumber}`" :month="day.monthNumber" @click="toggleSelect($event,  day)">
+        <div class="calendar ui-draggable" :style="{pointerEvents: eventState.phase === 'dragging' ? 'none' : 'auto'}" style="left: 0px;" @mousedown="handleDrag($event)">
+          <div v-for="day in toAppend.days" class="cal-cell cell" :id="`${day.fullYear}-${day.monthNumber}-${day.day}`" :month-id="`${day.fullYear}-${day.monthNumber}`" :month="day.monthNumber" @click="toggleSelect($event, day)">
             <div class="cell-content">
               <div class="day-number">
                 {{day.day}}
@@ -72,24 +71,25 @@ export default {
         phase: 'sleep',
         startX: 0,
         currentOffset: 0,
+        initLeft: 0,
       },
     };
   },
   methods: {
     handleDrag(e) {
-      console.log(e);
-      if (e.type === 'mouseup') {
+      if (e.type === 'mouseup' || e.type === 'mouseleave') {
         document.body.removeEventListener('mousemove', this.handleDrag, false);
         this.eventState.phase = 'sleep';
       }
-      if (e.type === 'mousedown') {
+      if (e.type === 'mousedown' && e.button === 0) {
         document.body.addEventListener('mousemove', this.handleDrag, false);
         this.eventState.phase = 'listen';
         this.eventState.startX = e.screenX;
         this.eventState.style = e.path.find(el => el.className.includes('ui-draggable')).style;
-        this.eventState.initLeft = Number(this.eventState.style.left.match(/[0-9]*/g)[0]);
+        this.eventState.initLeft = Number(this.eventState.style.left.match(/-?[0-9]+/g)[0]);
       }
       if (e.type === 'mousemove') {
+        this.eventState.phase = 'dragging';
         this.eventState.currentOffset = e.screenX - this.eventState.startX;
         this.eventState.realOffset = this.eventState.initLeft + this.eventState.currentOffset;
         this.eventState.style.left =
@@ -131,12 +131,39 @@ export default {
       return calendar;
     },
     toggleSelect(e, day) {
+      if (e.target.getAttribute('selected') == 'true') {
+        e.target.setAttribute('selected', false);
+        this.selectedDate = null;
+        return;
+      }
+      if (this.selectedDate)
+        document
+          .getElementById(
+            `${this.selectedDate.fullYear}-${this.selectedDate.monthNumber}-${
+              this.selectedDate.day
+            }`
+          )
+          .setAttribute('selected', false);
       this.selectedDate = day;
+      e.target.setAttribute('selected', true);
+      this.dateSelected(day);
+    },
+    dateSelected(date) {
+      const formattedDate = new Date(
+        Date.UTC(date.fullYear, date.monthNumber, date.day)
+      ).toLocaleDateString('fr-FR', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      });
+      this.$emit('dateSelected', formattedDate);
     },
   },
   created() {
     this.toAppend = this.buildCalendar();
     document.body.onmouseup = e => this.handleDrag(e);
+    document.body.onmouseleave = e => this.handleDrag(e);
   },
 };
 </script>
@@ -144,6 +171,11 @@ export default {
 /* ========================================================================== */
 
 /* ========================================================================== */
+
+.container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 .range-calendar {
   box-sizing: content-box;
@@ -159,6 +191,24 @@ export default {
   user-select: none;
   padding: 10px 0;
   background-color: transparent;
+}
+
+.cell-content {
+  pointer-events: none;
+}
+
+.cal-cell[selected='true'] {
+  background-color: var(--mm);
+}
+.cal-cell[selected='true'] {
+  border-radius: 0.5em;
+  .cell-content {
+    transform: scale(1.5);
+    transition: transform 0.3s ease;
+    div {
+      color: white;
+    }
+  }
 }
 
 .range-calendar.triggerable {
@@ -239,109 +289,6 @@ export default {
   opacity: 1;
 }
 
-.range-calendar .calendar .cell:hover {
-  background-color: rgba(0, 0, 0, 0);
-  color: #888;
-}
-
-.range-calendar .calendar .cell:hover .day-number {
-}
-
-.range-calendar .calendar .cell:hover .day {
-}
-
-.range-calendar .calendar .cell:hover .month {
-}
-
-.range-calendar .calendar .cell.selected {
-  background: transparent;
-  color: #fff;
-  border-right: 1px solid rgba(0, 0, 0, 0.04);
-}
-
-.range-calendar .calendar .cell.selected.last {
-  border: none !important;
-}
-
-.range-calendar .calendar .cell.selected .day-number,
-.calendar .cell.ui-selecting .day-number {
-  z-index: 2;
-  .months {
-    background-color: transparent;
-  }
-
-  .months .cell {
-    color: #888;
-  }
-
-  .months .cell.selected .month-name {
-    color: #fff;
-  }
-
-  .months .cell.selected .bullet {
-    background-color: #fff;
-  }
-
-  .calendar {
-    background-color: transparent;
-  }
-
-  .calendar .cell {
-    color: rgba(0, 0, 0, 0.4);
-  }
-
-  .calendar .cell .day-number {
-    color: #888;
-  }
-
-  .calendar .cell:hover {
-    background: transparent;
-  }
-
-  .calendar .cell:hover .day-number {
-    color: #888;
-  }
-
-  .calendar .cell.selected {
-    color: #fff;
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .calendar .cell.selected:hover {
-    background: none;
-  }
-
-  .calendar .cell.selected .day-number {
-    color: #fff;
-  }
-
-  .range-bar {
-    background-color: #888;
-  }
-
-  position: relative;
-}
-
-.range-calendar .calendar .cell.selected .month,
-.calendar .cell.ui-selecting .month {
-  z-index: 2;
-  position: relative;
-  opacity: 1;
-}
-
-.range-calendar .calendar .cell.selected .day,
-.calendar .cell.ui-selecting day {
-  z-index: 2;
-  position: relative;
-}
-
-.range-calendar .calendar .cell.selected .day.ferial,
-.calendar .cell.ui-selecting day.ferial {
-  z-index: 2;
-  position: relative;
-  font-weight: bold;
-}
-
 .range-calendar .months {
   z-index: 1;
   list-style: none;
@@ -366,7 +313,7 @@ export default {
   text-align: center;
   position: relative;
   color: #888;
-  border-right: 0px solid rgba(0, 0, 0, 0.03);
+  border-right: 1px solid rgba(0, 0, 0, 0.03);
   position: relative;
 }
 
@@ -394,26 +341,6 @@ export default {
   border-radius: 1px;
 }
 
-.range-calendar .months .cell.selected {
-  float: left;
-  text-align: center;
-  position: relative;
-  color: #fff;
-  background-color: #888;
-}
-
-.range-calendar .months .cell.selected .month-name {
-  color: #fff;
-}
-
-.range-calendar .months .cell.selected .date-formatted {
-  color: #fff;
-}
-
-.range-calendar .months .cell.selected .bullet {
-  background-color: #fff;
-}
-
 .range-calendar .months .cell.current .bullet {
   display: block;
 }
@@ -437,14 +364,6 @@ export default {
   color: #888;
 }
 
-.months .cell.selected .month-name {
-  color: #fff;
-}
-
-.months .cell.selected .bullet {
-  background-color: #fff;
-}
-
 .calendar {
   background-color: transparent;
 }
@@ -455,27 +374,6 @@ export default {
 
 .calendar .cell .day-number {
   color: #888;
-}
-
-.calendar .cell:hover {
-  background: transparent;
-}
-
-.calendar .cell:hover .day-number {
-  color: #888;
-}
-
-.calendar .cell.selected {
-  color: #fff;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.calendar .cell.selected:hover {
-  background: none;
-}
-
-.calendar .cell.selected .day-number {
-  color: #fff;
 }
 
 @media only screen and (max-width: 768px) {

@@ -1,40 +1,33 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default {
   state: {
-    TODAY: new Date(),
-    NUMBER_OF_DAYS: 14,
-    NUMBER_OF_MONTH: 8,
-    NUMBER_OF_YEARS: 4,
-    DAYS: ['LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI', 'DIMANCHE'],
-    MONTHS: [
-      'JANVIER',
-      'FÉVRIER',
-      'MARS',
-      'AVRIL',
-      'MAI',
-      'JUIN',
-      'JUILLET',
-      'AOÛT',
-      'SEPTEMBRE',
-      'OCTOBRE',
-      'NOVEMBRE',
-      'DÉCEMBRE',
-    ],
+    steps: {
+      address: null,
+      massage: null,
+      date: null,
+      timeslot: null,
+      therapist: null,
+      payment: null,
+    },
+    BOOKING_STEP: 0,
   },
-  getter: {
-    getUser: () => this.state.user,
-    getBookingStep: () => this.state.BOOKING_STEP,
+  getters: {
+    getStep: (state, step) => state.steps[step],
+    getSteps: state => state.steps,
+    getBookingStep: state => state.BOOKING_STEP,
   },
   mutations: {
-    storeUser: user => (this.state.user = user),
-    nextStep: () =>
-      this.state.BOOKING_STEP === 5
-        ? (this.state.BOOKING_STEP = 0)
-        : (this.state.BOOKING_STEP += 1),
+    storeStep(state, payload) {
+      console.log(payload);
+      state.steps = { ...state.steps, ...payload };
+    },
+    nextStep(state) {
+      state.BOOKING_STEP === 5 ? (state.BOOKING_STEP = 0) : (state.BOOKING_STEP += 1);
+    },
   },
-  actions: {},
-});
+  actions: {
+    nextStep({ commit }, previousStep) {
+      window.sessionStorage.set({ ...window.sessionStorage.get('steps'), previousStep });
+      commit('nextStep');
+    },
+  },
+};

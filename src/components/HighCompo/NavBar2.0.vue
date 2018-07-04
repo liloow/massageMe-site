@@ -26,7 +26,7 @@
           </router-link>
         </div>
         <div class="navbar-end">
-          <a @click.prevent="dyno='HomemadeModal'" v-if="!$root.user" class="navbar-item">Sign In/Up</a>
+            <router-link class="navbar-item" v-if="!$root.user" to="/signup">Sign In/Up</router-link>
           <a class="navbar-item" @click.prevent="logout" v-if="$root.user">Logout</a>
         </div>
       </div>
@@ -35,7 +35,7 @@
   </header>
 </template>
 <script>
-// import { logout } from "@/api/auth";
+import { logout } from '@/api';
 // import HomemadeModal from '@/components/HomemadeModal';
 
 export default {

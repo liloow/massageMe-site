@@ -1,22 +1,27 @@
 <template>
   <section>
     <massage-step v-if="BOOKING_STEP === 0" :massages="massages"></massage-step>
-    <date-step v-if="BOOKING_STEP === 1"></date-step>
-    <therapist-step :therapists="therapists" v-if="BOOKING_STEP === 2"></therapist-step>
-    <login-step v-if="BOOKING_STEP === 3"></login-step>
-    <payment-step v-if="BOOKING_STEP === 4"></payment-step>
+    <slot-step v-if="BOOKING_STEP === 1" :therapists="therapists"></slot-step>
+    <!-- <therapist-step v-if="BOOKING_STEP === 2"></therapist-step> -->
+    <login-step v-if="BOOKING_STEP === 2"></login-step>
+    <payment-step v-if="BOOKING_STEP === 3"></payment-step>
   <!-- <summary-step></summary-step> -->
   </section>
 </template>
 <script>
 import MassageStep from './BookingSteps/MassageStep';
-import DateStep from './BookingSteps/DateStep';
+import SlotStep from './BookingSteps/SlotStep';
 import TherapistStep from './BookingSteps/TherapistStep';
 import LoginStep from './BookingSteps/LoginStep';
 import PaymentStep from './BookingSteps/PaymentStep';
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'BookingSteps',
-
+  computed: {
+    ...mapGetters({
+      BOOKING_STEP: 'getBookingStep',
+    }),
+  },
   data() {
     return {
       massages: [
@@ -86,12 +91,11 @@ export default {
           picture: '/static/assets/img/avatar/2.png',
         },
       ],
-      BOOKING_STEP: 1,
     };
   },
   components: {
     MassageStep,
-    DateStep,
+    SlotStep,
     TherapistStep,
     LoginStep,
     PaymentStep,
