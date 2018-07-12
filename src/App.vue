@@ -8,7 +8,7 @@
 <script>
 import NavBar from '@/components/HighCompo/NavBar2.0';
 import FooterVue from '@/components/HighCompo/FooterVue';
-import { mapGetters, mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'app',
@@ -24,7 +24,10 @@ export default {
     };
   },
   methods: {},
-  created() {},
+  created() {
+    this.$store.dispatch('init');
+    this.$store.dispatch('fetchData');
+  },
   components: {
     NavBar,
     FooterVue,

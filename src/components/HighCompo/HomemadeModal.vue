@@ -1,14 +1,15 @@
 <template>
   <section @keydown.esc="close($event)">
     <div class="fullscreen" @click="close($event)">
-      <div class="modal-wrapper">
-        <modal-form @close="$emit('close',$event)"></modal-form>
+        <div class="modal-wrapper">
+          <!-- <modal-form @close="$emit('close',$event)"></modal-form> -->
+          <slot></slot>
       </div>
     </div>
   </section>
 </template>
 <script>
-import ModalForm from '@/components/ModalForm';
+// import ModalForm from '@/components/ModalForm';
 export default {
   name: 'HomemadeModal',
 
@@ -20,17 +21,25 @@ export default {
   ref: 'dynoComp',
   methods: {
     close(e) {
-      console.log(e.path);
-      if (e.path[0].className === 'fullscreen') this.$emit('close');
+      this.$emit('close', e);
     },
   },
-  created() {
+  mounted() {
     this.scroll = document.getElementsByTagName('html')[0].scrollHeight;
+    // window.addEventListener(
+    //   'keydown',
+    //   e => {
+    //     if (e.key === 'Escape') {
+    //       this.close(e);
+    //     }
+    //   },
+    //   { capture: true }
+    // );
     document.getElementsByTagName('html')[0].style.height = '100%';
     document.getElementsByTagName('html')[0].style.overflow = 'hidden';
   },
   components: {
-    ModalForm,
+    // ModalForm,
   },
 };
 </script>
@@ -41,14 +50,17 @@ export default {
   background-color: rgba(0, 0, 0, 0.8);
   position: absolute;
   top: 0vh;
-  z-index: 5;
+  z-index: 1000;
 }
 
 .modal-wrapper {
   min-width: 640px;
-  margin: 20vh 40vw;
+  bottom: 50%;
+  left: 50%;
+  margin: auto;
   position: absolute;
   transform: translateX(-50%);
+  display: flex;
 }
 
 </style>

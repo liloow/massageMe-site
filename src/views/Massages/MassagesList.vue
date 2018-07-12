@@ -1,11 +1,11 @@
 <template>
   <section class="container">
     <div class="title">
-      <h1>Selectionnez votre massage</h1>
+      <h1>Nos Massages</h1>
     </div>
     <div class="container-flex">
       <div class="cards container">
-        <prez-cards v-if="massages" v-for="massage in massages" :key="massage.title" :card-img="massage.img_url" :card-title="massage.name" :card-body="massage.short" card-button="Choisir ce massage" @cardButtonClicked="handleSelection($event, massage)"></prez-cards>
+        <prez-cards v-if="massages" v-for="massage in massages" :key="massage.title" :card-img="massage.img_url" :card-title="massage.name" :card-body="massage.short" @cardLinkClicked="handleClick($event, masssage)"></prez-cards>
       </div>
     </div>
     </div>
@@ -15,7 +15,7 @@
 import PrezCards from '@/components/PrezCards';
 import { mapGetters } from 'vuex';
 export default {
-  name: 'MassageStep',
+  name: 'MassagesList',
   computed: {
     ...mapGetters({
       massages: 'getMassages',
@@ -25,10 +25,8 @@ export default {
     return {};
   },
   methods: {
-    handleSelection(e, massage) {
-      console.log(e, massage);
-      this.$store.commit('storeStep', { massage: massage });
-      this.$store.dispatch('nextStep');
+    handleClick(e, massage) {
+      console.log(e);
     },
   },
   components: { PrezCards },
@@ -38,5 +36,4 @@ export default {
 @import url(https://fonts.googleapis.com/css?family=Oswald);
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
 @import url(https://fonts.googleapis.com/css?family=Quattrocento);
-
 </style>

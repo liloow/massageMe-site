@@ -16,10 +16,6 @@
     </section>
 </template>
 <script>
-import VoucherForm from '@/components/reservation/voucher/VoucherForm';
-import VoucherConfirm from '@/components/reservation/voucher/VoucherConfirm';
-import VoucherPay from '@/components/reservation/voucher/VoucherPay';
-
 export default {
   name: 'Voucher',
   data() {
@@ -28,11 +24,7 @@ export default {
     };
   },
   methods: {},
-  components: {
-    VoucherForm,
-    VoucherConfirm,
-    VoucherPay,
-  },
+  components: {},
   created() {
     scrollTo(top);
   },

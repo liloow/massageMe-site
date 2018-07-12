@@ -1,16 +1,16 @@
 <template>
   <div class="card-wrapper">
     <figure class="card">
-      <div class="image"><img src="../assets/img/staff/relax.png" />
+      <div class="image"><img :src="cardImg" />
       </div>
       <figcaption>
         <h2>{{cardTitle}}</h2>
-        <p>{{cardBody}}</p>
+        <p>{{cardBody}}<a v-if="!cardButton" href="#" @click.prevent="$emit('cardLinkClicked', $event)">voir la suite</a></p>
         <div class="price">
         </div>
       </figcaption>
       <div class="card-footer">
-        <button class="reserve btn btn-filled" @click="$emit('cardButtonClicked', $event)"> {{cardButton}}</button>
+        <button v-if="cardButton" class="btn btn-filled" @click="$emit('cardButtonClicked', $event)"> {{cardButton}}</button>
       </div>
     </figure>
   </div>
@@ -37,7 +37,7 @@ export default {
   font-family: 'Quattrocento', Arial, sans-serif;
   position: relative;
   overflow: hidden;
-  margin: 10px 1%;
+  margin: 10px 1vw;
   min-width: 230px;
   max-width: 315px;
   width: 100%;

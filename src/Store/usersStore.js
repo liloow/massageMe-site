@@ -1,4 +1,4 @@
-import { login, logout } from '../api';
+import { login, logout, fetchUserInfos } from '../api';
 
 export default {
   state: {
@@ -17,17 +17,20 @@ export default {
     storeUser(state, user) {
       state.USER_INFOS = user;
     },
-    setLoginState(state, session) {
-      state.LOGGED_IN = Boolean(session.extra_secret);
+    setLoginState(state, extra) {
+      state.LOGGED_IN = Boolean(extra);
     },
   },
   actions: {
-    async init() {
-      // context.commit('storeUser', user);
+    async init(context) {
+      const user = await fetchUserInfos();
+      context.commit('storeUser', user);
+      context.commit('setLoginState', !!user);
+      return;
     },
     async registerLogin(context, body) {
       const { session, userInfos } = await login(body);
-      context.commit('setLoginState', session);
+      context.commit('setLoginState', session.extra_secret);
       context.commit('storeUser', userInfos);
     },
     async registerLogout(context, body) {

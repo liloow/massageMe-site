@@ -9,6 +9,7 @@ export default {
       payment: null,
     },
     BOOKING_STEP: 0,
+    addressInputElement: null,
   },
   getters: {
     getStep: (state, step) => state.steps[step],
@@ -17,7 +18,6 @@ export default {
   },
   mutations: {
     storeStep(state, payload) {
-      console.log(payload);
       state.steps = { ...state.steps, ...payload };
     },
     nextStep(state) {
@@ -25,8 +25,9 @@ export default {
     },
   },
   actions: {
-    nextStep({ commit }, previousStep) {
-      window.sessionStorage.set({ ...window.sessionStorage.get('steps'), previousStep });
+    nextStep({ commit, state }) {
+      console.log(JSON.stringify(state.steps));
+      window.sessionStorage.setItem('steps', JSON.stringify(state.steps));
       commit('nextStep');
     },
   },

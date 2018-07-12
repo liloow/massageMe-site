@@ -68,8 +68,16 @@
 </template>
 <script>
 import { login } from '../../../api';
+import { mapGetters, mapState } from 'vuex';
+
 export default {
   name: 'LoginStep',
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+      isLoggedIn: 'getLoggedInStatus',
+    }),
+  },
   data() {
     return {
       loginCard: true,
@@ -120,6 +128,9 @@ export default {
           });
       }
     },
+  },
+  mounted() {
+    if (this.isLoggedIn) this.$store.dispatch('nextStep');
   },
 };
 </script>

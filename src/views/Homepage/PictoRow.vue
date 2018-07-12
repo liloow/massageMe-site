@@ -24,8 +24,8 @@
       </div>
       <div class="columns is-half is-centered no-gap">
         <div class="column picto">
-            <button class="btn btn-filled">
-             <router-link to="/book">RESERVER MAINTENANT</router-link>
+            <button class="btn btn-filled" @click="scrollToAddress($event)">
+             RESERVER MAINTENANT
            </button>
         </div>
       </div>
@@ -33,21 +33,32 @@
   </section>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: 'PictoRow',
-
+  computed: {
+    ...mapGetters({
+      addressInputElement: 'getAddressInputElement',
+    }),
+  },
   data() {
     return {};
   },
+  methods: {
+    scrollToAddress(e) {
+      document.querySelector('#address-input').focus({ preventScroll: true });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+  },
 };
 </script>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .hero-body {
   padding: 3rem 1.5rem;
 }
 
 .picto {
-  max-width: 75rem;
+  max-width: 90rem;
   margin-right: auto;
   margin-left: auto;
   display: -webkit-flex;
@@ -56,23 +67,26 @@ export default {
   -webkit-flex-flow: row wrap;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
+  img {
+    max-width: 100%;
+  }
 }
 
 .picto-card {
-  flex: 1 1 0px;
-  padding-right: 0.625rem;
-  padding-left: 0.625rem;
+  flex: 1 0 0px;
+  padding-right: 1rem;
+  padding-left: 1rem;
   min-width: initial;
-  text-align: center
+  text-align: center;
+  margin: 1rem;
 }
 
-.desc {
-
+.columns {
 }
 
 a:-webkit-any-link {
-    color: inherit;
-    cursor: pointer;
-    text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
 }
 </style>

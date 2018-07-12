@@ -1,85 +1,112 @@
 <template>
-  <div class="container">
-    <form>
-      <div class="row">
-        <div class="columns">
-          <div class="column static is-one-quarter-desktop is-one-third-widescreen">
-            <div class="row">
-              <img class="logo" src="../assets/img/logo/Full.svg" alt="Logo">
+  <section>
+    <div class="container">
+      <form @input="check($event)" class="borderless">
+        <div class="row">
+          <div class="columns">
+            <div class="column third">
+              <div class="row">
+                <img class="logo" src="../../assets/img/logo/Full.svg" alt="Logo">
+              </div>
+              <div class="row">
+                <p>N'hésitez pas à nous contacter pour toutes vos questions.</p>
+                <p> Laissez-nous un message; nous y répondrons dans les plus brefs délais.</p>
+              </div>
+              <div class="row">
+                <p>
+                  Tel: 0498.82 39 31
+                  <br> E-mail: infos@massageme.be
+                  <br> N° compte: BE13 0018 0837 4939
+                </p>
+              </div>
             </div>
-            <div class="row">
-              <p>N'hésitez pas à nous contacter pour toutes vos questions.</p>
-              <p> Laissez-nous un message; nous y répondrons dans les plus brefs délais.</p>
-            </div>
-            <div class="row">
-              <p>
-                <br>Tel: 0498.82 39 31
-                <br> E-mail: infos@massageme.be
-                <br> N° compte: BE13 0018 0837 4939
-              </p>
-            </div>
-          </div>
-          <div class="column userfields">
-            <div class="form-group">
-              <h2 class="heading">Vos informations</h2>
-              <div class="controls">
-                <input type="text" id="firstname" icon="account_circle" class="floatLabel" v-model="form.firstName" placeholder @focus="a($event)" @blur="a($event)">
-                <label for="firstname">Prenom</label>
+            <div class="column two-third">
+              <div class="row">
+                <div class="field mini">
+                  <custom-select :options="['M.', 'Mme']"></custom-select>
+                   <div class="baseline"></div>
+                </div>
+                <div class="field fill">
+                  <input id="address" class="input empty" type="text" placeholder="" required="true" autocomplete="fullname">
+                  <label for="address" data-tid="elements_examples.form.address_label">Nom Complet</label>
+                  <div class="baseline"></div>
+                </div>
               </div>
-              <div class="controls">
-                <input type="text" id="lastname" icon="person" class="floatLabel" v-model="form.lastName" placeholder @focus="a($event)" @blur="a($event)">
-                <label for="lastname">Nom </label>
+              <div class="row">
+                <div class="field full">
+                  <input id="email" class="input empty" type="email" placeholder="playboy007@caramail.com" required="true" autocomplete="email">
+                  <label for="email" data-tid="form.email">Email</label>
+                  <div class="baseline"></div>
+                </div>
               </div>
-              <div class="controls">
-                <input type="email" id="email" icon="mail" class="floatLabel" v-model="form.email" placeholder @focus="a($event)" @blur="a($event)">
-                <label for="email">Email</label>
+              <div class="row">
+                <div class="field mini">
+                  <custom-select :options="['+32', '+33']"></custom-select>
+                   <div class="baseline"></div>
+                </div>
+                <div class="field fill">
+                  <input id="phone" class="input empty" type="text" placeholder="" required="true" autocomplete="mobile">
+                  <label for="phone">Mobile</label>
+                  <div class="baseline"></div>
+                </div>
+                <div class="field fill fourth">
+                  <input id="postalCode" class="input empty fourth" type="text" placeholder="4000" required="true" autocomplete="postalCode">
+                  <label for="postalCode">Code Postal</label>
+                  <div class="baseline"></div>
+                </div>
               </div>
-              <div class="controls">
-                <input type="tel" id="phoneNo" icon="phone_android" class="floatLabel" v-model="form.tel" placeholder @focus="a($event)" @blur="a($event)">
-                <label for="phoneNo">Telephone</label>
-              </div>
-              <div class="controls">
-                <input type="tel" id="phoneNo" icon="phone_android" class="floatLabel" v-model="form.tel" placeholder @focus="a($event)" @blur="a($event)">
-                <label for="phoneNo">Telephone</label>
+              <div class="row">
+                <div class="field full">
+                  <input id="subject" class="input empty" type="text" placeholder="Demande de renseignement, question,..." required="true" autocomplete="subject">
+                  <label for="subject" data-tid="form.subject">Sujet</label>
+                  <div class="baseline"></div>
+                </div>
               </div>
             </div>
           </div>
         </div>
         <div class="row">
-          <!--  Details -->
-          <div class="form-group">
-            <h2 class="heading">Votre message</h2>
-            <b-field class="controls">
-              <input type="text" id="subject" class="floatLabel" icon="priority_high" v-model="form.subject" placeholder @focus="a($event)" @blur="a($event)" expanded>
-              <label for="subject">Sujet</label>
-            </b-field>
-            <b-field class="controls">
-              <textarea name="message" class="floatLabel" id="message" placeholder @focus="a($event)" @blur="a($event)"></textarea>
-              <label for="message">Message</label>
-            </b-field>
-            <button @click="sendForm($event)" class="button" type="button" icon="send">Envoyer</button>
-          </div>
+          <div class="container 1em">
+            <div class="field full block">
+              <textarea id="message" rows="1" class="empty textarea input" type="message" placeholder="Salut Massage-Me !" required="true" autocomplete="message" @input="handleResize($event)"></textarea>
+                <label for="message" data-tid="form.message">Message</label>
+              <div class="baseline"></div>
+            </div>
         </div>
-      </div>
-    </form>
-  </div>
+          </div>
+          <!-- <div class="field full btn"> -->
+            <button v-if="status === 'loading'" class="btn btn-loading bottom">
+              <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+                <span>Processing...</span>
+              </div>
+            </button>
+            <button v-else class="btn btn-filled bottom" type="submit">Envoyer</button>
+          <!-- </div> -->
+      </form>
+    </div>
+  </section>
 </template>
 <script>
+import CustomSelect from '@/components/CustomSelect';
 export default {
   name: 'Contact',
 
   data() {
     return {
+      status: 'idle',
       isActive: false,
       message: '',
       form: {
-        firstname: '',
-        lastName: '',
+        fullname: '',
         email: '',
         tel: '',
         subject: '',
         message: '',
       },
+      txtScroll: 0,
     };
   },
   methods: {
@@ -87,43 +114,344 @@ export default {
       console.log(event.target.labels[0].classList);
       console.log(this.form);
     },
-    a(e) {
-      !e.target.value ? e.target.labels[0].classList.toggle('active') : 'He free now';
-      e.target.placeholder === ''
-        ? (e.target.placeholder = `Enter your ${e.target.id}`)
-        : (e.target.placeholder = '');
+    check(e) {
+      if (e.target.value.length === 0) e.target.classList.add('empty');
+      else e.target.classList.remove('empty');
     },
+    handleFocus(e) {
+      if (e.target.nodeName === 'INPUT' || 'TEXTAREA') {
+        if (e.type === 'focus') e.target.classList.add('focused');
+        else e.target.classList.remove('focused');
+      }
+    },
+    handleResize(e) {
+      if (!this.txtScroll) this.txtScroll = e.target.scrollHeight;
+      if (this.txtScroll - e.target.scrollHeight < 0) {
+        e.target.setAttribute('rows', Number(e.target.getAttribute('rows')) + 1);
+        this.txtScroll = e.target.scrollHeight;
+      }
+    },
+  },
+  mounted() {
+    // Floating labels
+    const inputs = document.querySelectorAll('.borderless .input');
+    Array.prototype.forEach.call(inputs, input => {
+      input.addEventListener('focus', e => this.handleFocus(e));
+      input.addEventListener('blur', e => this.handleFocus(e));
+    });
+    const textarea = document.querySelector('textarea');
+    textarea.addEventListener('focus', e => this.handleFocus(e));
+    textarea.addEventListener('blur', e => this.handleFocus(e));
+  },
+  components: {
+    CustomSelect,
   },
 };
 </script>
-<style lang="css" scoped>
-@import '../../assets/stylesheets/formStyle.css';
-.column {
-  margin: 0.5rem;
+<style lang="scss" scoped>
+button.bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 20vh;
+  transform: translateX(-50%);
 }
 
-.heading {
-  margin-bottom: 1rem
+.1em {
+  margin-top: 1em;
 }
 
-.controls {
-  padding: 0.6rem;
-  justify-content: center
+.columns {
+  display: flex;
+  margin: auto;
+  .column {
+    margin: 0 auto;
+  }
+  .column.third {
+    width: 40%;
+    .logo {
+      max-width: 100%;
+    }
+    p {
+      font-size: 1rem;
+      font-family: 'Quattrocento', Arial, sans-serif;
+    }
+  }
+  .column.two-third {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60%;
+    padding-top: 10%;
+    .row {
+      display: flex;
+      flex-direction: row;
+      .field.fill,
+      .field.full {
+        flex: 1 1 0px;
+        width: initial;
+        &.fourth {
+          width: 25%;
+          flex: 0.5 1 0px;
+        }
+      }
+      .fill {
+        margin-left: 3%;
+      }
+    }
+  }
 }
 
-.userfields .controls input {
-  padding: 0.5rem;
+.field.full.block {
+  height: auto;
+  label {
+    top: 0;
+    z-index: 30;
+    overflow: visible;
+  }
+}
+.field.full.btn {
+  height: auto;
+  .btn.btn-filled {
+    position: absolute;
+    bottom: 100%;
+  }
+}
+
+.baseline {
+  position: absolute;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--mm);
+  opacity: 0.5;
+}
+
+.borderless {
+  background-color: #fafafa;
+  width: 85%;
+  margin: auto;
+  max-width: 1200px;
+  max-height: calc(100vh - var(--nav) - var(--foot));
+}
+
+#message {
+  width: 100%;
+  position: relative;
+}
+
+.borderless * {
+  font-family: Source Code Pro, Consolas, Menlo, monospace;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.borderless .row {
+  margin: 0 auto 10px;
   width: 90%;
 }
 
-.static {
+.borderless .field {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  height: 1.5em;
 }
 
-.logo {
-  max-width: 100%;
+.borderless .field.half-width {
+  width: 48%;
 }
 
+.anchor .borderless .baseline {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  left: 0;
+  bottom: 3px;
+  background-color: var(--mm);
+  opacity: 0.2;
+  transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 100;
+}
+
+.borderless label {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 20%;
+  color: var(--mm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transform-origin: 0 50%;
+  cursor: text;
+  font-weight: 300;
+  transition-property: color, transform;
+  transition-duration: 0.3s;
+  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.borderless .input {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  color: var(--mm);
+  background-color: transparent;
+}
+
+.borderless .input::-webkit-input-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.borderless .input::-moz-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.borderless .input:-ms-input-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.borderless .input.focused,
+.borderless .input:not(.empty) {
+  opacity: 1;
+}
+
+.borderless .input.focused::-webkit-input-placeholder,
+.borderless .input:not(.empty)::-webkit-input-placeholder {
+  color: #cfd7df;
+}
+
+.borderless .input.focused::-moz-placeholder,
+.borderless .input:not(.empty)::-moz-placeholder {
+  color: #cfd7df;
+}
+
+.borderless .input.focused:-ms-input-placeholder,
+.borderless .input:not(.empty):-ms-input-placeholder {
+  color: #cfd7df;
+}
+
+.borderless .input.focused + label,
+.borderless .input:not(.empty) + label {
+  color: #aab7c4;
+  transform: scale(0.85) translateY(-25px);
+  cursor: default;
+}
+
+.borderless textarea.input.focused + label,
+.borderless textarea.input:not(.empty) + label {
+  color: var(--mm);
+  transform: scale(0.85) translateY(-25px);
+  cursor: default;
+}
+
+.borderless .input.focused + label {
+  color: var(--mm);
+}
+
+.borderless .input.invalid + label {
+  color: #ffa27b;
+}
+
+.borderless .input.focused + label + .baseline {
+  background-color: var(--mm);
+  opacity: 0.7;
+}
+
+.borderless .input.focused.invalid + label + .baseline {
+  background-color: #e25950;
+}
+
+.borderless input,
+.borderless textarea,
+.borderless button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+}
+
+.borderless input:-webkit-autofill {
+  -webkit-text-fill-color: #e39f48;
+  transition: background-color 100000000s;
+  -webkit-animation: 1ms void-animation-out;
+}
+
+.borderless input,
+.borderless button {
+  -webkit-animation: 1ms void-animation-out;
+}
+
+.borderless button {
+  display: block;
+  width: 60%;
+  height: 3em;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+#loader.btn-loading {
+  color: var(--mm);
+  border: solid 2px var(--mm);
+  border-style: solid;
+  white-space: nowrap;
+}
+
+.spinner {
+  text-align: center;
+  margin-right: 15%;
+  span {
+    margin-left: 15%;
+  }
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: var(--mm);
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
 </style>

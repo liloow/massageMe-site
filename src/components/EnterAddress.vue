@@ -1,5 +1,5 @@
 <template>
-  <section class="container card-wrapper">
+  <section class="container card-wrapper address-input">
     <div class="card appointment">
       <header class="card-title">
         <h2 class="card-header-title title is-3 is-centered">
@@ -24,12 +24,12 @@
         </div>
         <p v-if="successAdd">Merci pour votre intérêt ! Nous vous recontactons dès aue possible.</p>
       </footer>
-              <button type="submit" class="btn btn-filled">Valider</button>
+      <button type="submit" class="btn btn-filled">Valider</button>
     </div>
   </section>
 </template>
 <script>
-import PlacesAutocomplete from '../../components/PlacesAutocomplete';
+import PlacesAutocomplete from '@/components/PlacesAutocomplete';
 export default {
   name: 'EnterAddress',
   data() {
@@ -46,8 +46,8 @@ export default {
   },
   methods: {
     storeAdress(e) {
-      console.log(this.$store);
       this.$store.commit('storeStep', { address: e });
+      this.$router.push('/book');
     },
     fakeSearch(res = 0) {
       this.state = 1;
@@ -115,7 +115,6 @@ export default {
   position: relative;
   margin: 10px 1%;
   width: 100%;
-  color: #141414;
   text-align: left;
   line-height: 1.4em;
   font-size: 0.8em;
@@ -135,7 +134,7 @@ export default {
 
 .card-title h2 {
   font-weight: 300;
-  font-size: 1.5em;
+  font-size: 2.2em;
   line-height: 1.2em;
   font-family: 'Oswald', Arial, sans-serif;
   text-transform: uppercase;
@@ -155,6 +154,14 @@ export default {
   justify-content: center;
   margin: auto;
   padding: 0 0
+}
+
+.address-input {
+  max-width: 800px;
+  width: 75%;
+  text-align: center;
+  margin: auto;
+  flex: 1 0 0px;
 }
 
 </style>

@@ -18,7 +18,6 @@
 <script>
 export default {
   name: 'TimeSlots',
-
   data() {
     return {
       slots: ['8:00', '9:30', '11:00', '13:00', '14:30', '16:00', '17:30', '19:00', '20:30'],

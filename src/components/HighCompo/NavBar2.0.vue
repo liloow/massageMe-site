@@ -26,20 +26,26 @@
           </router-link>
         </div>
         <div class="navbar-end">
-            <router-link class="navbar-item" v-if="!$root.user" to="/signup">Sign In/Up</router-link>
-          <a class="navbar-item" @click.prevent="logout" v-if="$root.user">Logout</a>
+            <router-link class="navbar-item" v-if="!isLoggedIn" to="/signup">Sign In/Up</router-link>
+          <a class="navbar-item" @click.prevent="logout" v-if="isLoggedIn">Logout</a>
         </div>
       </div>
     </nav>
-    <component @close="close($event)" :is="dyno"></component>
   </header>
 </template>
 <script>
 import { logout } from '@/api';
 // import HomemadeModal from '@/components/HomemadeModal';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'NavBar',
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+      isLoggedIn: 'getLoggedInStatus',
+    }),
+  },
   data() {
     return {
       navbarLinks: [
@@ -92,8 +98,6 @@ export default {
     },
     close(e) {
       this.closeBurger();
-      document.getElementsByTagName('html')[0].style.height = 'auto';
-      document.getElementsByTagName('html')[0].style.overflow = 'visible';
       this.dyno = null;
     },
     escape(event) {
@@ -105,8 +109,6 @@ export default {
       this.burgerState = false;
     },
   },
-
-  computed: {},
   created() {},
   components: {
     // HomemadeModal
@@ -164,19 +166,22 @@ input[type='checkbox'] {
   height: 3.25rem;
   position: relative;
   text-align: center;
-  z-index: 9999;
+  z-index: 100;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  max-width: 100%;
+  flex: 1 1 0px;
 }
 
 .navbar {
   background-color: #f9f9f9;
   min-height: 7vh;
   position: relative;
+  flex: 1 1 0px;
 }
 
 .navbar-brand {
@@ -189,7 +194,7 @@ input[type='checkbox'] {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-negative: 0;
-  flex-shrink: 0;
+  flex-shrink: 1;
   min-height: 7vh;
 }
 
@@ -212,14 +217,15 @@ input[type='checkbox'] {
   -ms-flex-positive: 1;
   flex-grow: 1;
   -ms-flex-negative: 0;
-  flex-shrink: 0;
+  flex-shrink: 0.5;
 }
 
 .navbar-item {
+  text-decoration: none;
   color: #4a4a4a;
-  display: block;
   line-height: 1.5;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
+  font-size: 1.1vw;
   position: relative;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -229,9 +235,9 @@ input[type='checkbox'] {
   display: flex;
   -webkit-box-flex: 0;
   -ms-flex-positive: 0;
-  flex-grow: 0;
+  flex-grow: 1;
   -ms-flex-negative: 0;
-  flex-shrink: 0;
+  flex-shrink: 1;
 }
 
 .navbar-end {
@@ -239,7 +245,6 @@ input[type='checkbox'] {
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-left: auto;
-  margin-right: 5vw;
 }
 
 img.brand {
@@ -261,7 +266,7 @@ img.brand {
   top: 0;
   left: 0;
   right: 0;
-  z-index: 9997;
+  z-index: 97;
   height: var(--nav);
   border-bottom: solid 2px var(--mm);
 }
@@ -311,7 +316,7 @@ a.nav:focus {
   height: 5px;
   transition: 0.5s ease;
   cursor: pointer;
-  z-index: 9999;
+  z-index: 100;
   position: absolute;
   top: 2.5vw;
   right: 2.5vw;
@@ -390,7 +395,7 @@ a.nav:focus {
   -webkit-animation: not-checked-anim-data-v-35cd069c 0.2s both;
   animation: not-checked-anim-data-v-35cd069c 0.2s both;
   transition: 0.2s;
-  z-index: 9998;
+  z-index: 98;
 }
 
 #menu-toggle:checked + #trigger ~ #menu > li > a,
@@ -489,19 +494,22 @@ a.nav:focus {
     -ms-flex-positive: 1;
     flex-grow: 1;
     -ms-flex-negative: 0;
-    flex-shrink: 0;
+    flex-shrink: 0.5;
+    text-align: center;
   }
   .navbar-start {
     -webkit-box-pack: start;
     -ms-flex-pack: start;
     justify-content: flex-start;
     margin-right: auto;
+    padding-right: 1vw;
   }
   .navbar-end {
     -webkit-box-pack: end;
     -ms-flex-pack: end;
     justify-content: flex-end;
     margin-left: auto;
+    padding-right: 1vw;
   }
 }
 </style>

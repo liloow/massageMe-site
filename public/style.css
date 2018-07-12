@@ -24,6 +24,7 @@ html {
 
 body {
   margin: 0;
+  width: 100vw;
 }
 
 /**
@@ -407,6 +408,7 @@ html {
 
 .container {
   max-width: 90%;
+  width: 90%;
   margin: 2em auto;
 }
 .container-flex {
@@ -416,8 +418,7 @@ html {
 }
 .container-fluid {
   width: 100%;
-  padding: 1em;
-  margin: auto;
+  margin:auto;
 }
 
 .cards {

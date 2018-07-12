@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import booking from '@/Store/booking';
+import booking from '@/Store/bookingStore';
+import data from '@/Store/dataStore';
 import users from '@/Store/usersStore';
 import createLogger from 'vuex/dist/logger';
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   modules: {
     booking,
     users,
+    data,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : [],

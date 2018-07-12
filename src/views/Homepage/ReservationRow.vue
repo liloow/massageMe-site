@@ -12,7 +12,7 @@
   </section>
 </template>
 <script>
-import EnterAddress from '@/views/Homepage/EnterAddress';
+import EnterAddress from '@/components/EnterAddress';
 export default {
   name: 'ReservationRow',
 

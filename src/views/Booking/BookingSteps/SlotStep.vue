@@ -53,7 +53,7 @@ export default {
     handleTherapistSelection(e) {
       this.therapist = e;
       this.$store.commit('storeStep', { therapist: e });
-      this.$store.commit('nextStep');
+      this.$store.dispatch('nextStep');
     },
   },
 };
