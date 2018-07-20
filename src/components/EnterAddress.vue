@@ -7,16 +7,16 @@
         </h2>
       </header>
       <div class="card-content">
-        <div class="container">
-          <places-autocomplete @addressIsChosen="storeAdress($event)" ></places-autocomplete>
+        <div class="container" v-show="!notYetThere">
+          <places-autocomplete @addressIsChosen="storeAdress($event)" @addressExists="currentAddress = $event"></places-autocomplete>
         </div>
       </div>
       <footer v-if="notYetThere" class="card-footer">
         <div class="validator">
-          <p>{{message}}</p>
+          <p v-html=message></p>
           <form @submit.prevent="registerEmail">
             <div>
-              <input type="email" v-model="guestmail" label="Votre Email" placeholder="Enter your email"></b-input>
+              <input class="ap-input" type="email" v-model="guestmail" label="Votre Email" placeholder="Enter your email"></input>
             </div>
             <div>
             </div>
@@ -24,41 +24,46 @@
         </div>
         <p v-if="successAdd">Merci pour votre intérêt ! Nous vous recontactons dès aue possible.</p>
       </footer>
-      <button type="submit" class="btn btn-filled">Valider</button>
+      <button type="button" @click="storeAdress(currentAddress)" class="btn btn-filled">Valider</button>
     </div>
   </section>
 </template>
 <script>
 import PlacesAutocomplete from '@/components/PlacesAutocomplete';
+import {mapGetters, mapState} from 'vuex';
 export default {
   name: 'EnterAddress',
+  computed: {
+    message() {
+      return `Malheureusement, nous ne sommes pas encore present dans la region de <strong>${
+        this.county
+      }</strong>, nous avons toutefois enregistre votre interet. En laissant votre email, vous recevrez une notification des que nos services seront presents dans votre region !`;
+    },
+  },
   data() {
     return {
       name: '',
       selected: null,
-      citiesWeOperate: [],
+      county: null,
       state: 0,
-      message: null,
       guestmail: '',
       successAdd: false,
       notYetThere: false,
+      currentAddress: null,
     };
   },
   methods: {
     storeAdress(e) {
-      this.$store.commit('storeStep', { address: e });
-      this.$router.push('/book');
-    },
-    fakeSearch(res = 0) {
-      this.state = 1;
-
-      let t = setTimeout(() => {
-        this.state = !res ? 3 : 2;
-        if (this.state === 2) this.$router.push('/reserve');
-        if (this.state === 3)
-          this.message =
-            'Malheureusement, nous ne sommes pas encore présents dans votre ville. Laissez-nous votre e-mail via le formulaire ci-dessous et nous vous previendrons dès que seront présents près de chez vous !';
-      }, 3000);
+      if (e === null) return;
+      if (e.postcode >= 4000 && e.postcode < 5000) {
+        this.$store.commit('storeStep', {address: e});
+        this.$store.commit('backToStep', 0);
+        this.$store.dispatch('nextStep');
+        this.$emit('close', e);
+        return this.$router.push('/book');
+      }
+      this.county = e.county;
+      this.notYetThere = true;
     },
     registerEmail() {
       addToMailList(this.guestmail).then(r => {
@@ -66,48 +71,32 @@ export default {
       });
     },
   },
-  computed: {
-    filteredDataArray() {
-      function ignore(s) {
-        return s
-          .replace(/á/g, 'a')
-          .replace(/é/g, 'e')
-          .replace(/è/g, 'e')
-          .replace(/í/g, 'i')
-          .replace(/ó/g, 'o')
-          .replace(/ú/g, 'u');
-      }
-
-      return this.data
-        .filter(option => {
-          return (
-            ignore(option)
-              .toString()
-              .toLowerCase()
-              .indexOf(ignore(this.name).toLowerCase()) === 0
-          );
-        })
-        .sort();
-    },
+  created() {
+    this.notYetThere = false;
   },
-  created() {},
   components: {
     PlacesAutocomplete,
   },
 };
 </script>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .appointment {
-  margin: 5rem;
+  margin: 1rem;
 }
 
 .validator {
   text-align: center;
-  padding: 5vh,
-}
-
-.input {
-  padding-top: 3vh;
+  padding: 0.5em 5em 3em;
+  width: 90%;
+  p {
+    font-size: 1.1rem;
+    padding-bottom: 1.5em;
+  }
+  input {
+    font-size: 2em;
+    font-weight: 550;
+    height: 2.5em;
+  }
 }
 
 .card {
@@ -121,7 +110,7 @@ export default {
   justify-content: center;
   background-color: #ffffff;
   border-radius: 0.5em;
-    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .cards .card-wrapper {
@@ -153,7 +142,7 @@ export default {
   display: flex;
   justify-content: center;
   margin: auto;
-  padding: 0 0
+  padding: 0 0;
 }
 
 .address-input {
@@ -163,5 +152,9 @@ export default {
   margin: auto;
   flex: 1 0 0px;
 }
-
+@media screen and (max-width: 1023px) {
+  .address-input {
+    width: 100%;
+  }
+}
 </style>

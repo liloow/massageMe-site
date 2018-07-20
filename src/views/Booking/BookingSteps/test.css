@@ -1,0 +1,407 @@
+/*! CSS Used from: http://localhost:8080/style.css */
+img {
+  border-style: none;
+  max-height: 100%;
+}
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+}
+button,
+input {
+  overflow: visible;
+}
+button,
+select {
+  text-transform: none;
+}
+button,
+[type='submit'] {
+  -webkit-appearance: button;
+}
+button::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+button:-moz-focusring,
+[type='submit']:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+textarea {
+  overflow: auto;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+.container {
+  max-width: 1500px;
+  width: 95%;
+  margin: 2em auto;
+}
+.btn {
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  color: #fff;
+  background: transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  display: block;
+  font-size: 16px;
+  margin: 1em auto;
+}
+.btn.btn-filled {
+  background: var(--mm);
+}
+.btn.btn-filled:hover {
+  background-color: #2b5676;
+  opacity: 1;
+  box-shadow: 0 8px 25px -8px var(--mm);
+}
+/*! CSS Used from: Embedded */
+[include*='form-input-select()'][data-v-04350d06] {
+  display: block;
+  padding: 0;
+  position: relative;
+  color: var(--mm);
+  display: block;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 1em;
+  width: 100%;
+}
+[include*='form-input-select()'][data-v-04350d06]::before,
+[include*='form-input-select()'][data-v-04350d06]::after {
+  content: '';
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  z-index: 2;
+}
+[include*='form-input-select()'] select[data-v-04350d06] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  border: 1px solid transparent;
+  font-size: 1em;
+  outline: none;
+}
+[include*='form-input-select()'] select[data-v-04350d06]:focus {
+  background-color: transparent;
+  outline: none;
+}
+[include*='form-input-select()'] option[data-v-04350d06] {
+  font-weight: normal;
+}
+[include*='form-input-select()'][data-v-04350d06]::after {
+  display: none;
+}
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  [include*='form-input-select()'] select[data-v-04350d06]::-ms-expand {
+    display: none;
+  }
+}
+[include*='form-input-select()'][data-v-04350d06]::before,
+[include*='form-input-select()'][data-v-04350d06]::after {
+  content: '';
+  display: block;
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid transparent;
+  width: 0;
+  height: 0;
+  right: 0%;
+}
+[include*='form-input-select()'][data-v-04350d06]::after {
+  border-width: 6px 4.5px 0 4.5px;
+  border-top-color: var(--mm);
+  top: -20%;
+}
+[include*='form-input-select()']:hover select[data-v-04350d06] {
+  border: solid 2px var(--mm);
+}
+[include*='form-input-select()']:hover select[data-v-04350d06]:focus {
+  outline-color: black;
+}
+[include*='form-input-select()'][data-v-04350d06]:hover::before {
+  border-bottom-color: var(--mm);
+}
+[include*='form-input-select()'][data-v-04350d06]:hover::after {
+  border-top-color: var(--mm);
+}
+[include*='form-input-select()'] select[data-v-04350d06] {
+  border: solid 2px transparent;
+  border-radius: 0;
+  font-weight: 400;
+  color: inherit;
+  padding: 0;
+  margin-bottom: 5px;
+  line-height: normal;
+  transition: border-color 0.2s ease, outline 0.2s ease;
+}
+[include*='form-input-select()'] select[data-v-04350d06]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+[include*='form-input-select()'] select[data-v-04350d06]:invalid {
+  color: #c7c7c7;
+}
+/*! CSS Used from: Embedded */
+button.bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 20vh;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+.columns {
+  display: flex;
+  margin: auto;
+}
+.columns .column {
+  margin: 0 auto;
+}
+.columns .column.third {
+  width: 40%;
+}
+.columns .column.third .logo {
+  max-width: 100%;
+}
+.columns .column.third p {
+  font-size: 1rem;
+  font-family: 'Quattrocento', Arial, sans-serif;
+}
+.columns .column.two-third {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 60%;
+  padding-top: 10%;
+}
+.columns .column.two-third .row {
+  display: flex;
+  flex-direction: row;
+}
+.columns .column.two-third .row .field.fill,
+.columns .column.two-third .row .field.full {
+  flex: 1 1 0px;
+  width: initial;
+}
+.columns .column.two-third .row .field.fill.fourth {
+  width: 25%;
+  flex: 0.5 1 0px;
+}
+.columns .column.two-third .row .fill {
+  margin-left: 3%;
+}
+.field.full.block {
+  height: auto;
+}
+.field.full.block label {
+  top: 0;
+  z-index: 30;
+  overflow: visible;
+}
+.baseline {
+  position: absolute;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background-color: var(--mm);
+  opacity: 0.5;
+}
+.borderless {
+  background-color: #fafafa;
+  width: 85%;
+  margin: auto;
+  max-width: 1200px;
+  max-height: calc(100vh - var(--nav) - var(--foot));
+  font-family: Source Code Pro, Consolas, Menlo, monospace;
+  font-size: 1rem;
+  font-weight: 500;
+  .row {
+    margin: 0 auto 10px;
+    width: 90%;
+    .field {
+      display: flex;
+      position: relative;
+      height: 1.5em;
+    }
+    .borderless label {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 20%;
+      color: var(--mm);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      -webkit-transform-origin: 0 50%;
+      transform-origin: 0 50%;
+      cursor: text;
+      font-weight: 300;
+      transition-property: color, -webkit-transform;
+      transition-property: color, transform;
+      transition-property: color, transform, -webkit-transform;
+      transition-duration: 0.3s;
+      transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+  }
+}
+.borderless .input {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  color: var(--mm);
+  background-color: transparent;
+}
+.borderless .input::-webkit-input-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.borderless .input::-moz-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.borderless .input:-ms-input-placeholder {
+  color: transparent;
+  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.borderless input,
+.borderless textarea,
+.borderless button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  border-style: none;
+}
+.borderless input,
+.borderless button {
+  -webkit-animation: 1ms void-animation-out;
+}
+.borderless button {
+  display: block;
+  width: 40%;
+  height: 3em;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+}
+/*! CSS Used fontfaces */
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3zWj6T4g.woff2)
+      format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3w2j6.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3zWj6T4g.woff2)
+      format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3w2j6.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3zWj6T4g.woff2)
+      format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3w2j6.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3zWj6T4g.woff2)
+      format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3w2j6.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3zWj6T4g.woff2)
+      format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113,
+    U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Quattrocento';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Quattrocento'),
+    url(https://fonts.gstatic.com/s/quattrocento/v9/OZpEg_xvsDZQL_LKIF7q4jP3w2j6.woff2)
+      format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

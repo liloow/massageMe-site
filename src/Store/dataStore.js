@@ -1,13 +1,15 @@
-const { fetchMassages, fetchTherapists } = require('../api');
+const {fetchMassages, fetchTherapists, fetchSlotsAvailable} = require('../api');
 
 export default {
   state: {
     massages: null,
     therapists: null,
+    slotsAvailable: null,
   },
   getters: {
     getMassages: state => state.massages,
     getTherapists: state => state.therapists,
+    getSlotsAvailable: state => state.slotsAvailable,
   },
   mutations: {
     storeMassages(state, payload) {
@@ -16,9 +18,12 @@ export default {
     storeTherapists(state, payload) {
       state.therapists = payload;
     },
+    storeSlots(state, payload) {
+      state.slotsAvailable = payload;
+    },
   },
   actions: {
-    async fetchData({ commit }) {
+    async fetchData({commit}) {
       const massages = (await fetchMassages()).data.map(el => {
         el.short =
           el.description.length > 175
@@ -26,10 +31,16 @@ export default {
             : el.description;
         return el;
       });
-      const therapists = (await fetchTherapists()).data;
-      console.log(massages);
+      const therapists = (await fetchTherapists()).data.map(el => {
+        el.short = el.bio.length > 175 ? `${el.bio.match(/(^([^]{175}))[^\W]*/g)[0]}...` : el.bio;
+        return el;
+      });
       commit('storeMassages', massages);
       commit('storeTherapists', therapists);
+    },
+    async fetchSlotsAvailable({commit}, raw) {
+      const slots = (await fetchSlotsAvailable(raw)).data;
+      commit('storeSlots', slots);
     },
   },
 };

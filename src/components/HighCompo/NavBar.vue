@@ -2,13 +2,16 @@
   <header id="header" class="header" @keydown.esc="close($event)">
     <nav class="navbar fixed" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <router-link class="navbar-item" to="/">
+        <router-link class="navbar-item brand" to="/">
           <img src="../../assets/img/logo/Full.svg" alt="MassageMe" class="brand">
         </router-link>
         <input type="checkbox" v-model="burgerState" id="menu-toggle" />
         <label id="trigger" for="menu-toggle" class="navbar-burger"></label>
         <label id="burger" for="menu-toggle" class="navbar-burger"></label>
         <ul id="menu" class="navbar-burger">
+          <li class="nav" @click="closeBurger">
+            <router-link class="nav" to="/book"> > Reserver un massage < </router-link>
+          </li>
           <li v-for="(link, index) in navbarLinks" class="nav" @click="closeBurger">
             <router-link class="nav" :key="index" :to="link.location"> {{ link.text }}</router-link>
           </li>
@@ -20,14 +23,17 @@
       </div>
       <input type="checkbox" id="nav-toggle-state" hidden />
       <div class="navbar-menu">
+        <div class="navbar-item book">
+          <router-link class="btn btn" to="/book">Reserver</router-link>
+        </div>
         <div class="navbar-start">
           <router-link v-for="(link, index) in navbarLinks" :key="index" :to="link.location" :class="{'is-page': $route.path === link.location, 'navbar-item': true}">
             {{ link.text }}
           </router-link>
         </div>
         <div class="navbar-end">
-            <router-link class="navbar-item" v-if="!isLoggedIn" to="/signup">Sign In/Up</router-link>
-          <a class="navbar-item" @click.prevent="logout" v-if="isLoggedIn">Logout</a>
+          <router-link class="navbar-item" v-if="!isLoggedIn" to="/signup">Sign In/Up</router-link>
+          <a class="navbar-item" @click.prevent="logout()" v-if="isLoggedIn">Logout</a>
         </div>
       </div>
     </nav>
@@ -55,7 +61,7 @@ export default {
         },
         {
           location: '/business',
-          text: 'Massages en entreprise',
+          text: 'Entreprises',
         },
         {
           location: '/team',
@@ -92,7 +98,7 @@ export default {
   },
   methods: {
     logout() {
-      logout(this.$root);
+      this.$store.dispatch('registerLogout');
       this.closeBurger();
       this.$router.push('/');
     },
@@ -116,7 +122,7 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-@import url('https://fonts.googleapis.com/css?family=Roboto:400, 700');
+$mm: var(--mm);
 
 #header {
   height: var(--nav);
@@ -126,15 +132,35 @@ export default {
 }
 
 header {
-  color: #f9f9f9;
+  color: $mm;
   display: block;
+  font-family: 'Raleway';
 }
 
-a {
-  color: #00d1b2;
-  cursor: pointer;
+.navbar-item.book {
+  margin-left: -2vw;
+  flex: 0;
+  a {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 0;
+    color: $mm;
+  }
   &:hover {
-    color: #363636;
+    transform: scale(1.1);
+  }
+}
+
+.navbar-start,
+.navbar-end {
+  a.navbar-item {
+    cursor: pointer;
+    &:hover:not(.is-page) {
+      color: $mm;
+      transform: scale(1.2);
+    }
   }
 }
 
@@ -162,7 +188,7 @@ input[type='checkbox'] {
 }
 
 .nav {
-  background-color: #f9f9f9;
+  background-color: ghostwhite;
   height: 3.25rem;
   position: relative;
   text-align: center;
@@ -178,7 +204,7 @@ input[type='checkbox'] {
 }
 
 .navbar {
-  background-color: #f9f9f9;
+  background-color: ghostwhite;
   min-height: 7vh;
   position: relative;
   flex: 1 1 0px;
@@ -186,7 +212,7 @@ input[type='checkbox'] {
 
 .navbar-brand {
   max-height: 100%;
-  margin: 0 5vw;
+  margin: 0 4vw;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
@@ -194,7 +220,7 @@ input[type='checkbox'] {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-negative: 0;
-  flex-shrink: 1;
+  flex-shrink: 2;
   min-height: 7vh;
 }
 
@@ -203,12 +229,9 @@ input[type='checkbox'] {
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-left: auto;
-}
-
-> a {
-  margin-top: 1vh;
-  margin-bottom: 1vh;
-  font-weight: 700;
+  > a {
+    margin: auto 1vw;
+  }
 }
 
 .navbar-menu {
@@ -217,15 +240,15 @@ input[type='checkbox'] {
   -ms-flex-positive: 1;
   flex-grow: 1;
   -ms-flex-negative: 0;
-  flex-shrink: 0.5;
+  flex-shrink: 1;
 }
 
 .navbar-item {
   text-decoration: none;
-  color: #4a4a4a;
+  color: $mm;
   line-height: 1.5;
-  padding: 0.5rem 2rem;
-  font-size: 1.1vw;
+  padding: 0.5rem 1.5vw;
+  font-size: 1rem;
   position: relative;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -245,10 +268,12 @@ input[type='checkbox'] {
   -ms-flex-pack: end;
   justify-content: flex-end;
   margin-left: auto;
+  margin-right: 1vw;
 }
 
 img.brand {
-  max-height: 6.5vh;
+  max-height: 6.8vh;
+  margin: auto;
 }
 
 .brand-burger {
@@ -256,9 +281,10 @@ img.brand {
 }
 
 .is-page {
-  border-bottom: solid 0.3vh black;
+  border-bottom: solid 0.3vh var(--mm);
   font-weight: bold;
-  margin-bottom: 1vh;
+  padding: 0 0.7vw 0.7vh;
+  margin-bottom: 0.5vh;
   margin-top: 1vh;
 }
 
@@ -289,7 +315,7 @@ img.brand {
 li.nav,
 a.nav {
   margin: 0;
-  color: var(--mm);
+  color: $mm;
   font: 14pt 'Roboto', sans-serif;
   font-weight: 700;
   line-height: 1.8;
@@ -302,8 +328,8 @@ a.nav {
 
 a.nav:focus {
   display: block;
-  color: #333;
-  background-color: #f9f9f9;
+  color: $mm;
+  background-color: ghostwhite;
   transition: all 2.5s;
 }
 
@@ -378,7 +404,10 @@ a.nav:focus {
 }
 
 #menu > li:first-child {
-  margin: 8vh 0 0vh;
+  margin: 6vh 0 2vh;
+  a {
+    font-weight: 600;
+  }
 }
 
 #menu {
@@ -389,7 +418,7 @@ a.nav:focus {
   padding: 0;
   width: 9vh;
   height: 9vh;
-  background-color: #f9f9f9;
+  background-color: ghostwhite;
   border-bottom-left-radius: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
   -webkit-animation: not-checked-anim-data-v-35cd069c 0.2s both;
@@ -442,8 +471,15 @@ a.nav:focus {
     display: -ms-flexbox;
     display: flex;
   }
+  .navbar-burger {
+    li {
+      a {
+        font-weight: 550;
+      }
+    }
+  }
   .navbar-menu {
-    background-color: #f9f9f9;
+    background-color: ghostwhite;
     box-shadow: 0 8px 16px hsla(0, 0%, 4%, 0.1);
     padding: 0.5rem 0;
   }
@@ -494,7 +530,7 @@ a.nav:focus {
     -ms-flex-positive: 1;
     flex-grow: 1;
     -ms-flex-negative: 0;
-    flex-shrink: 0.5;
+    flex-shrink: 1;
     text-align: center;
   }
   .navbar-start {
@@ -510,6 +546,7 @@ a.nav:focus {
     justify-content: flex-end;
     margin-left: auto;
     padding-right: 1vw;
+    white-space: nowrap;
   }
 }
 </style>

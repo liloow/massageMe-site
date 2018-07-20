@@ -1,18 +1,23 @@
-'use strict';
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
-  extends: ['plugin:vue/essential', '@vue/prettier'],
-  plugins: ['vue', 'prettier', 'html'],
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'eol-last': 'error',
-  },
-  parser: 'vue-eslint-parser',
+  extends: 'google',
   parserOptions: {
-    parser: 'babel-eslint',
+    ecmaVersion: 8,
+    sourceType: 'script',
+  },
+  rules: {
+    'max-len': ['error', {code: 120, ignoreComments: true}],
+    'require-jsdoc': [
+      'error',
+      {
+        require: {
+          FunctionDeclaration: false,
+          MethodDefinition: false,
+          ClassDeclaration: false,
+          ArrowFunctionExpression: false,
+          FunctionExpression: false,
+        },
+      },
+    ],
+    'arrow-parens': ['error', 'as-needed'],
   },
 };

@@ -2,49 +2,59 @@
   <section class="container-fluid">
     <div class="step-wrapper">
       <ul class="steps">
-        <li class="step">
+        <li class="step" @click="gotBackToStep(0)">
           <h5 class="step-title">Ou ?</h5>
-          <p  v-if="steps.address" class="step-body">
+          <p v-if="steps.address" class="step">
           {{steps.address.name}} <br>
           {{steps.address.postcode}} {{steps.address.city}}
-        </p>
+          </p>
         </li>
-        <li class="step">
+        <li class="step" @click="gotBackToStep(1)">
           <h5 class="step-title">Quoi ?</h5>
           <p class="step-body">{{steps.massage ? steps.massage.name : null}}</p>
         </li>
-        <li class="step">
+        <li class="step" @click="gotBackToStep(2)">
           <h5 class="step-title">Quand ?</h5>
-          <p class="step-body">
-            {{steps.date}} <br>
-            {{steps.timeslot}}
+          <p v-if="steps.date" class="step-body">
+            {{steps.date.formattedDate}} <br>
+            <span v-if="steps.timeslot">{{steps.timeslot.time}}</span>
           </p>
         </li>
-        <li class="step">
+        <li class="step" @click="gotBackToStep(3)">
           <h5 class="step-title">Qui ?</h5>
           <p v-if="steps.therapist" class="step-body">{{steps.therapist.name}}</p>
         </li>
-        <li class="step">
-          <h5 class="step-title">Combien ?</h5>
+        <li class="step" @click="gotBackToStep(4)">
+          <h5 class="step-title">Confirmation</h5>
           <p class="step-body">{{steps.payment}}</p>
         </li>
       </ul>
     </div>
   </section>
 </template>
-
 <script>
-import { mapGetters, mapState } from 'vuex';
-
+import {mapGetters, mapState} from 'vuex';
 export default {
   name: 'BookingProgress',
   computed: {
     ...mapGetters({
       steps: 'getSteps',
+      BOOKING_STEP: 'getBookingStep',
     }),
+    progressInc() {
+      if (this.BOOKING_STEP > this.progress) this.progress = this.BOOKING_STEP;
+      return this.progress;
+    },
   },
   data() {
-    return {};
+    return {
+      progress: 0,
+    };
+  },
+  methods: {
+    gotBackToStep(step) {
+      if (step <= this.progressInc) this.$store.commit('backToStep', step);
+    },
   },
 };
 </script>

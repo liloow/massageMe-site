@@ -76,7 +76,7 @@ button {
 button:hover,
 button:focus {
   border-color: var(--hover);
-  color: #f9f9f9;
+  color: ghostwhite;
 
   -webkit-transition: all 0.1s;
   -moz-transition: all 0.1s;
@@ -103,7 +103,7 @@ button.reserve {
   display: flex;
   font-size: 1rem;
   font-weight: bold;
-  color: #f9f9f9;
+  color: ghostwhite;
   border-radius: 1vh;
   border: solid 1px #f39c12;
   background: var(--mm);

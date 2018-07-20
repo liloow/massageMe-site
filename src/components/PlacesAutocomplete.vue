@@ -3,9 +3,14 @@
 </template>
 <script>
 import places from 'places.js';
+import {mapGetters} from 'vuex';
 export default {
   name: 'PlacesAutocomplete',
-  computed: {},
+  computed: {
+    ...mapGetters({
+      steps: 'getSteps',
+    }),
+  },
   data() {
     return {
       config: {
@@ -24,8 +29,13 @@ export default {
   mounted() {
     this.config.container = document.querySelector('#address-input');
     const placesAutocomplete = places(this.config);
+    if (this.steps.address && this.steps.address.value) {
+      this.$emit('addressExists', this.steps.address);
+      placesAutocomplete.setVal(this.steps.address.value);
+    }
     placesAutocomplete.on('change', e => {
       this.$emit('addressIsChosen', e.suggestion);
+      this.$destroy();
     });
   },
 };
@@ -36,7 +46,7 @@ export default {
 
 /* The algolia-places input */
 .ap-input, .ap-hint {
-  font-size: 2em;
+  font-size: 2.5vh;
   font-weight: 550;
   height: 60px;
 }

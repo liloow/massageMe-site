@@ -1,0 +1,422 @@
+/* ========================================================================== */
+/*                                  CHECKBOX                                  */
+/* ========================================================================== */
+
+input:before,
+input:after {
+  box-sizing: unset;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox'] + label {
+  position: relative;
+  display: flex;
+  margin: auto;
+  align-items: center;
+}
+
+input[type='checkbox'] + label + div {
+  color: #9e9e9e;
+  transition: color 50ms cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+input[type='checkbox'] + label > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1em;
+  width: 1.2em;
+  height: 1.2em;
+  background: transparent;
+  border: 2px solid #9e9e9e;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+input[type='checkbox']:checked + label > span {
+  border: 0.5em solid #ffeb3b;
+  -webkit-animation: shrink-bounce 200ms cubic-bezier(0.4, 0, 0.23, 1);
+  animation: shrink-bounce 200ms cubic-bezier(0.4, 0, 0.23, 1);
+}
+
+input[type='checkbox']:checked + label > span:before {
+  content: '';
+  position: absolute;
+  top: 0.4em;
+  left: 0.2em;
+  border-right: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-transform-origin: 0% 100%;
+  transform-origin: 0% 100%;
+  -webkit-animation: checkbox-check 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1) forwards;
+  animation: checkbox-check 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1) forwards;
+}
+
+@-webkit-keyframes checkbox-check {
+  0% {
+    width: 0;
+    height: 0;
+    border-color: #212121;
+    -webkit-transform: translate3d(0, 0, 0) rotate(45deg);
+    transform: translate3d(0, 0, 0) rotate(45deg);
+  }
+  33% {
+    width: 0.2em;
+    height: 0;
+    -webkit-transform: translate3d(0, 0, 0) rotate(45deg);
+    transform: translate3d(0, 0, 0) rotate(45deg);
+  }
+  100% {
+    width: 0.2em;
+    height: 0.5em;
+    border-color: #212121;
+    -webkit-transform: translate3d(0, -0.5em, 0) rotate(45deg);
+    transform: translate3d(0, -0.5em, 0) rotate(45deg);
+  }
+}
+
+@keyframes checkbox-check {
+  0% {
+    width: 0;
+    height: 0;
+    border-color: #212121;
+    -webkit-transform: translate3d(0, 0, 0) rotate(45deg);
+    transform: translate3d(0, 0, 0) rotate(45deg);
+  }
+  33% {
+    width: 0.2em;
+    height: 0;
+    -webkit-transform: translate3d(0, 0, 0) rotate(45deg);
+    transform: translate3d(0, 0, 0) rotate(45deg);
+  }
+  100% {
+    width: 0.2em;
+    height: 0.5em;
+    border-color: #212121;
+    -webkit-transform: translate3d(0, -0.5em, 0) rotate(45deg);
+    transform: translate3d(0, -0.5em, 0) rotate(45deg);
+  }
+}
+
+/* ========================================================================== */
+/*                             CUSTOM SELECT                                  */
+/* ========================================================================== */
+
+@mixin _select-form-reset() {
+  display: block;
+  padding: 0;
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    pointer-events: none; /* Arrow clickable in some browsers*/
+    z-index: 2;
+  }
+
+  /* This is the native select, we're making everything but the text invisible so we can see the button styles in the wrapper*/
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: none;
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0;
+    border: 1px solid transparent;
+    font-size: 16px; /* Font size must the 16px or larger to prevent iOS page zoom on focus*/
+    outline: none;
+
+    /* Focus style */
+    &:focus {
+      background-color: transparent;
+      outline: none;
+    }
+  }
+
+  /* Set options to normal weight */
+  option {
+    font-weight: normal;
+  }
+
+  /* ------------------------------------  */
+  /* START OF UGLY BROWSER-SPECIFIC HACKS */
+  /* ----------------------------------  */
+
+  /* Targeted via this hack http://browserhacks.com/#hack-a3f166304aafed524566bc6814e1d5c7*/
+  x:-o-prefocus,
+  &::after {
+    display: none;
+  }
+  /* IE 10/11+ - This hides native dropdown button arrow so it will have the custom appearance,*/
+  /* IE 9 and earlier get a native select - targeting media query hack via http://browserhacks.com/#hack-28f493d247a12ab654f6c3637f6978d5 - looking for better ways to achieve this targeting*/
+  /* The second rule removes the odd blue bg color behind the text in the select button in IE 10/11 and sets the text color to match the focus style's - fix via http://stackoverflow.com/questions/17553300/change-ie-background-color-on-unopened-focused-select-box */ /**/
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    & {
+      select {
+        &::-ms-expand {
+          display: none;
+        }
+
+        &:focus::-ms-value {
+          background: transparent;
+          color: #000;
+        }
+      }
+    }
+  }
+
+  /* FIREFOX won't let us hide the native select arrow, so we have to make it wider than needed and clip it via overflow on the parent container.
+     The percentage width is a fallback since FF 4+ supports calc() so we can just add a fixed amount of extra width to push the native arrow out of view. We're applying this hack across all FF versions because all the previous hacks were too fragile and complex.
+     You might want to consider not using this hack and using the native select arrow in FF. Note this makes the menus wider than the select button because they display at the specified width and aren't clipped. Targeting hack via http://browserhacks.com/#hack-758bff81c5c32351b02e10480b5ed48e */
+  /* Show only the native arrow */
+  @-moz-document url-prefix() {
+    & {
+      overflow: hidden;
+
+      select {
+        width: 120%;
+        width: calc(100% + 3em);
+
+        @supports (-moz-appearance: none) {
+          width: 100%;
+        }
+
+        /* Firefox focus has odd artifacts around the text, this kills that. See https://developer.mozilla.org/en-US/docs/Web/CSS/:-moz-focusring */
+        &:-moz-focusring {
+          color: transparent;
+          text-shadow: 0 0 0 #000;
+        }
+      }
+    }
+  }
+
+  @supports (-moz-appearance: none) {
+    & {
+      width: 100%;
+    }
+  }
+}
+
+/* ========================================================================== */
+/*                               BORDERLESS                                   */
+/* ========================================================================== */
+
+/* if (e.target.value.length === 0) e.target.classList.add('empty');*/
+/* else e.target.classList.remove('empty');*/
+/* if (e.type === 'focus') e.target.classList.add('focused');*/
+/* else e.target.classList.remove('focused');*/
+$font: 1rem;
+$line-height: 1.5;
+$scale: 0.9;
+$translate: $font * $line-height;
+$height: $translate + $font + $line-height * $scale;
+
+.borderless {
+  font-family: 'PT Sans';
+  font-size: $font;
+  background-color: ghostwhite;
+  width: 85%;
+  padding: 2em 2em 0.2em;
+  margin: auto;
+  font-family: Source Code Pro, Consolas, Menlo, monospace;
+  font-size: 1.1rem;
+  font-weight: 500;
+  .row {
+    display: flex;
+    margin: 0 auto 10px;
+    width: 90%;
+    height: $height;
+    justify-content: space-between;
+    .field {
+      position: relative;
+      display: flex;
+      height: $height / 2;
+      &.full {
+        width: 100%;
+      }
+      &.half-width {
+        width: 48%;
+      }
+      &.fill {
+        flex: 1;
+        margin: auto;
+        margin-left: 2%;
+      }
+      &.mini {
+        margin: auto;
+        padding: 0 0.2rem;
+      }
+      input,
+      textarea {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 0;
+        color: var(--mm);
+        background-color: transparent;
+        line-height: $line-height;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+        padding: 0 0 0.3rem 0.5rem;
+        border-style: none;
+        -webkit-animation: 1ms void-animation-out;
+
+        &::-webkit-input-placeholder {
+          color: transparent;
+          transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+          &:not(.empty) {
+            opacity: 1;
+          }
+        }
+        &::-moz-placeholder {
+          color: transparent;
+          transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+          &:not(.empty) {
+            opacity: 1;
+          }
+        }
+        &:-ms-input-placeholder {
+          color: transparent;
+          transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+          &:not(.empty) {
+            opacity: 1;
+          }
+        }
+        &:not(.empty) + label,
+        &.focused + label {
+          color: #aab7c4;
+          -webkit-transform: scale($scale) translateY(-$translate);
+          transform: scale($scale) translateY(-$translate);
+          cursor: default;
+        }
+      }
+      label {
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 15%;
+        color: var(--mm);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        -webkit-transform-origin: 0 50%;
+        transform-origin: 0 50%;
+        cursor: text;
+        font-weight: 300;
+        transition-property: color, -webkit-transform;
+        transition-property: color, transform;
+        transition-property: color, transform, -webkit-transform;
+        transition-duration: 0.3s;
+        transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .baseline {
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        bottom: 1px;
+        background-color: var(--mm);
+        opacity: 0.2;
+        transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+        z-index: 100;
+      }
+    }
+  }
+}
+
+/* ========================================================================== */
+/*                                  BUTTONS                                   */
+/* ========================================================================== */
+
+.btn {
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  color: #fff;
+  background: transparent;
+  transition: all 0.2s ease;
+  position: relative;
+  display: block;
+  font-size: 16px;
+  margin: 1em auto;
+  &.btn-filled {
+    background: var(--mm);
+    &:hover {
+      background-color: #2b5676;
+      opacity: 1;
+      box-shadow: 0 8px 25px -8px var(--mm);
+    }
+  }
+  &[disabled] {
+    opacity: 0.3;
+  }
+}
+
+#loader.btn-loading {
+  color: var(--mm);
+  border: solid 2px var(--mm);
+  border-style: solid;
+  white-space: nowrap;
+}
+
+.spinner {
+  text-align: center;
+  margin-right: 15%;
+  span {
+    margin-left: 15%;
+  }
+  > div {
+    width: 18px;
+    height: 18px;
+    background-color: var(--mm);
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    &.bounce1 {
+      -webkit-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+    &.bounce2 {
+      -webkit-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+  }
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bouncedelay {
+  0%,
+  80%,
+  100% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  40% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}

@@ -10,6 +10,8 @@
               </div>
               <div class="row">
                 <p>N'hésitez pas à nous contacter pour toutes vos questions.</p>
+              </div>
+              <div class="row">
                 <p> Laissez-nous un message; nous y répondrons dans les plus brefs délais.</p>
               </div>
               <div class="row">
@@ -68,7 +70,7 @@
         <div class="row">
           <div class="container 1em">
             <div class="field full block">
-              <textarea id="message" rows="1" class="empty textarea input" type="message" placeholder="Salut Massage-Me !" required="true" autocomplete="message" @input="handleResize($event)"></textarea>
+              <textarea id="message" rows="1" class="empty textarea input" type="message" resizable="false" placeholder="Salut Massage-Me !" required="true" autocomplete="message" @input="handleResize($event)"></textarea>
                 <label for="message" data-tid="form.message">Message</label>
               <div class="baseline"></div>
             </div>
@@ -149,53 +151,63 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-button.bottom {
-  position: absolute;
-  left: 50%;
-  bottom: 20vh;
-  transform: translateX(-50%);
-}
+@import '@/assets/scss/form.scss';
 
 .1em {
   margin-top: 1em;
 }
-
-.columns {
-  display: flex;
-  margin: auto;
-  .column {
-    margin: 0 auto;
+.borderless {
+  width: 95%;
+  padding-top: 0;
+  button.bottom {
+    position: absolute;
+    left: 50%;
+    bottom: 12.5vh;
+    transform: translateX(-50%);
   }
-  .column.third {
-    width: 40%;
-    .logo {
-      max-width: 100%;
-    }
-    p {
-      font-size: 1rem;
-      font-family: 'Quattrocento', Arial, sans-serif;
-    }
-  }
-  .column.two-third {
+  .row {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    width: 60%;
-    padding-top: 10%;
-    .row {
+    height: unset;
+    .columns {
       display: flex;
-      flex-direction: row;
-      .field.fill,
-      .field.full {
-        flex: 1 1 0px;
-        width: initial;
-        &.fourth {
-          width: 25%;
-          flex: 0.5 1 0px;
+      margin: auto;
+      .column {
+        margin: 0 auto;
+      }
+      .column.third {
+        width: 40%;
+        .logo {
+          max-width: 100%;
+        }
+        p {
+          font-size: 1rem;
+          font-family: 'Quattrocento', Arial, sans-serif;
         }
       }
-      .fill {
-        margin-left: 3%;
+      .column.two-third {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 60%;
+        padding-top: 10%;
+        .row {
+          display: flex;
+          flex-direction: row;
+          height: unset;
+          .field.fill,
+          .field.full {
+            flex: 1 1 0px;
+            width: initial;
+            &.fourth {
+              width: 25%;
+              flex: 0.5 1 0px;
+            }
+          }
+          .fill {
+            margin-left: 3%;
+          }
+        }
       }
     }
   }
@@ -217,47 +229,9 @@ button.bottom {
   }
 }
 
-.baseline {
-  position: absolute;
-  bottom: -3px;
-  width: 100%;
-  height: 1px;
-  background-color: var(--mm);
-  opacity: 0.5;
-}
-
-.borderless {
-  background-color: #fafafa;
-  width: 85%;
-  margin: auto;
-  max-width: 1200px;
-  max-height: calc(100vh - var(--nav) - var(--foot));
-}
-
 #message {
   width: 100%;
   position: relative;
-}
-
-.borderless * {
-  font-family: Source Code Pro, Consolas, Menlo, monospace;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.borderless .row {
-  margin: 0 auto 10px;
-  width: 90%;
-}
-
-.borderless .field {
-  display: flex;
-  position: relative;
-  height: 1.5em;
-}
-
-.borderless .field.half-width {
-  width: 48%;
 }
 
 .anchor .borderless .baseline {
@@ -272,97 +246,7 @@ button.bottom {
   z-index: 100;
 }
 
-.borderless label {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 20%;
-  color: var(--mm);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  transform-origin: 0 50%;
-  cursor: text;
-  font-weight: 300;
-  transition-property: color, transform;
-  transition-duration: 0.3s;
-  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.borderless .input {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  color: var(--mm);
-  background-color: transparent;
-}
-
-.borderless .input::-webkit-input-placeholder {
-  color: transparent;
-  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.borderless .input::-moz-placeholder {
-  color: transparent;
-  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.borderless .input:-ms-input-placeholder {
-  color: transparent;
-  transition: color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.borderless .input.focused,
-.borderless .input:not(.empty) {
-  opacity: 1;
-}
-
-.borderless .input.focused::-webkit-input-placeholder,
-.borderless .input:not(.empty)::-webkit-input-placeholder {
-  color: #cfd7df;
-}
-
-.borderless .input.focused::-moz-placeholder,
-.borderless .input:not(.empty)::-moz-placeholder {
-  color: #cfd7df;
-}
-
-.borderless .input.focused:-ms-input-placeholder,
-.borderless .input:not(.empty):-ms-input-placeholder {
-  color: #cfd7df;
-}
-
-.borderless .input.focused + label,
-.borderless .input:not(.empty) + label {
-  color: #aab7c4;
-  transform: scale(0.85) translateY(-25px);
-  cursor: default;
-}
-
-.borderless textarea.input.focused + label,
-.borderless textarea.input:not(.empty) + label {
-  color: var(--mm);
-  transform: scale(0.85) translateY(-25px);
-  cursor: default;
-}
-
-.borderless .input.focused + label {
-  color: var(--mm);
-}
-
-.borderless .input.invalid + label {
-  color: #ffa27b;
-}
-
-.borderless .input.focused + label + .baseline {
-  background-color: var(--mm);
-  opacity: 0.7;
-}
-
-.borderless .input.focused.invalid + label + .baseline {
-  background-color: #e25950;
-}
+// .bo
 
 .borderless input,
 .borderless textarea,
@@ -374,84 +258,13 @@ button.bottom {
   border-style: none;
 }
 
-.borderless input:-webkit-autofill {
-  -webkit-text-fill-color: #e39f48;
-  transition: background-color 100000000s;
-  -webkit-animation: 1ms void-animation-out;
-}
-
-.borderless input,
-.borderless button {
-  -webkit-animation: 1ms void-animation-out;
-}
-
 .borderless button {
   display: block;
-  width: 60%;
+  width: 40%;
   height: 3em;
   border-radius: 4px;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
-}
-
-#loader.btn-loading {
-  color: var(--mm);
-  border: solid 2px var(--mm);
-  border-style: solid;
-  white-space: nowrap;
-}
-
-.spinner {
-  text-align: center;
-  margin-right: 15%;
-  span {
-    margin-left: 15%;
-  }
-}
-
-.spinner > div {
-  width: 18px;
-  height: 18px;
-  background-color: var(--mm);
-
-  border-radius: 100%;
-  display: inline-block;
-  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
-}
-
-.spinner .bounce1 {
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-
-.spinner .bounce2 {
-  -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
-}
-
-@-webkit-keyframes sk-bouncedelay {
-  0%,
-  80%,
-  100% {
-    -webkit-transform: scale(0);
-  }
-  40% {
-    -webkit-transform: scale(1);
-  }
-}
-
-@keyframes sk-bouncedelay {
-  0%,
-  80%,
-  100% {
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  }
-  40% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
 }
 </style>

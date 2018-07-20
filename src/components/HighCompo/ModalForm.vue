@@ -3,7 +3,7 @@
 form {
     position: absolute;
     text-align: center;
-    background: #f9f9f9;
+    background: ghostwhite;
     min-width: 320px;
     width: auto;
     height: 60vh;
@@ -14,7 +14,6 @@ form {
     top: 0;
 }
 
-
 p {
     font-family: 'Roboto', sans-serif;
     font-weight: 100;
@@ -24,7 +23,7 @@ p {
     margin: 2vh 0;
 }
 
-p>span {
+p > span {
     padding-top: 3px;
     display: block;
     font-weight: 400;
@@ -38,7 +37,7 @@ h3 {
     color: #ff9a58;
     margin: -10vh 0vh 0;
     letter-spacing: 0.2rem;
-    padding: 2vh 0vh
+    padding: 2vh 0vh;
 }
 
 button.fb {
@@ -47,7 +46,7 @@ button.fb {
     height: 50px;
     font-family: 'Roboto', sans-serif;
     font-size: 12px;
-    color: #f9f9f9;
+    color: ghostwhite;
     text-transform: uppercase;
     border-radius: 4px;
     border: 1px solid #29487d;
@@ -57,7 +56,7 @@ button.fb {
 }
 
 button.fb:hover {
-    background: #f9f9f9;
+    background: ghostwhite;
     color: #3b5998;
 }
 
@@ -77,13 +76,13 @@ button.form-btn.sx {
     left: 0;
     border-radius: 0 0 0 5px;
     background-color: rgba(255, 125, 0, 0.35);
-    color: #f9f9f9;
+    color: ghostwhite;
     transition: all 0.3s linear;
 }
 
 button.form-btn.sx:hover {
     background-color: rgba(255, 125, 0, 0.65);
-    color: #f9f9f9;
+    color: ghostwhite;
 }
 
 button.form-btn.sx.back {
@@ -99,9 +98,8 @@ button.form-btn.dx {
     right: 0;
     border-radius: 0 0 5px 0;
     background-color: #ff9a58;
-    color: #f9f9f9;
+    color: ghostwhite;
 }
-
 
 .signIn ::-webkit-input-placeholder {
     color: #ffc185;
@@ -130,7 +128,6 @@ button.form-btn.dx {
     font-weight: 50;
     font-size: 1rem;
 }
-
 
 .signUp ::-webkit-input-placeholder {
     color: #ffc185;
@@ -268,7 +265,7 @@ button.form-btn.dx {
     font-size: 1.3rem;
     font-weight: 100;
     margin: 3vh 0 2vh;
-    background-color: #f9f9f9;
+    background-color: ghostwhite;
     line-height: 200%;
 }
 
@@ -281,7 +278,7 @@ button.form-btn.dx {
     font-size: 1.3rem;
     font-weight: 100;
     margin: 0vh 0 2vh;
-    background-color: #f9f9f9;
+    background-color: ghostwhite;
     line-height: 200%;
 }
 
@@ -304,7 +301,6 @@ button.form-btn.dx {
     padding: 0 1vw 0;
 }
 
-
 .signUp input:focus,
 .signUp input:hover,
 .signIn input:focus,
@@ -320,7 +316,7 @@ button.form-btn.dx {
 .small {
     font-size: 0.7rem;
     text-transform: none;
-    padding-right: 2vw
+    padding-right: 2vw;
 }
 
 .inactive-dx input,
@@ -336,7 +332,6 @@ button.form-btn.dx {
     align-items: center;
     text-align: left;
 }
-
 </style>
 <template>
     <section>
@@ -370,7 +365,7 @@ button.form-btn.dx {
     </section>
 </template>
 <script>
-import { login, signup } from '@/api/auth';
+import {login, signup} from '@/api/auth';
 export default {
   name: 'ModalForm',
   data() {

@@ -1,12 +1,12 @@
 <template>
   <section>
-    <massage-step v-if="BOOKING_STEP === 0" ></massage-step>
-    <slot-step v-if="BOOKING_STEP === 1" :therapists="therapists"></slot-step>
-    <!-- <therapist-step v-if="BOOKING_STEP === 2"></therapist-step> -->
-    <login-step v-if="BOOKING_STEP === 2"></login-step>
-    <payment-step v-if="BOOKING_STEP === 3"></payment-step>
-  <!-- <summary-step></summary-step> -->
-    <homemade-modal @close.capture,stop="preventClose($event)" v-if="!steps.address"><enter-address></enter-address></homemade-modal>
+    <massage-step v-if="BOOKING_STEP === 1 && !dyno"></massage-step>
+    <slot-step v-if="BOOKING_STEP === 2 || BOOKING_STEP === 3"></slot-step>
+    <login-step v-if="BOOKING_STEP === 4"></login-step>
+    <payment-step v-if="BOOKING_STEP === 5"></payment-step>
+    <homemade-modal @close="preventClose($event)" v-if="dyno">
+      <component @continueProgress="continueProgress()" @resetProgress="resetProgress()" @close="close($event)" :is="dyno" />
+    </homemade-modal>
   </section>
 </template>
 <script>
@@ -16,8 +16,9 @@ import TherapistStep from './BookingSteps/TherapistStep';
 import LoginStep from './BookingSteps/LoginStep';
 import PaymentStep from './BookingSteps/PaymentStep';
 import HomemadeModal from '@/components/HighCompo/HomemadeModal';
-import { mapGetters, mapState } from 'vuex';
 import EnterAddress from '@/components/EnterAddress';
+import AskIfContinue from '@/components/AskIfContinue';
+import {mapGetters} from 'vuex';
 export default {
   name: 'BookingSteps',
   computed: {
@@ -29,50 +30,49 @@ export default {
   data() {
     return {
       EnterAddress: EnterAddress,
-      therapists: [
-        {
-          name: 'Tom',
-          email: '',
-          bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisi lectus, mollis quis augue fermentum, tincidunt interdum tortor. Donec vehicula turpis rhoncus libero maximus, ac placerat nisl tristique. Proin vehicula, ipsum vitae ullamcorper aliquet, ipsum risus imperdiet enim, sit amet fermentum nisi quam eu orci.',
-          picture: '/static/assets/img/avatar/1.png',
-        },
-        {
-          name: 'Lara',
-          email: '',
-          bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisi lectus, mollis quis augue fermentum, tincidunt interdum tortor. Donec vehicula turpis rhoncus libero maximus, ac placerat nisl tristique. Proin vehicula, ipsum vitae ullamcorper aliquet, ipsum risus imperdiet enim, sit amet fermentum nisi quam eu orci.',
-          picture: '/static/assets/img/avatar/2.png',
-        },
-        {
-          name: 'Laura',
-          email: '',
-          bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisi lectus, mollis quis augue fermentum, tincidunt interdum tortor. Donec vehicula turpis rhoncus libero maximus, ac placerat nisl tristique. Proin vehicula, ipsum vitae ullamcorper aliquet, ipsum risus imperdiet enim, sit amet fermentum nisi quam eu orci.',
-          picture: '/static/assets/img/avatar/3.png',
-        },
-        {
-          name: 'Tina',
-          email: '',
-          bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisi lectus, mollis quis augue fermentum, tincidunt interdum tortor. Donec vehicula turpis rhoncus libero maximus, ac placerat nisl tristique. Proin vehicula, ipsum vitae ullamcorper aliquet, ipsum risus imperdiet enim, sit amet fermentum nisi quam eu orci.',
-          picture: '/static/assets/img/avatar/4.png',
-        },
-        {
-          name: 'Bast',
-          email: '',
-          bio:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam nisi lectus, mollis quis augue fermentum, tincidunt interdum tortor. Donec vehicula turpis rhoncus libero maximus, ac placerat nisl tristique. Proin vehicula, ipsum vitae ullamcorper aliquet, ipsum risus imperdiet enim, sit amet fermentum nisi quam eu orci.',
-          picture: '/static/assets/img/avatar/2.png',
-        },
-      ],
+      dyno: null,
+      sessionProgress: {},
     };
   },
   methods: {
+    close(e) {
+      document.getElementsByTagName('html')[0].style.overflow = 'auto';
+      this.dyno = null;
+    },
     preventClose(e) {
-      // console.log(e);
+      document.getElementsByTagName('html')[0].style.overflow = 'auto';
       this.$router.push('/');
     },
+    continueProgress() {
+      this.$store.commit('storeStep', this.sessionProgress);
+      this.appendDyno();
+    },
+    resetProgress() {
+      this.$store.dispatch('cleanSlate');
+      this.appendDyno();
+    },
+    appendDyno(sessionProgress) {
+      if (
+        sessionProgress &&
+        sessionProgress.steps &&
+        sessionProgress.steps.address &&
+        !this.steps.address
+      ) {
+        this.sessionProgress = sessionProgress;
+        this.dyno = AskIfContinue;
+      } else if (!this.steps.address && (this.BOOKING_STEP === 0 || this.BOOKING_STEP === 1)) {
+        this.dyno = EnterAddress;
+      } else this.dyno = null;
+    },
+  },
+  mounted() {
+    const sessionProgress = JSON.parse(window.sessionStorage.getItem('steps')) || {};
+    console.log(sessionProgress);
+    sessionProgress.BOOKING_STEP = JSON.parse(window.sessionStorage.getItem('BOOKING_STEP'));
+    this.appendDyno(sessionProgress);
+  },
+  updated() {
+    // this.appendDyno();
   },
   components: {
     MassageStep,
@@ -82,6 +82,7 @@ export default {
     PaymentStep,
     HomemadeModal,
     EnterAddress,
+    AskIfContinue,
   },
 };
 </script>

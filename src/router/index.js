@@ -1,24 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import LoginStep from '@/views/Booking/BookingSteps/LoginStep';
-import BookingWrapper from '@/views/BookingWrapper.vue';
-import MassagesList from '@/views/Massages/MassagesList.vue';
-import HomePage from '@/views/HomePage.vue';
-import AboutBusiness from '@/views/AboutBusiness.vue';
-import ContactForm from '@/views/Contact/ContactForm.vue';
-import VoucherForm from '@/views/Vouchers/VoucherForm.vue';
-import TherapistsList from '@/views/Therapists/TherapistsList.vue';
-import store from '../store';
+import BookingWrapper from '@/views/BookingWrapper';
+import MassagesList from '@/views/Massages/MassagesList';
+import HomePage from '@/views/HomePage';
+import AboutBusiness from '@/views/AboutBusiness';
+import ContactForm from '@/views/Contact/ContactForm';
+import VoucherWrapper from '@/views/Vouchers/VoucherWrapper';
+import TherapistsList from '@/views/Therapists/TherapistsList';
 
 Vue.use(Router);
 
+//eslint-disable-line
 const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/signup',
-      name: 'signu[',
+      name: 'signup',
       component: LoginStep,
+      beforeEnter: (to, from, next) => {
+        console.log(router.isLoggedIn);
+        if (router.isLoggedIn) return router.push('/');
+        next();
+      },
     },
     {
       path: '/',
@@ -53,15 +58,13 @@ const router = new Router({
     {
       path: '/vouchers',
       name: 'vouchers',
-      component: VoucherForm,
+      component: VoucherWrapper,
     },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to, from);
-  const LOGGED_IN = store.state.users.LOGGED_IN;
-  console.log(LOGGED_IN);
+  router.isLoggedIn = !!JSON.parse(window.localStorage.getItem('user'));
   setTimeout(() => {
     return next(), 300;
   });

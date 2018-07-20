@@ -1,18 +1,18 @@
 <template>
   <section class="container">
-    <div class="range-calendar" style="display: block">
+    <div class="range-calendar" :style="eventState.phase === 'dragging' ? {pointerEvents: 'none', transition: 'none', cursor:'-webkit-grab'} : {} " style="display: block background-color: 'transparent'">
       <div class="wrapper">
-        <div class="months ui-draggable" style="left: 0px;">
-          <div v-for="month in toAppend.months" class="month-cell cell">
+        <div id="monthly" class="months ui-draggable" style="left: 0px;" @mousedown="handleDrag($event)">
+          <div v-for="month in toAppend.months" class="month-cell cell" :class="month.past ? 'past' : ''" @click="toggleSelectMonth($event, month)" :month-id="`${month.fullYear}-${month.monthNumber}`">
             <div class="date-formatted">
-              <span class="month-name">{{MONTHS[month.monthNumber] | abr}}</span> {{month.fullYear%1000}}
+              <span class="cell-content month-name">{{MONTHS[month.monthNumber] | abr}}</span> {{month.fullYear%1000}}
             </div>
           </div>
         </div>
       </div>
       <div class="wrapper">
-        <div class="calendar ui-draggable" :style="{pointerEvents: eventState.phase === 'dragging' ? 'none' : 'auto'}" style="left: 0px;" @mousedown="handleDrag($event)">
-          <div v-for="day in toAppend.days" class="cal-cell cell" :id="`${day.fullYear}-${day.monthNumber}-${day.day}`" :month-id="`${day.fullYear}-${day.monthNumber}`" :month="day.monthNumber" @click="toggleSelect($event, day)">
+        <div id="daily" class="calendar ui-draggable" :style="eventState.phase === 'dragging' ? {pointerEvents: 'none', transition: 'none'} : {} " style="left: 0px;" @mousedown="handleDrag($event)">
+          <div v-for="day in toAppend.days" class="cal-cell cell" :id="`${day.fullYear}-${day.monthNumber}-${day.day}`" :month="day.monthNumber" :year="day.fullYear" @click="toggleSelect($event, day)">
             <div class="cell-content">
               <div class="day-number">
                 {{day.day}}
@@ -28,7 +28,7 @@
   </section>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex';
+import {mapGetters, mapActions} from 'vuex';
 export default {
   name: 'DateStep',
   filters: {
@@ -37,12 +37,17 @@ export default {
       return `${value.slice(0, 3).toUpperCase()}`;
     },
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      steps: 'getSteps',
+    }),
+  },
   data() {
     return {
       TODAY: new Date(),
-      NUMBER_OF_DAYS: 365,
-      NUMBER_OF_MONTH: 12,
+      NUMBER_OF_DAYS: 533,
+      NUMBER_OF_MONTH: 18,
+      PREPEND_MONTHS: 2,
       DAYS: ['DIMANCHE', 'LUNDI', 'MARDI', 'MERCREDI', 'JEUDI', 'VENDREDI', 'SAMEDI'],
       MONTHS: [
         'JANVIER',
@@ -59,6 +64,7 @@ export default {
         'DÉCEMBRE',
       ],
       selectedDate: null,
+      selectedMonth: null,
       currentConstructorDate: new Date(),
       currentConstructorMonth: new Date(),
       currentConstructorYear: new Date(),
@@ -72,6 +78,7 @@ export default {
         startX: 0,
         currentOffset: 0,
         initLeft: 0,
+        maxOffset: 0,
       },
     };
   },
@@ -85,13 +92,18 @@ export default {
         document.body.addEventListener('mousemove', this.handleDrag, false);
         this.eventState.phase = 'listen';
         this.eventState.startX = e.screenX;
-        this.eventState.style = e.path.find(el => el.className.includes('ui-draggable')).style;
+        let row = e.path.find(el => el.className.includes('ui-draggable'));
+        this.eventState.style = row.style;
+        this.eventState.maxOffset = row.parentNode.clientWidth - row.clientWidth;
         this.eventState.initLeft = Number(this.eventState.style.left.match(/-?[0-9]+/g)[0]);
       }
       if (e.type === 'mousemove') {
         this.eventState.phase = 'dragging';
         this.eventState.currentOffset = e.screenX - this.eventState.startX;
         this.eventState.realOffset = this.eventState.initLeft + this.eventState.currentOffset;
+        if (Math.abs(this.eventState.realOffset) > Math.abs(this.eventState.maxOffset)) {
+          this.eventState.realOffset = this.eventState.maxOffset;
+        }
         this.eventState.style.left =
           this.eventState.realOffset <= 0 ? `${this.eventState.realOffset}px` : '0px';
       }
@@ -128,27 +140,51 @@ export default {
         });
         this.currentConstructorMonth = new Date(date.fullYear, date.monthNumber + 1, date.day);
       }
+      for (let i = 0; i < this.PREPEND_MONTHS; i++) {
+        let year = calendar.months[0].fullYear;
+        let index = calendar.months[0].monthNumber - 1;
+        if (index === -1) {
+          index = 11;
+          year--;
+        }
+        calendar.months = [{monthNumber: index, fullYear: year, past: true}, ...calendar.months];
+      }
       return calendar;
     },
+    toggleSelectMonth(e, month) {
+      let exist = document.querySelector('.month-cell[selected="true"]');
+      if (exist) exist.setAttribute('selected', false);
+      document
+        .querySelector(`[month-id="${month.fullYear}-${month.monthNumber}"]`)
+        .setAttribute('selected', true);
+      this.selectedMonth = `${month.fullYear}-${month.monthNumber}`;
+      const id = `[year="${month.fullYear}"][month="${month.monthNumber}"].cal-cell`;
+      if (e) this.scrollIntoView(document.querySelector(id));
+    },
     toggleSelect(e, day) {
-      if (e.target.getAttribute('selected') == 'true') {
-        e.target.setAttribute('selected', false);
-        this.selectedDate = null;
-        return;
+      let exist = document.querySelector('.cal-cell[selected="true"]');
+      if (exist) {
+        exist.setAttribute('selected', false);
+        if (e.target === exist) {
+          this.selectedDate = null;
+          this.selectedMonth = null;
+          return this.$emit('dateCleared');
+        }
       }
-      if (this.selectedDate)
-        document
-          .getElementById(
-            `${this.selectedDate.fullYear}-${this.selectedDate.monthNumber}-${
-              this.selectedDate.day
-            }`
-          )
-          .setAttribute('selected', false);
       this.selectedDate = day;
+      this.selectedMonth = `${day.fullYear}-${day.monthNumber}`;
+      this.toggleSelectMonth(null, day);
       e.target.setAttribute('selected', true);
       this.dateSelected(day);
     },
+    scrollIntoView(element) {
+      let cal = element;
+      if (!element) cal = document.querySelector(`[selected=true].cal-cell`);
+      let offset = cal.offsetLeft - cal.parentNode.parentNode.clientWidth * 0.3 - cal.clientWidth;
+      document.querySelector('.calendar.ui-draggable').style.left = `${offset > 0 ? -offset : 0}px`;
+    },
     dateSelected(date) {
+      const raw = [date.fullYear, date.monthNumber, date.day];
       const formattedDate = new Date(
         Date.UTC(date.fullYear, date.monthNumber, date.day)
       ).toLocaleDateString('fr-FR', {
@@ -157,13 +193,25 @@ export default {
         month: 'long',
         day: 'numeric',
       });
-      this.$emit('dateSelected', formattedDate);
+      this.$emit('dateSelected', {formattedDate, raw});
     },
   },
   created() {
     this.toAppend = this.buildCalendar();
     document.body.onmouseup = e => this.handleDrag(e);
     document.body.onmouseleave = e => this.handleDrag(e);
+  },
+  mounted() {
+    if (!this.steps.date) {
+      document.querySelector('div:not(.past).month-cell.cell').click(); //.setAttribute('selected', true);
+    }
+    if (this.steps.date) {
+      const d = this.steps.date.raw;
+      document.getElementById(`${d[0]}-${d[1]}-${d[2]}`).click();
+    }
+    if (this.selectedDate) {
+      this.scrollIntoView();
+    }
   },
 };
 </script>
@@ -173,7 +221,7 @@ export default {
 /* ========================================================================== */
 
 .container {
-  margin-top: 0;
+  margin-top: 1em;
   margin-bottom: 0;
 }
 
@@ -189,44 +237,44 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  padding: 10px 0;
+  padding: 0;
   background-color: transparent;
+  .month-cell {
+    padding: 0;
+  }
 }
 
-.cell-content {
+.cell-content,
+.date-formatted {
   pointer-events: none;
 }
 
-.cal-cell[selected='true'] {
+.cell.cal-cell[selected='true'] {
   background-color: var(--mm);
 }
-.cal-cell[selected='true'] {
+.range-calendar {
+  .months .cell[selected='true'] .date-formatted {
+    opacity: 0.5;
+    color: white;
+    background-color: var(--mm);
+    border-radius: 0.5em;
+    padding: 0.3em;
+    margin-top: -0.3em;
+    font-weight: 350;
+  }
+}
+
+.cal-cell[selected='true'],
+.month-cell[selected='true'] {
   border-radius: 0.5em;
   .cell-content {
-    transform: scale(1.5);
     transition: transform 0.3s ease;
     div {
+      transform: scale(1.5);
       color: white;
     }
   }
 }
-
-.range-calendar.triggerable {
-  display: none;
-}
-
-.calendar-wrapper {
-  position: relative;
-  left: 0;
-  top: 0;
-  z-index: 2;
-  list-style: none;
-  display: block;
-  clear: both;
-  overflow: hidden;
-  padding: 10px 0;
-}
-
 .range-calendar .calendar {
   z-index: 1;
   list-style: none;
@@ -234,10 +282,16 @@ export default {
   margin: 0;
   padding: 0;
   position: relative;
-  width: 99999px;
+  width: max-content;
+  transition: all 1s ease;
+  > .cell:first-child {
+    color: red;
+    .day-number {
+      text-decoration: underline;
+    }
+  }
 }
-
-.range-calendar .calendar .cell {
+.range-calendar .cal-cell {
   float: left;
   width: 5em;
   padding: 25px 20px;
@@ -296,13 +350,9 @@ export default {
   margin: 0;
   padding: 0;
   position: relative;
-  width: 99999px;
-  border-bottom: 0px solid #f9f9f9;
+  width: max-content;
+  border-bottom: 0px solid ghostwhite;
   margin-bottom: 10px;
-}
-
-.range-calendar.auto-hide-months .months {
-  display: none;
 }
 
 .range-calendar .months .cell {
@@ -326,19 +376,8 @@ export default {
 }
 
 .range-calendar .months .cell .date-formatted {
-  font-weight: 100;
-  font-size: 12px;
-}
-
-.range-calendar .months .cell .bullet {
-  position: absolute;
-  left: 15px;
-  top: 15px;
-  height: 7px;
-  width: 7px;
-  background-color: #888;
-  display: none;
-  border-radius: 1px;
+  font-weight: 200;
+  font-size: 1em;
 }
 
 .range-calendar .months .cell.current .bullet {
@@ -349,11 +388,6 @@ export default {
   cursor: move;
   cursor: -moz-grab;
   cursor: -webkit-grab;
-}
-
-.range-calendar .ui-draggable-dragging {
-  cursor: -moz-grabbing;
-  cursor: -webkit-grabbing;
 }
 
 .months {
@@ -368,12 +402,19 @@ export default {
   background-color: transparent;
 }
 
-.calendar .cell {
-  color: rgba(0, 0, 0, 0.4);
+.range-calendar .months .cell.past {
+  background-color: rgba(222, 222, 222, 0.6);
+  color: lightgrey;
+  opacity: 0.8;
+  pointer-events: none;
+  border-right: solid 0.5px rgba(222, 222, 222, 0.8);
 }
 
-.calendar .cell .day-number {
-  color: #888;
+@keyframes scroll-to-view {
+  0% {
+  }
+  100% {
+  }
 }
 
 @media only screen and (max-width: 768px) {

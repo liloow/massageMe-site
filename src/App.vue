@@ -1,14 +1,16 @@
 <template>
   <div id="app">
     <nav-bar></nav-bar>
-    <router-view class="main"></router-view>
+    <section class="container-fluid main">
+      <router-view></router-view>
+    </section>
     <footer-vue></footer-vue>
   </div>
 </template>
 <script>
-import NavBar from '@/components/HighCompo/NavBar2.0';
+import NavBar from '@/components/HighCompo/NavBar';
 import FooterVue from '@/components/HighCompo/FooterVue';
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 
 export default {
   name: 'app',
@@ -41,11 +43,36 @@ export default {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  background-color: #fafafa;
+  background-color: ghostwhite;
   --mm: #044169;
   --nav: 8vh;
-  --foot: 20vh;
+  --foot: 10vh;
+
+  font-family: PT Sans, Consolas, Menlo, monospace;
 }
+/* font-family: MontserratThin; */
+/*
+font-family: Source Code Pro, Consolas, Menlo, monospace;
+font-family: 'Rubik', sans-serif;
+font-family: 'Quattrocento', Arial, sans-serif;
+font-family: "small=0em&medium=40em&large=64em&xlarge=75em&xxlarge=90em";
+font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+font-family: 'Quattrocento', Arial, sans-serif;
+font-family: 'Oswald', Arial, sans-serif;
+font-family: 'Quattrocento', Arial, sans-serif;
+font-family: 'Rubik', sans-serif;
+font-family: OpenSans;
+font-family: MontserratThin;
+font-family: 'Dosis';
+font-family: 'Oswald', Arial, sans-serif;
+font-family: 'Quattrocento', Arial, sans-serif;
+font-family: 'Quattrocento', Arial, sans-serif;
+font-family: "small=0em&medium=40em&large=64em&xlarge=75em&xxlarge=90em";
+font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+font-family: 'FontAwesome';
+font-family': 'Quattrocento, Arial, sans-serif',
+}
+/*font-family: 'Quattrocento', Arial, sans-serif;*/
 .main {
   margin-top: var(--nav);
   min-height: calc(100vh - var(--nav) - var(--foot));

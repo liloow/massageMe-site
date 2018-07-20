@@ -6,11 +6,13 @@ const api = axios.create({
   responseType: 'json',
 });
 
-export const signup = userInfo => api.post('/signup', userInfo).then(r => r.data);
+export const signup = async userInfo => (await api.post('/signup', userInfo)).data; //.then(r => r.data);
+export const login = async body => (await api.post('/login', body)).data; //.then(r => r.data);
+export const logout = async () => (await api.post('/logout')).data; //.then(r => r.data);
+export const prebook = async (therapistId, fullDate) =>
+  (await api.post('/prebook', {therapistId, fullDate})).data; //.then(r => r.data);
 
-export const login = body => api.post('/login', body).then(r => r.data);
-
-export const fetchUserInfos = () => api.get('/fetchUserInfos').then(r => r.data);
+export const fetchUserInfos = async () => (await api.get('/fetchUserInfos')).data; //.then(r => r.data);
 
 // function saveUserInfo({ token, user }) {
 //   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -40,9 +42,12 @@ export const fetchUserInfos = () => api.get('/fetchUserInfos').then(r => r.data)
 //   }
 // }
 
-// export function appendToUserHistory(user, res) { return api.post(`${user}/append/`).then(response => { return response.data; }) }
+export const appendToUserHistory = async state => api.post(`/bookingPostProcessing`, state).data;
 
 export const fetchTherapists = async () => await api.get('/getTherapists'); //.then(r => r.data);
+
+export const fetchSlotsAvailable = async raw =>
+  await api.get('/getSlotsAvailable', {params: {raw}}); //.then(r => r.data);
 
 export const fetchMassages = async () => await api.get('/getMassages'); //.then(r => r.data);
 

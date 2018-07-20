@@ -15,7 +15,7 @@ module.exports = {
   trailingComma: 'es5',
 
   // Controls the printing of spaces inside array and objects
-  bracketSpacing: true,
+  bracketSpacing: false,
 
   // If true, puts the `>` of a multi-line jsx element at the end of
   // the last line instead of being alone on the next line

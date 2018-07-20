@@ -1,115 +1,140 @@
 <template>
   <section>
     <div class="container">
-      <div class="payment-wrapper">
-        <div class="payment-tabs"></div>
-        <div id="paypal" class="payment-method">
-          <div class="container">
-            <div id="paypal-button" class="row"></div>
+      <summary-step @clientAgreed="agreed = true"></summary-step>
+      <div class="container">
+        <div class="accordion" :class="{notAgreed: agreed ? false : true}">
+          <header @click="handleOpenClose($event)">
+            <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger is-collapsed">Carte de Credit</a>
+          </header>
+          <div class="accordion-content accordionItem is-expanded" :class="agreed ? '' : 'is-collapsed' " id="accordion1" aria-hidden="false">
+            <div class="container">
+              <div id="credit-card" class="payment-method ">
+                <form @input="check($event)">
+                  <div data-locale-reversible>
+                    <div class="row">
+                      <div class="field">
+                        <input id="fullName" :class="{input: true, empty: fullname ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="fullname" @blur="check($event)" autocomplete="fullName">
+                        <label for="fullName" data-tid="elements_examples.form.address_label">Name</label>
+                        <div class="baseline"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="field">
+                      <input id="card-number" :class="{input: true, empty: cardNumber ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="cardNumber" autocomplete="address-line1">
+                      <label for="card-number" data-tid="elements_examples.form.card_number_label">Card number</label>
+                      <div class="baseline"></div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="field half-width">
+                      <input id="card-expiry" :class="{input: true, empty: expirationDate ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="expirationDate" autocomplete="address-line1">
+                      <label for="card-expiry" data-tid="elements_examples.form.card_expiry_label">Expiration</label>
+                      <div class="baseline"></div>
+                    </div>
+                    <div class="field half-width">
+                      <input id="card-cvc" :class="{input: true, empty: address ? false : true}" type="number" placeholder="" required="" v-model="cvc" autocomplete="address-line1">
+                      <label for="card-cvc" data-tid="elements_examples.form.card_cvc_label">CVC</label>
+                      <div class="baseline"></div>
+                    </div>
+                  </div>
+                  <button v-if="state === 'processing'" id="loader" class="btn btn-loading" aria-busy="true" aria-label="Loading" role="progressbar">
+                    <div class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                      <span>Processing...</span>
+                    </div>
+                  </button>
+                  <button v-else class="btn btn-filled" type="submit" data-tid="elements_examples.form.pay_button" @click.prevent="">Payer {{order.price}} EUR</button>
+                </form>
+              </div>
+            </div>
           </div>
-        </div>
-        <div id="bancontact" class="payment-method">
-          <div class="container">
-            <form @input="check($event)">
-              <div data-locale-reversible>
-                <div class="row">
-                  <div class="field">
-                    <input id="name" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="name">
-                    <label for="name" data-tid="elements_examples.form.address_label">Name</label>
-                    <div class="baseline"></div>
+          <header @click="handleOpenClose($event)">
+            <a href="#accordion1" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger is-collapsed">Paypal</a>
+          </header>
+          <div class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="false">
+            <div class="container">
+              <div id="bancontact" class="payment-method">
+                <form @input="check($event)">
+                  <div data-locale-reversible>
+                    <div class="row">
+                      <div class="field">
+                        <input id="name" :class="{input: true, empty: fullname ? false : true}" type="text" v-model="fullname" placeholder="185 Berry St" required="" autocomplete="name">
+                        <label for="name" data-tid="elements_examples.form.address_label">Name</label>
+                        <div class="baseline"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="field">
+                        <input id="email" :class="{input: true, empty: email ? false : true}" type="email" placeholder="185 Berry St" required="" autocomplete="email">
+                        <label for="email" data-tid="elements_examples.form.address_label">Email</label>
+                        <div class="baseline"></div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="field">
-                    <input id="email" class="input empty" type="email" placeholder="185 Berry St" required="" autocomplete="email">
-                    <label for="email" data-tid="elements_examples.form.address_label">Email</label>
-                    <div class="baseline"></div>
+                  <div class="row">
+                    <div class="field">
+                      <input id="address" :class="{input: true, empty: address ? false : true}" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
+                      <label for="address" data-tid="elements_examples.form.card_number_label">Adresse</label>
+                      <div class="baseline"></div>
+                    </div>
                   </div>
-                </div>
+                  <div class="row">
+                    <div class="field half-width">
+                      <input id="postal-code" :class="{input: true, empty: postalCode ? false : true}" type="text" placeholder="185 Berry St" required="" autocomplete="postal">
+                      <label for="postal-code" data-tid="elements_examples.form.card_expiry_label">Code Postal</label>
+                      <div class="baseline"></div>
+                    </div>
+                    <div class="field half-width">
+                      <input id="city" :class="{input: true, empty: city ? false : true}" type="text" placeholder="Bruxelles" required="" autocomplete="city">
+                      <label for="city" data-tid="elements_examples.form.card_cvc_label">Ville</label>
+                      <div class="baseline"></div>
+                    </div>
+                  </div>
+                  <button class="btn btn-filled" id="bancontact-button">Payer {{order.price}} EUR</button>
+                </form>
               </div>
-              <div class="row">
-                <div class="field">
-                  <input id="address" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
-                  <label for="address" data-tid="elements_examples.form.card_number_label">Adresse</label>
-                  <div class="baseline"></div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="field half-width">
-                  <input id="postal-code" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="postal-code">
-                  <label for="postal-code" data-tid="elements_examples.form.card_expiry_label">Code Postal</label>
-                  <div class="baseline"></div>
-                </div>
-                <div class="field half-width">
-                  <input id="city" class="input empty" type="text" placeholder="Bruxelles" required="" autocomplete="city">
-                  <label for="city" data-tid="elements_examples.form.card_cvc_label">Ville</label>
-                  <div class="baseline"></div>
-                </div>
-              </div>
-              <button class="btn btn-filled" id="bancontact-button">Payer {{order.price}} EUR</button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-      <div id="credit-card" class="payment-method ">
-        <div class="container">
-          <form @input="check($event)">
-            <div data-locale-reversible>
-              <div class="row">
-                <div class="field">
-                  <input id="address" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
-                  <label for="address" data-tid="elements_examples.form.address_label">Name</label>
-                  <div class="baseline"></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <input id="card-number" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
-                <label for="card-number" data-tid="elements_examples.form.card_number_label">Card number</label>
-                <div class="baseline"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field half-width">
-                <input id="card-expiry" class="input empty" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
-                <label for="card-expiry" data-tid="elements_examples.form.card_expiry_label">Expiration</label>
-                <div class="baseline"></div>
-              </div>
-              <div class="field half-width">
-                <input id="card-cvc" class="input empty" type="number" placeholder="" required="" autocomplete="address-line1">
-                <label for="card-cvc" data-tid="elements_examples.form.card_cvc_label">CVC</label>
-                <div class="baseline"></div>
-              </div>
-            </div>
-            <button class="btn btn-filled" type="submit" data-tid="elements_examples.form.pay_button">Payer {{order.price}} EUR</button>
-            <button id="loader" class="btn btn-loading" aria-busy="true" aria-label="Loading" role="progressbar">
-              <div class="spinner">
-                <div class="bounce1"></div>
-                <div class="bounce2"></div>
-                <div class="bounce3"></div>
-                <span>Processing...</span>
-              </div>
-            </button>
-          </form>
-        </div>
-      </div>
+    </div>
     </div>
   </section>
 </template>
 <script>
+import SummaryStep from './SummaryStep';
+import {mapGetters} from 'vuex';
 export default {
   name: 'PaymentStep',
-
+  computed: {
+    ...mapGetters({
+      user: 'getUser',
+    }),
+  },
   data() {
     return {
+      agreed: false,
       order: {
         price: 60,
       },
+      fullname: null,
+      email: null,
+      cardNumber: null,
+      cvc: null,
+      expirationDate: null,
+      address: null,
+      city: null,
+      postalCode: null,
+      state: 'idle',
     };
   },
   methods: {
     check(e) {
+      console.log(e.target);
       if (e.target.value.length === 0) e.target.classList.add('empty');
       else e.target.classList.remove('empty');
     },
@@ -119,69 +144,62 @@ export default {
         else e.target.classList.remove('focused');
       }
     },
+    handleOpenClose(e) {
+      let fc = e.target.firstChild.classList;
+      let ns = e.target.nextSibling.classList;
+      let exist = document.querySelector('.accordion-content.is-expanded');
+      if (exist) {
+        exist.classList.toggle('is-expanded');
+        exist.classList.toggle('is-collapsed');
+        exist.previousSibling.firstChild.classList.toggle('is-expanded');
+        exist.previousSibling.firstChild.classList.toggle('is-collapsed');
+        console.log(e.target, exist);
+        if (e.target === exist.previousSibling) return;
+      }
+      fc.toggle('is-collapsed');
+      fc.toggle('is-expanded');
+      ns.toggle('is-collapsed');
+      ns.toggle('is-expanded');
+      e.target.nextSibling.setAttribute(
+        'aria-hidden',
+        !e.target.nextSibling.getAttribute('aria-hidden')
+      );
+    },
   },
   mounted() {
-    const stripe = Stripe('pk_test_hRfWeiE7MuT5fINhdlIWyh9n');
-    const elements = stripe.elements({
-      locale: 'auto',
-    });
+    if (this.user) {
+      this.email = this.user.email;
+      this.fullname = this.user.fullname;
+    }
+    // const stripe = Stripe('pk_test_hRfWeiE7MuT5fINhdlIWyh9n');
+    // const elements = stripe.elements({
+    //   locale: 'auto',
+    // });
     // Floating labels
-    const inputs = document.querySelectorAll('.payment-method .input');
-    Array.prototype.forEach.call(inputs, input => {
+    const inputs = [...document.querySelectorAll('.payment-method .input')];
+    inputs.forEach(input => {
       input.addEventListener('focus', e => this.handleFocus(e));
       input.addEventListener('blur', e => this.handleFocus(e));
+      this.check({target: input});
     });
-    paypal.Button.render(
-      {
-        env: 'production', // Or 'sandbox',
-
-        commit: true, // Show a 'Pay Now' button
-
-        style: {
-          color: 'blue',
-          size: 'responsive',
-          shape: 'rect',
-        },
-
-        payment: function(data, actions) {
-          /*
-           * Set up the payment here
-           */
-        },
-
-        onAuthorize: function(data, actions) {
-          /*
-           * Execute the payment here
-           */
-        },
-
-        onCancel: function(data, actions) {
-          /*
-           * Buyer cancelled the payment
-           */
-        },
-
-        onError: function(err) {
-          /*
-           * An error occurred during the transaction
-           */
-        },
-      },
-      '#paypal-button'
-    );
+  },
+  components: {
+    SummaryStep,
   },
 };
 </script>
 <style lang="scss" scoped>
+$mm: #044169;
 .payment-method {
-  background-color: #fafafa;
+  background-color: #fdfdfd;
   width: 85%;
+  padding: 2em 2em 0.2em;
   margin: auto;
 }
 
 .payment-method * {
   font-family: Source Code Pro, Consolas, Menlo, monospace;
-  font-size: 1.1em;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
@@ -208,7 +226,7 @@ export default {
   width: 100%;
   height: 1px;
   left: 0;
-  bottom: 3px;
+  bottom: 1px;
   background-color: var(--mm);
   opacity: 0.2;
   transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -239,6 +257,7 @@ export default {
   bottom: 0;
   color: var(--mm);
   background-color: transparent;
+  line-height: 1.5;
 }
 
 .payment-method .input::-webkit-input-placeholder {
@@ -332,12 +351,16 @@ export default {
 
 .payment-method button {
   display: block;
-  width: 60%;
+  // width: 60%;
   height: 3em;
+  margin-top: 2em;
+  padding-left: 3em;
+  padding-right: 3em;
   border-radius: 4px;
   text-transform: uppercase;
   font-weight: 500;
   cursor: pointer;
+  margin-bottom: 0;
 }
 
 #loader.btn-loading {
@@ -397,6 +420,128 @@ export default {
   40% {
     -webkit-transform: scale(1);
     transform: scale(1);
+  }
+}
+
+////////////////////////////////////////////
+
+.notAgreed {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.accordion,
+.accordion-list {
+  border: 1px solid #ddd;
+  &:after {
+    content: '';
+    display: block;
+    height: 1em;
+    width: 100%;
+    background-color: darken($mm, 10%);
+  }
+  max-width: 1200px;
+  margin: auto;
+}
+
+.accordion header,
+.accordion__panel {
+  background-color: #fdfdfd;
+  font-size: 1em;
+  line-height: 1.5em;
+}
+
+.accordion p {
+  padding: 1em 2em 1em 2em;
+}
+
+.accordion {
+  position: relative;
+  background-color: #fdfdfd;
+  a {
+    pointer-events: none;
+  }
+}
+
+.accordionTitle,
+.accordion__Heading {
+  background-color: var(--mm);
+  text-align: center;
+  font-weight: 700;
+  padding: 1.2em;
+  display: block;
+  text-decoration: none;
+  color: #fff;
+  transition: background-color 0.5s ease-in-out;
+  border-bottom: 1px solid darken($mm, 5%);
+  &:before {
+    content: '+';
+    font-size: 1.5em;
+    line-height: 0.5em;
+    float: left;
+    transition: transform 0.5s ease-in-out;
+  }
+  &:hover {
+    background-color: darken($mm, 10%);
+  }
+}
+
+.accordionTitleActive,
+.accordionTitle.is-expanded {
+  background-color: darken($mm, 10%);
+  &:before {
+    transform: rotate(-225deg);
+  }
+}
+
+.accordionItem {
+  height: auto;
+  overflow: hidden; //SHAME: magic number to allow the accordion to animate
+  max-height: 50em;
+  transition: max-height 1s;
+
+  @media screen and (min-width: 48em) {
+    max-height: 100vh;
+    transition: max-height 1s;
+  }
+}
+
+.accordionItem.is-collapsed {
+  max-height: 0;
+}
+
+.no-js .accordionItem.is-collapsed {
+  max-height: auto;
+}
+
+.animateIn {
+  animation: accordionIn 0.45s normal ease-in-out both 1;
+}
+
+.animateOut {
+  animation: accordionOut 0.45s alternate ease-in-out both 1;
+}
+
+@keyframes accordionIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) rotateX(-60deg);
+    transform-origin: 50% 0;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes accordionOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) rotateX(-60deg);
   }
 }
 </style>

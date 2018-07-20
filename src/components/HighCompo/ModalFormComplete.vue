@@ -1,9 +1,9 @@
 <style scoped>
-@import "https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400";
+@import 'https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400';
 form {
   position: absolute;
   text-align: center;
-  background: #f9f9f9;
+  background: ghostwhite;
   min-width: 320px;
   width: auto;
   height: 60vh;
@@ -15,7 +15,7 @@ form {
 }
 
 p {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 100;
   text-transform: uppercase;
   font-size: 12px;
@@ -31,7 +31,7 @@ p > span {
 }
 
 h3 {
-  font-family: "Dosis";
+  font-family: 'Dosis';
   font-size: 50px;
   text-transform: uppercase;
   color: #ff9a58;
@@ -43,9 +43,9 @@ button.fb {
   background: #3b5998;
   width: 160px;
   height: 25px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-size: 12px;
-  color: #f9f9f9;
+  color: ghostwhite;
   text-transform: uppercase;
   border-radius: 4px;
   border: 1px solid #29487d;
@@ -55,7 +55,7 @@ button.fb {
 }
 
 button.fb:hover {
-  background: #f9f9f9;
+  background: ghostwhite;
   color: #3b5998;
 }
 
@@ -65,7 +65,7 @@ button.form-btn {
   height: 60px;
   bottom: 0;
   border: 0;
-  font-family: "Dosis";
+  font-family: 'Dosis';
   font-size: 24px;
   text-transform: uppercase;
   cursor: pointer;
@@ -75,13 +75,13 @@ button.form-btn.sx {
   left: 0;
   border-radius: 0 0 0 5px;
   background-color: rgba(255, 125, 0, 0.35);
-  color: #f9f9f9;
+  color: ghostwhite;
   transition: all 0.3s linear;
 }
 
 button.form-btn.sx:hover {
   background-color: rgba(255, 125, 0, 0.65);
-  color: #f9f9f9;
+  color: ghostwhite;
 }
 
 button.form-btn.sx.back {
@@ -97,61 +97,61 @@ button.form-btn.dx {
   right: 0;
   border-radius: 0 0 5px 0;
   background-color: #ff9a58;
-  color: #f9f9f9;
+  color: ghostwhite;
 }
 
 .signIn ::-webkit-input-placeholder {
   color: #ffc185;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signIn :-moz-placeholder {
   color: #ffc185;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signIn ::-moz-placeholder {
   color: #ffc185;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signIn :-ms-input-placeholder {
   color: #ffc185;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signUp input:focus::-webkit-input-placeholder {
-  color: #f9f9f9;
-  font-family: "Roboto";
+  color: ghostwhite;
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signUp input:focus:-moz-placeholder {
-  color: #f9f9f9;
-  font-family: "Roboto";
+  color: ghostwhite;
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signUp input:focus:-moz-placeholder {
-  color: #f9f9f9;
-  font-family: "Roboto";
+  color: ghostwhite;
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
 
 .signUp input:focus:-ms-input-placeholder {
-  color: #f9f9f9;
-  font-family: "Roboto";
+  color: ghostwhite;
+  font-family: 'Roboto';
   font-weight: 50;
   font-size: 1rem;
 }
@@ -258,24 +258,24 @@ button.form-btn.dx {
 .signIn input {
   border: none;
   width: 85%;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   color: #ff9a58;
   text-align: center;
   font-size: 1.3rem;
   font-weight: 100;
   margin-bottom: 26px;
-  background-color: #f9f9f9;
+  background-color: ghostwhite;
   line-height: 200%;
 }
 
 .signUp input {
   border: none;
-  font-family: "Roboto";
+  font-family: 'Roboto';
   color: #ff9a58;
   text-align: center;
   font-size: 0.9rem;
   font-weight: 100;
-  background-color: #f9f9f9;
+  background-color: ghostwhite;
   line-height: 1.7;
   border-bottom: solid 1px #ff9a58;
   outline: none;

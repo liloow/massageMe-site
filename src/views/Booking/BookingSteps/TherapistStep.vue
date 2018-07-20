@@ -1,40 +1,46 @@
 <template>
-  <section class="container-fluid">
+  <section class="container">
     <div class="title">
-      <h2>Selectionnez votre masseur</h2>
+      <h2>Selectionnez votre masseur / masseuse</h2>
     </div>
     <div class="container-fluid">
       <div class="cards">
-        <div v-for="therapist in therapistsComputed" class="card-wrapper" :key="therapist.name" @click="handleSelection($event, therapist)">
+        <div v-for="therapist in therapistsForSlot" class="card-wrapper" :key="therapist.id" :id="`t${therapist.id}`" @click="handleSelection($event, therapist)" @mouseenter="emphaseCard($event)" @mouseleave="emphaseCard($event)">
           <figure class="card">
             <div class="image"><img src="@/assets/img/staff/avatar1.png" />
             </div>
             <figcaption>
-              <h2>{{therapist.name}}</h2>
+              <h2>{{therapist.fullname}}</h2>
               <p>{{therapist.short}}</p>
-              <div class="price">
-              </div>
             </figcaption>
           </figure>
         </div>
+      <div class="ui-helper"></div>
       </div>
     </div>
   </section>
 </template>
 <script>
+import {mapGetters} from 'vuex';
 export default {
   name: 'TherapistStep',
   props: {
-    therapists: Array,
-    date: String,
-    timeslot: String,
+    date: Array,
+    timeslot: Object,
   },
   computed: {
-    therapistsComputed: function() {
-      return this.therapists.map(el => {
-        el.short = el.bio.length > 175 ? `${el.bio.match(/(^([^]{175}))[^\W]*/g)[0]}...` : el.bio;
-        return el;
-      });
+    ...mapGetters({
+      steps: 'getSteps',
+      slotsAvailable: 'getSlotsAvailable',
+      therapists: 'getTherapists',
+    }),
+    therapistsForSlot() {
+      if (this.timeslot) {
+        let slot = [...this.slotsAvailable].find(el => el.time === this.timeslot.time);
+        if (slot) {
+          return Array.from(slot.therapists, id => [...this.therapists].find(t => t.id == id));
+        }
+      }
     },
   },
   data() {
@@ -47,35 +53,74 @@ export default {
       this.pickedTherapist = therapist;
       this.$emit('therapistSelected', this.pickedTherapist);
     },
+    emphaseCard(e) {
+      let cards = [...document.querySelectorAll('.card-wrapper:not(.hover)')];
+      if (e.type === 'mouseleave' && cards) {
+        cards.forEach(el => el.classList.remove('fade'));
+        e.target.classList.remove('hover', 'fade');
+        return;
+      }
+      e.target.classList.add('hover');
+      cards.forEach(el => el.classList.add('fade'));
+    },
   },
   components: {},
+  mounted() {
+    if (this.steps.therapist) {
+      let cards = [...document.querySelectorAll('.card-wrapper:not(.hover)')];
+      cards.forEach(el => el.classList.add('fade'));
+      this.pickedTherapist = this.steps.therapist;
+      document.querySelector(`#t${this.steps.therapist.id}`).classList.add('hover');
+    }
+  },
 };
 </script>
-<style lang="css" scoped="">
-@import url(https://fonts.googleapis.com/css?family=Oswald);
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-@import url(https://fonts.googleapis.com/css?family=Quattrocento);
-.card {
-  font-family: 'Quattrocento', Arial, sans-serif;
-  position: relative;
-  overflow: hidden;
-  margin: 10px 0.5em;
-  width: 175px;
-  color: #141414;
-  text-align: left;
-  line-height: 1em;
-  font-size: 0.8em;
-  justify-content: center;
-  background-color: #ffffff;
-  border-radius: 0.5em;
+<style lang="scss" scoped="">
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+@import url('https://fonts.googleapis.com/css?family=Quattrocento');
+
+.container {
+  width: 95%;
 }
 
-.cards .card-wrapper {
-  flex-basis: 0;
-  height: auto;
-  margin: 2em auto 0;
-  flex-grow: 0;
-  flex-shrink: 0;
+.cards {
+  .ui-helper {
+    flex: 1;
+  }
+  .card-wrapper {
+    flex-basis: 0;
+    height: auto;
+    margin: 2em 1vw 0;
+    flex-grow: 0;
+    flex-shrink: 0;
+    .card {
+      font-family: 'Quattrocento', Arial, sans-serif;
+      position: relative;
+      overflow: hidden;
+      margin: 10px 0.5em;
+      width: 175px;
+      color: #141414;
+      text-align: left;
+      line-height: 1em;
+      font-size: 0.8em;
+      justify-content: center;
+      background-color: #ffffff;
+      border-radius: 0.5em;
+      pointer-events: auto;
+      transition: 0.5s all ease;
+      > div,
+      figcaption {
+        pointer-events: none;
+      }
+    }
+    &.hover > .card {
+      transform: scale(1.2);
+    }
+    &.fade:not(.hover) > .card {
+      opacity: 0.5;
+    }
+  }
 }
 
 .card img {
@@ -112,20 +157,6 @@ export default {
   opacity: 0.9;
 }
 
-.card i {
-  padding: 10px 5px;
-  display: inline-block;
-  font-size: 24px;
-  color: #141414;
-  opacity: 0.65;
-}
-
-.card i:hover {
-  opacity: 1;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-
 .card-wrapper {
   display: flex;
   justify-content: center;
@@ -135,14 +166,14 @@ export default {
 }
 
 .card {
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
 }
 
 .card-footer {
   display: flex;
   justify-content: center;
   margin: auto;
-  padding: 0 0 1em
+  padding: 0 0 1em;
 }
 
 .no-margin {
@@ -150,7 +181,9 @@ export default {
 }
 
 .title {
-  padding-left: 5em;
+  display: flex;
+  h2 {
+    margin: auto;
+  }
 }
-
 </style>

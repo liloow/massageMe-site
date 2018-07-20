@@ -38,7 +38,7 @@ export default {
     width: 100%;
     margin: 0;
     border: 1px solid transparent;
-    font-size: 16px; // Font size must the 16px or larger to prevent iOS page zoom on focus
+    font-size: 1em; // Font size must the 16px or larger to prevent iOS page zoom on focus
     outline: none;
 
     /* Focus style */
@@ -176,7 +176,7 @@ $border-width: 1px;
     border-radius: 0;
     font-weight: 400;
     color: inherit;
-    padding: 5px 5px 0;
+    padding: 1px 2px;
     margin-bottom: 5px;
     line-height: normal;
     transition: border-color 0.2s ease, outline 0.2s ease; // we really need this for the tabbers
