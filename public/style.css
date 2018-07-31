@@ -434,20 +434,6 @@ h4 {
 
 /* ========================================================================== */
 
-html {
-  box-sizing: border-box;
-  font-size: 14px;
-}
-@media screen and (max-width: 1023px) {
-  html {
-    font-size: 12px;
-  }
-}
-@media screen and (max-width: 1367px) {
-  html {
-    font-size: 13px;
-  }
-}
 *,
 *:before,
 *:after {
@@ -523,12 +509,16 @@ html {
   transition: all 0.2s ease;
   position: relative;
   display: block;
-  font-size: 16px;
+  font-size: 1rem;
   margin: 1em auto;
 }
 
 .btn.btn-filled {
   background: var(--mm);
+}
+
+.btn.btn-upper {
+  text-transform: uppercase;
 }
 
 .btn.btn-filled:hover {
@@ -557,26 +547,11 @@ html {
 /*                                    550px                                   */
 /* ========================================================================== */
 
-@media (max-width: 550px) {
+/* @media (max-width: 550px) {
   .box .box h2 {
     font-size: 16px;
   }
   .box .box li {
     font-size: 11px;
   }
-}
-
-@font-face {
-  font-family: OpenSans;
-  src: url(https://lusaxweb.github.io/vuesax/assets/fonts/OpenSans-Regular.629a55a7.ttf)
-    format('truetype');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: MontserratThin;
-  src: url(https://lusaxweb.github.io/vuesax/assets/fonts/MONTSERRAT-EXTRALIGHT.0db10313.OTF);
-  font-weight: 400;
-  font-style: normal;
-}
+} */

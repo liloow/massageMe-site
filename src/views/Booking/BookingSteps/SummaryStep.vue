@@ -22,14 +22,14 @@
           <div class="row">
             <h5 class="step-title">Date et heure : </h5>
             <p class="step-body">
-              {{steps.date.formattedDate}} a {{steps.timeslot}}
+              {{steps.date.formattedDate}} a {{steps.timeslot.time}}
             </p>
           </div>
         </li>
         <li class="step" >
           <div class="row">
             <h5 class="step-title">Par : </h5>
-            <p class="step-body">{{steps.therapist.name}}</p>
+            <p class="step-body">{{steps.therapist.fullname}}</p>
           </div>
         </li>
         <li class="step" >
@@ -103,6 +103,8 @@ export default {
       font-size: 1.2em;
       line-height: 0.5em;
       float: left;
+    }
+    &:after {
       transition: transform 0.5s ease-in-out;
       transform: rotate(90deg);
     }

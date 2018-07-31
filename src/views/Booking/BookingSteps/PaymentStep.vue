@@ -10,7 +10,8 @@
           <div class="accordion-content accordionItem is-expanded" :class="agreed ? '' : 'is-collapsed' " id="accordion1" aria-hidden="false">
             <div class="container">
               <div id="credit-card" class="payment-method ">
-                <form @input="check($event)">
+                <stripe-elements></stripe-elements>
+              <!--   <form @input="check($event)">
                   <div data-locale-reversible>
                     <div class="row">
                       <div class="field">
@@ -48,7 +49,7 @@
                     </div>
                   </button>
                   <button v-else class="btn btn-filled" type="submit" data-tid="elements_examples.form.pay_button" @click.prevent="">Payer {{order.price}} EUR</button>
-                </form>
+                </form> -->
               </div>
             </div>
           </div>
@@ -57,7 +58,7 @@
           </header>
           <div class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="false">
             <div class="container">
-              <div id="bancontact" class="payment-method">
+              <!-- <div id="bancontact" class="payment-method">
                 <form @input="check($event)">
                   <div data-locale-reversible>
                     <div class="row">
@@ -96,7 +97,15 @@
                   </div>
                   <button class="btn btn-filled" id="bancontact-button">Payer {{order.price}} EUR</button>
                 </form>
-              </div>
+              </div> -->
+<form id="payment-form" method="POST" action="https://merchant.com/charge-card">
+    <div class="frames-container">
+      <!-- form will be added here -->
+    </div>
+    <!-- add submit button -->
+    <button id="pay-now-button" type="submit" disabled>Pay now</button>
+  </form>
+
             </div>
           </div>
         </div>
@@ -107,6 +116,7 @@
 </template>
 <script>
 import SummaryStep from './SummaryStep';
+import StripeElements from '@/components/StripeElements';
 import {mapGetters} from 'vuex';
 export default {
   name: 'PaymentStep',
@@ -171,10 +181,6 @@ export default {
       this.email = this.user.email;
       this.fullname = this.user.fullname;
     }
-    // const stripe = Stripe('pk_test_hRfWeiE7MuT5fINhdlIWyh9n');
-    // const elements = stripe.elements({
-    //   locale: 'auto',
-    // });
     // Floating labels
     const inputs = [...document.querySelectorAll('.payment-method .input')];
     inputs.forEach(input => {
@@ -185,6 +191,7 @@ export default {
   },
   components: {
     SummaryStep,
+    StripeElements,
   },
 };
 </script>
@@ -350,8 +357,7 @@ $mm: #044169;
 }
 
 .payment-method button {
-  display: block;
-  // width: 60%;
+  display: block; // width: 60%;
   height: 3em;
   margin-top: 2em;
   padding-left: 3em;
@@ -424,7 +430,6 @@ $mm: #044169;
 }
 
 ////////////////////////////////////////////
-
 .notAgreed {
   opacity: 0.5;
   pointer-events: none;

@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     <div class="title">
-      <h1>Selectionnez votre massage</h1>
+      <h2>Selectionnez votre massage</h2>
     </div>
     <div class="container-flex">
       <div class="cards container">
@@ -13,7 +13,7 @@
 </template>
 <script>
 import PrezCards from '@/components/PrezCards';
-import { mapGetters } from 'vuex';
+import {mapGetters} from 'vuex';
 export default {
   name: 'MassageStep',
   computed: {
@@ -27,11 +27,11 @@ export default {
   methods: {
     handleSelection(e, massage) {
       console.log(e, massage);
-      this.$store.commit('storeStep', { massage: massage });
+      this.$store.commit('storeStep', {massage: massage});
       this.$store.dispatch('nextStep');
     },
   },
-  components: { PrezCards },
+  components: {PrezCards},
 };
 </script>
 <style lang="css" scoped="">

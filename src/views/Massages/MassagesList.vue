@@ -30,7 +30,7 @@ export default {
       style: {
         'max-width': '350px',
         'font-family': 'Quattrocento, Arial, sans-serif',
-        position: 'absolute',
+        // position: 'absolute',
         overflow: 'hidden',
         margin: '10px 0.7vw',
         'min-width': '230px',
@@ -38,15 +38,15 @@ export default {
         width: '100%',
         color: 'var(--mm)',
         'text-align': 'left',
-        'line-height': '1.4em',
-        'font-size': '1.2em',
+        'line-height': '1.5',
+        'font-size': '1.2rem',
         'justify-content': 'center',
         'background-color': '#ffffff',
         'border-radius': '0.5em',
         'box-shadow': '0 19px 38px rgba(0, 0, 0, 0.30), 0 15px 12px rgba(0, 0, 0, 0.22)',
         'text-rendering': 'optimizeLegibility',
         transform: ' scale(0)',
-        transition: '1.5s all ease',
+        transition: '1s all ease',
         left: '0',
       },
     };
@@ -54,7 +54,7 @@ export default {
   methods: {
     handleClick(e, massage) {
       console.log(e);
-      this.style.left = `${e.clientX - 200}px`;
+      this.style.left = `${-window.screenX / 2 + e.clientX - 200}px`;
       this.modalOpen = !this.modalOpen;
       this.pickedCard = massage;
       setTimeout(() => {

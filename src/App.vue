@@ -36,8 +36,14 @@ export default {
   },
 };
 </script>
-<style type="text/scss">
+<style lang="scss">
 @import './assets/stylesheets/typo.css';
+body.frozen {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+}
+
 #app {
   min-height: 100vh;
   width: 100vw;
@@ -50,29 +56,7 @@ export default {
 
   font-family: PT Sans, Consolas, Menlo, monospace;
 }
-/* font-family: MontserratThin; */
-/*
-font-family: Source Code Pro, Consolas, Menlo, monospace;
-font-family: 'Rubik', sans-serif;
-font-family: 'Quattrocento', Arial, sans-serif;
-font-family: "small=0em&medium=40em&large=64em&xlarge=75em&xxlarge=90em";
-font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-font-family: 'Quattrocento', Arial, sans-serif;
-font-family: 'Oswald', Arial, sans-serif;
-font-family: 'Quattrocento', Arial, sans-serif;
-font-family: 'Rubik', sans-serif;
-font-family: OpenSans;
-font-family: MontserratThin;
-font-family: 'Dosis';
-font-family: 'Oswald', Arial, sans-serif;
-font-family: 'Quattrocento', Arial, sans-serif;
-font-family: 'Quattrocento', Arial, sans-serif;
-font-family: "small=0em&medium=40em&large=64em&xlarge=75em&xxlarge=90em";
-font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-font-family: 'FontAwesome';
-font-family': 'Quattrocento, Arial, sans-serif',
-}
-/*font-family: 'Quattrocento', Arial, sans-serif;*/
+
 .main {
   margin-top: var(--nav);
   min-height: calc(100vh - var(--nav) - var(--foot));

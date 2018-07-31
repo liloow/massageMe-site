@@ -2,7 +2,7 @@
   <section class="container">
     <div class="range-calendar" :style="eventState.phase === 'dragging' ? {pointerEvents: 'none', transition: 'none', cursor:'-webkit-grab'} : {} " style="display: block background-color: 'transparent'">
       <div class="wrapper">
-        <div id="monthly" class="months ui-draggable" style="left: 0px;" @mousedown="handleDrag($event)">
+        <div id="monthly" class="months ui-draggable" style="left: 0px;" @mousedown="handleDrag($event)" @touchstart="handleDrag($event)">
           <div v-for="month in toAppend.months" class="month-cell cell" :class="month.past ? 'past' : ''" @click="toggleSelectMonth($event, month)" :month-id="`${month.fullYear}-${month.monthNumber}`">
             <div class="date-formatted">
               <span class="cell-content month-name">{{MONTHS[month.monthNumber] | abr}}</span> {{month.fullYear%1000}}
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="wrapper">
-        <div id="daily" class="calendar ui-draggable" :style="eventState.phase === 'dragging' ? {pointerEvents: 'none', transition: 'none'} : {} " style="left: 0px;" @mousedown="handleDrag($event)">
+        <div id="daily" class="calendar ui-draggable" :style="eventState.phase === 'dragging' ? {pointerEvents: 'none', transition: 'none'} : {} " style="left: 0px;" @mousedown="handleDrag($event)" @touchstart="handleDrag($event)">
           <div v-for="day in toAppend.days" class="cal-cell cell" :id="`${day.fullYear}-${day.monthNumber}-${day.day}`" :month="day.monthNumber" :year="day.fullYear" @click="toggleSelect($event, day)">
             <div class="cell-content">
               <div class="day-number">
@@ -23,6 +23,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="arrow left" @click="goLeft($event)" :disabled="eventState.realOffset === 0" :style="{visibility: eventState.realOffset === 0 ? 'hidden' : 'visible'}">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </div>
+      <div class="arrow right" @click="goRight($event)">
+        <i class="material-icons">keyboard_arrow_right</i>
       </div>
     </div>
   </section>
@@ -41,6 +47,28 @@ export default {
     ...mapGetters({
       steps: 'getSteps',
     }),
+    currentMonth() {
+      let past = this.eventState.pastBreakPoints;
+      let future = this.eventState.monthBreakPoints;
+      let off =
+        Math.abs(this.eventState.realOffset) +
+        document.querySelector('#monthly').parentNode.clientWidth / 2;
+      if (past.length > 0 && off <= past[past.length - 1].offset) {
+        future.unshift(past.pop());
+        this.toggleSelectMonth(null, past[past.length - 1]);
+        return past[past.length - 1];
+      }
+      if (future.length > 0 && off >= future[0].offset) {
+        this.toggleSelectMonth(null, future[0]);
+        past.push(future.shift());
+        return past[past.length - 1];
+      }
+      return {
+        offset: 0,
+        monthNumber: this.TODAY.getMonth(),
+        fullYear: this.TODAY.getFullYear(),
+      };
+    },
   },
   data() {
     return {
@@ -74,32 +102,61 @@ export default {
         days: [],
       },
       eventState: {
+        monthBreakPoints: [],
+        pastBreakPoints: [
+          {
+            offset: 0,
+            monthNumber: new Date().getMonth(),
+            fullYear: new Date().getFullYear(),
+          },
+        ],
         phase: 'sleep',
         startX: 0,
         currentOffset: 0,
         initLeft: 0,
         maxOffset: 0,
+        realOffset: 0,
       },
     };
   },
   methods: {
+    goLeft(e) {
+      if (this.eventState.realOffset === 0) return;
+      let elem = e.target.previousSibling;
+      this.eventState.realOffset =
+        this.eventState.realOffset + Math.floor(elem.clientWidth / 111) * 111;
+      if (this.eventState.realOffset > 0) this.eventState.realOffset = 0;
+      document.querySelector('#daily').style.left = `${this.eventState.realOffset}px`;
+      this.currentMonth;
+    },
+    goRight(e) {
+      let elem = e.target.previousSibling.previousSibling;
+      this.eventState.realOffset =
+        this.eventState.realOffset - Math.floor(elem.clientWidth / 111) * 111;
+      document.querySelector('#daily').style.left = `${this.eventState.realOffset}px`;
+      this.currentMonth;
+    },
     handleDrag(e) {
-      if (e.type === 'mouseup' || e.type === 'mouseleave') {
+      if (e.type === 'mouseup' || e.type === 'mouseleave' || e.type === 'touchend') {
         document.body.removeEventListener('mousemove', this.handleDrag, false);
+        document.body.removeEventListener('touchmove', this.handleDrag, false);
         this.eventState.phase = 'sleep';
+        // this.currentMonth;
       }
-      if (e.type === 'mousedown' && e.button === 0) {
+      if ((e.type === 'mousedown' && e.button === 0) || e.type === 'touchstart') {
         document.body.addEventListener('mousemove', this.handleDrag, false);
+        document.body.addEventListener('touchmove', this.handleDrag, false);
         this.eventState.phase = 'listen';
-        this.eventState.startX = e.screenX;
+        this.eventState.startX = e.screenX || e.touches[0].screenX;
         let row = e.path.find(el => el.className.includes('ui-draggable'));
         this.eventState.style = row.style;
         this.eventState.maxOffset = row.parentNode.clientWidth - row.clientWidth;
         this.eventState.initLeft = Number(this.eventState.style.left.match(/-?[0-9]+/g)[0]);
       }
-      if (e.type === 'mousemove') {
+      if (e.type === 'mousemove' || e.type === 'touchmove') {
         this.eventState.phase = 'dragging';
-        this.eventState.currentOffset = e.screenX - this.eventState.startX;
+        this.eventState.currentOffset =
+          (e.screenX || e.touches[0].screenX) - this.eventState.startX;
         this.eventState.realOffset = this.eventState.initLeft + this.eventState.currentOffset;
         if (Math.abs(this.eventState.realOffset) > Math.abs(this.eventState.maxOffset)) {
           this.eventState.realOffset = this.eventState.maxOffset;
@@ -152,6 +209,7 @@ export default {
       return calendar;
     },
     toggleSelectMonth(e, month) {
+      console.log(month.fullYear, month.monthNumber);
       let exist = document.querySelector('.month-cell[selected="true"]');
       if (exist) exist.setAttribute('selected', false);
       document
@@ -181,7 +239,8 @@ export default {
       let cal = element;
       if (!element) cal = document.querySelector(`[selected=true].cal-cell`);
       let offset = cal.offsetLeft - cal.parentNode.parentNode.clientWidth * 0.3 - cal.clientWidth;
-      document.querySelector('.calendar.ui-draggable').style.left = `${offset > 0 ? -offset : 0}px`;
+      this.eventState.realOffset = offset > 0 ? -offset : 0;
+      document.querySelector('#daily').style.left = `${this.eventState.realOffset}px`;
     },
     dateSelected(date) {
       const raw = [date.fullYear, date.monthNumber, date.day];
@@ -200,6 +259,7 @@ export default {
     this.toAppend = this.buildCalendar();
     document.body.onmouseup = e => this.handleDrag(e);
     document.body.onmouseleave = e => this.handleDrag(e);
+    document.body.ontouchend = e => this.handleDrag(e);
   },
   mounted() {
     if (!this.steps.date) {
@@ -212,6 +272,13 @@ export default {
     if (this.selectedDate) {
       this.scrollIntoView();
     }
+    this.eventState.monthBreakPoints = [...document.querySelectorAll('.cal-cell')]
+      .filter(cell => /-1$/g.test(cell.id))
+      .map(el => ({
+        offset: el.offsetLeft,
+        monthNumber: el.getAttribute('month'),
+        fullYear: el.getAttribute('year'),
+      }));
   },
 };
 </script>
@@ -242,6 +309,37 @@ export default {
   .month-cell {
     padding: 0;
   }
+  .arrow {
+    position: absolute;
+    display: flex;
+    height: 94px;
+    bottom: 0;
+    align-items: center;
+    z-index: 1000;
+    transition: 0.2s all;
+    &:hover {
+      background-color: #f8f8ff;
+      box-shadow: inset 0px 0px 5px 1px rgba(0, 0, 0, 0.1), inset 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    i {
+      font-size: 36px;
+      pointer-events: none;
+    }
+    &.left {
+      left: 0;
+    }
+    &.right {
+      right: 0;
+    }
+    &:active {
+      transform: scale(0.8);
+    }
+    &[disabled] {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+  }
 }
 
 .cell-content,
@@ -252,6 +350,7 @@ export default {
 .cell.cal-cell[selected='true'] {
   background-color: var(--mm);
 }
+
 .range-calendar {
   .months .cell[selected='true'] .date-formatted {
     opacity: 0.5;
@@ -275,6 +374,7 @@ export default {
     }
   }
 }
+
 .range-calendar .calendar {
   z-index: 1;
   list-style: none;
@@ -291,6 +391,7 @@ export default {
     }
   }
 }
+
 .range-calendar .cal-cell {
   float: left;
   width: 5em;

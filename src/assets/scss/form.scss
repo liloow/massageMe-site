@@ -221,15 +221,14 @@ $translate: $font * $line-height;
 $height: $translate + $font + $line-height * $scale;
 
 .borderless {
-  font-family: 'PT Sans';
+  font-family: 'PT Sans', Arial, sans-serif;
   font-size: $font;
   background-color: ghostwhite;
   width: 85%;
-  padding: 2em 2em 0.2em;
   margin: auto;
-  font-family: Source Code Pro, Consolas, Menlo, monospace;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-family: 'PT Sans';
+  font-size: 1rem;
+  font-weight: 400;
   .row {
     display: flex;
     margin: 0 auto 10px;

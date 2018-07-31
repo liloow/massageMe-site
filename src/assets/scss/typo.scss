@@ -1,14 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Oxygen');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-@import url('https://fonts.googleapis.com/css?family=Lato');
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
-@import url('https://fonts.googleapis.com/css?family=Lora');
+@import url('https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400');
+
 @import url('https://fonts.googleapis.com/css?family=Raleway:700,500');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
 
 /*/*/
 /*/ Viewport sized typography with minimum and maximum values*/
@@ -106,8 +102,7 @@
 }
 
 @mixin font-set($size: false, $colour: false, $weight: false, $lh: false) {
-  /* font-family: 'Rubik', sans-serif;*/
-  font-family: 'Montserrat', sans-serif, Arial, sans-serif;
+  font-family: 'Roboto', Arial, sans-serif;
   @if $size {
     font-size: $size;
   }
@@ -126,7 +121,7 @@ $up: uppercase;
 $mm: #044169;
 
 :root {
-  @include responsive-font(3vw, 10px, 16px, 24px);
+  @include responsive-font(2vw, 10px, 16px, 16px);
 }
 
 h1,
@@ -138,12 +133,28 @@ h6 {
   @include font-set(1.5rem, $mm, 600, 2);
 }
 
+h1 {
+  font-family: 'Dosis';
+  font-size: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  line-height: normal;
+  text-decoration: underline;
+}
+
+h2 {
+  padding: 2rem 0 1rem;
+  font-weight: 500;
+}
+
 h3 {
   text-transform: $up;
 }
 
-h2 {
-  margin: auto;
-  padding: 2rem 0 1rem;
-  font-weight: 500;
+h5 {
+  font-family: 'Dosis';
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  line-height: normal;
+  padding: 0.5rem;
 }

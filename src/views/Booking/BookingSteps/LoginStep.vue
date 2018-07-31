@@ -4,7 +4,7 @@
       <div :class="signupCard ? '' : 'disabled'" @click.self="toggleView()"></div>
       <form @input="check($event)" @submit.prevent="processForm($event)" class="borderless signUp">
         <div class="title">
-          <h3>S'inscrire</h3>
+          <h1>S'inscrire</h1>
         </div>
         <ul class="wrapper">
           <li class="row">
@@ -61,7 +61,7 @@
           </li>
         </ul>
         <section class="horizontal">
-          <button @click="toggleView" class="form-btn sx log-in" type="button">De retour ?</button>
+          <button @click="toggleView" class="form-btn sx log-in" type="button">Se connecter</button>
           <button class="form-btn dx" type="submit" :disabled="!form.legal" @click.prevent="processForm()">Valider</button>
         </section>
       </form>
@@ -70,7 +70,7 @@
       <div :class="loginCard ? '' : 'disabled'" @click.self="toggleView()"></div>
       <form @input="check($event)" @submit.prevent="processForm" class="borderless signIn">
         <div class="title">
-          <h3>De Retour ?</h3>
+          <h1>Se connecter</h1>
         </div>
         <ul class="wrapper">
           <li class="row">
@@ -205,38 +205,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-input[type='checkbox']:checked + label > span:before {
-  content: '';
-  position: absolute;
-  top: 0.4em;
-  left: 0.1em;
-  border-right: 3px solid transparent;
-  border-bottom: 3px solid transparent;
-  transform: rotate(45deg);
-  transform-origin: 0% 100%;
-  animation: checkbox-check 125ms 250ms cubic-bezier(0.4, 0, 0.23, 1) forwards;
-}
-
-input[type='checkbox']:checked + label > span {
-  border: 0.5em solid #ffeb3b;
-  animation: shrink-bounce 200ms cubic-bezier(0.4, 0, 0.23, 1);
-}
-
-input[type='checkbox']:checked ~ div > span.strikethrough:after {
-  content: '';
-  position: absolute;
-  display: block;
-  width: 100%;
-  height: 1px;
-  box-shadow: 0 2px rgba(30, 30, 30, 0.6);
-  margin-top: -0.7em;
-  background: white;
-  transform-origin: center left;
-  animation: strikethrough 1s 0.5s cubic-bezier(0.55, 0, 0.1, 1) 1;
-  transition: strikethrough 0.5s cubic-bezier(0.55, 0, 0.1, 1) 1;
-}
-
-@import url('https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400');
 .row {
   display: flex;
   flex-direction: row;

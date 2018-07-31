@@ -182,7 +182,6 @@ export default {
         }
         p {
           font-size: 1rem;
-          font-family: 'Quattrocento', Arial, sans-serif;
         }
       }
       .column.two-third {
@@ -210,17 +209,19 @@ export default {
         }
       }
     }
+    .field.full.block {
+      height: auto;
+      width: 90%;
+      margin: auto;
+      label {
+        top: 0;
+        z-index: 30;
+        overflow: visible;
+      }
+    }
   }
 }
 
-.field.full.block {
-  height: auto;
-  label {
-    top: 0;
-    z-index: 30;
-    overflow: visible;
-  }
-}
 .field.full.btn {
   height: auto;
   .btn.btn-filled {

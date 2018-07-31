@@ -24,7 +24,7 @@
         </div>
         <p v-if="successAdd">Merci pour votre intérêt ! Nous vous recontactons dès aue possible.</p>
       </footer>
-      <button type="button" @click="storeAdress(currentAddress)" class="btn btn-filled">Valider</button>
+      <button type="button" @click="storeAdress(currentAddress)" class="btn btn-filled btn-upper">Valider</button>
     </div>
   </section>
 </template>
@@ -100,7 +100,6 @@ export default {
 }
 
 .card {
-  font-family: 'Quattrocento', Arial, sans-serif;
   position: relative;
   margin: 10px 1%;
   width: 100%;
@@ -149,8 +148,9 @@ export default {
   max-width: 800px;
   width: 75%;
   text-align: center;
-  margin: auto;
+  margin: 0 auto;
   flex: 1 0 0px;
+  align-items: flex-start;
 }
 @media screen and (max-width: 1023px) {
   .address-input {

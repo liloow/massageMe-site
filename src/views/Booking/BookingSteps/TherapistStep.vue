@@ -10,12 +10,12 @@
             <div class="image"><img src="@/assets/img/staff/avatar1.png" />
             </div>
             <figcaption>
-              <h2>{{therapist.fullname}}</h2>
+              <h5>{{therapist.fullname}}</h5>
               <p>{{therapist.short}}</p>
             </figcaption>
           </figure>
         </div>
-      <div class="ui-helper"></div>
+      <!-- <div class="ui-helper"></div> -->
       </div>
     </div>
   </section>
@@ -81,7 +81,6 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Quattrocento');
 
 .container {
-  width: 95%;
 }
 
 .cards {
@@ -89,11 +88,9 @@ export default {
     flex: 1;
   }
   .card-wrapper {
-    flex-basis: 0;
-    height: auto;
-    margin: 2em 1vw 0;
-    flex-grow: 0;
-    flex-shrink: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.1rem;
     .card {
       font-family: 'Quattrocento', Arial, sans-serif;
       position: relative;
@@ -130,54 +127,30 @@ export default {
   pointer-events: none;
 }
 
-.card figcaption {
+.card-wrapper {
+}
+
+.card img {
   width: 100%;
-  padding: 0 0.5em 0.5em;
+  vertical-align: top;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.card figcaption {
+  width: 95%;
   position: relative;
   margin: auto;
-  height: auto;
-}
-
-.card h2,
-.card p {
-  margin: 0.7em;
-}
-
-.card h2 {
-  font-weight: 300;
-  font-size: 1.5em;
-  line-height: 1.2em;
-  font-family: 'Oswald', Arial, sans-serif;
-  text-transform: uppercase;
+  flex: 1;
+  margin-bottom: 0.5rem;
 }
 
 .card p {
   font-size: 0.9em;
   letter-spacing: 1px;
-  opacity: 0.9;
-}
-
-.card-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  opacity: 1;
   margin: auto;
-  flex-direction: row;
-}
-
-.card {
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
-}
-
-.card-footer {
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  padding: 0 0 1em;
-}
-
-.no-margin {
-  margin: 0;
+  width: 95%;
 }
 
 .title {

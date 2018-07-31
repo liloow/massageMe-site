@@ -36,11 +36,9 @@ export default {
   },
   methods: {
     close(e) {
-      document.getElementsByTagName('html')[0].style.overflow = 'auto';
       this.dyno = null;
     },
     preventClose(e) {
-      document.getElementsByTagName('html')[0].style.overflow = 'auto';
       this.$router.push('/');
     },
     continueProgress() {

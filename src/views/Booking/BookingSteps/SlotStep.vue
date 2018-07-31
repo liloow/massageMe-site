@@ -80,7 +80,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .row.row-mg {
-  width: 90vw;
   margin: auto;
 }
 

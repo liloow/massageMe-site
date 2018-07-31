@@ -559,3 +559,59 @@
 
 12:18:49 error: connect ECONNREFUSED 127.0.0.1:5432
          connection: {"ssl":{"rejectUnauthorized":false,"ca":"Certificate:\n    Data:\n        Version: 1 (0x0)\n        Serial Number:\n            a2:77:1e:b0:11:c9:27:75\n    Signature Algorithm: NULL\n        Issuer: CN = tom@5.39.77.184\n        Validity\n            Not Before: Jun 29 23:29:07 2018 GMT\n            Not After : Jun 26 23:29:07 2028 GMT\n        Subject: CN = tom@5.39.77.184\n        Subject Public Key Info:\n            Public Key Algorithm: rsaEncryption\n                Public-Key: (2048 bit)\n                Modulus:\n                    00:c1:9e:2d:5b:c7:5d:e7:1e:e2:36:83:b4:03:1d:\n                    e2:99:cd:80:a8:e0:fb:f6:e3:1f:07:c8:52:e7:32:\n                    63:08:24:35:9f:b7:17:f5:b0:f8:b8:5f:1e:1a:d9:\n                    7a:d6:ec:5f:e2:76:2f:d0:3c:e4:a8:b1:4f:f7:f5:\n                    1a:1d:30:90:31:e5:1f:43:6f:0d:6f:89:d0:6f:a2:\n                    aa:39:16:43:9a:8c:a4:ef:2a:57:9f:b1:2c:c3:a1:\n                    2f:7f:a5:b5:a0:01:64:d4:32:ca:4c:34:e5:27:17:\n                    e3:ae:f4:3a:33:83:0f:58:56:81:14:c5:ac:00:b3:\n                    43:99:af:3f:c9:10:87:8e:77:11:80:8b:b6:70:c4:\n                    df:69:e3:67:5d:17:91:84:9b:51:3c:76:9e:15:1b:\n                    5a:d4:c1:56:f1:e6:79:ed:c1:70:27:3d:c1:93:a8:\n                    8e:dd:ca:0e:73:14:25:d1:77:49:54:f9:c8:06:98:\n                    3d:5c:4b:2e:a3:5b:c9:6c:0c:87:90:74:44:4e:31:\n                    21:ba:02:93:ef:95:82:d1:e2:aa:24:7e:86:48:5f:\n                    3b:db:40:40:ff:bf:53:87:78:24:69:7c:5f:b2:e2:\n                    8c:63:da:64:97:2b:c5:91:21:d8:22:ff:33:0b:56:\n                    82:86:d9:e0:73:7d:27:37:59:e9:72:a0:59:c1:f2:\n                    54:f7\n                Exponent: 65537 (0x10001)\n    Signature Algorithm: NULL\n-----BEGIN CERTIFICATE-----\nMIIDCjCCAfKgAwIBAgIJAKJ3HrARySd1MA0GCSqGSIb3DQEBCwUAMBoxGDAWBgNV\nBAMMD3RvbUA1LjM5Ljc3LjE4NDAeFw0xODA2MjkyMzI5MDdaFw0yODA2MjYyMzI5\nMDdaMBoxGDAWBgNVBAMMD3RvbUA1LjM5Ljc3LjE4NDCCASIwDQYJKoZIhvcNAQEB\nBQADggEPADCCAQoCggEBAMGeLVvHXece4jaDtAMd4pnNgKjg+/bjHwfIUucyYwgk\nNZ+3F/Ww+LhfHhrZetbsX+J2L9A85KixT/f1Gh0wkDHlH0NvDW+J0G+iqjkWQ5qM\npO8qV5+xLMOhL3+ltaABZNQyykw05ScX4670OjODD1hWgRTFrACzQ5mvP8kQh453\nEYCLtnDE32njZ10XkYSbUTx2nhUbWtTBVvHmee3BcCc9wZOojt3KDnMUJdF3SVT5\nyAaYPVxLLqNbyWwMh5B0RE4xIboCk++VgtHiqiR+hkhfO9tAQP+/U4d4JGl8X7Li\njGPaZJcrxZEh2CL/MwtWgobZ4HN9JzdZ6XKgWcHyVPcCAwEAAaNTMFEwHQYDVR0O\nBBYEFFJGQGl4F6TthYAsAJqStT1O6YQhMB8GA1UdIwQYMBaAFFJGQGl4F6TthYAs\nAJqStT1O6YQhMA8GA1UdEwEB/wQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAJcF\nefsLXpKRAYT8JBPKTCQtn0xVwowcUQpyg36pT6jz5QH+UJI4fwIOXw/WkqykjqV7\n+wQpFfDhjdbbzQ8MaWGUED2RoVM/7nyrnZ2tbDnuePUGQNK2hBc0e2wI3je1h6C2\nDsGhUyn2hI4z1EzWWHQPHbN1rr18zPw/PiswNywol13Nfpgt2LquBibb1UjhASn4\naqdIbwsKXsYmoXSuWk0xn6TN2XMGAMa8MCGFf+CC4VfsNkigSQ7CmYLdZecW5UxB\nX/3WLLhzObEfI/QEX9mFCAc3aOQY+GJe7RCZfLz/Q97D8q6k+cS/8P1W7He+cXem\nQG96NDv8ikYFMxplOxA=\n-----END CERTIFICATE-----\n","key":"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDcYgKfur8F9OQc\nt2x3rhJ7xZw2rQIgYqpZRD0lRjtIVgfIv+n5lqFaZ33HoXRQ4AABjposD6qYMBs0\nnu1IMAEyPnNChSsWuCYU43xZkeVqH4qn/mOpftJqA/U+r1hKRYIxik082Kv2BjXH\nzpK86tSdG/P0/UufjHrgUfzqiSKmc3rwqe8FR3NaZxiqVrg2iF/2mU2PcrPrdaIc\nHD4+4TP7NYpsK8PuGZLlKzxuWb0JeU+Lo2Y7vEzGudCasq7EonGzq6pdNptOLsbP\n7JiMz2ZV1xVPMX+AmR/lgyIJPTSTZ05DfkmxgAQed/r8cRPOQMjXZ2l/Xk70aYhP\nEGezUjgtAgMBAAECggEAEJ5bcEwWx441/Wxfg47e2fKG2yCkvmhyTBT3P25SXhwO\nrja6oBWZyUVwmLM2IDskBPoJ6jSsOpm2E3vAjOcB0BYhfuyn2Si9xml5IQ/9aslC\nHXTzcv6bQ19VCQsT71XagX3aYTI9lWnWeGC9c/2JVueat+i54Sgow+2q0szQjhiX\nYaYgbzFKrpU8/gWAlhGYyJwYHuHSiu+MkZpuukTrhFt5235foc4LQOh/3N4FGvaN\n4+aUV5ZOU4DcQoNSGgIi7jofXumtPIVhua74txilF0S0exr9ohZFWJcCCBZ3VZ1W\nNuT/HBZNUhOEqpDWI8gYl0QgtEHD9/OOUiGeNudASQKBgQDzBLN1w319RttV5woT\njbktYCSQ7IntWFRs7QdFdAWg+JEjOwIT8S3P7ItREMqYbDZ8VPLAOrbTiE3CUX6U\nl8+aHtV0Jv8vtCJHrGra2srWokE6l09vrjOYCxnc6SROwqQwO0xtFEurjlTvycs0\ngjDsladkdjkE9kYhXTWCQkupuwKBgQDoJ8Q49J6phWiO5ZDioq/4JUcCuWTRGlNF\n6F+mzpsKmq2czrqr8DHYXhBJkoF4EQB5yB9i3IUdkO5mLDd9QM5xNDmwuBQwH8RF\n/7pj+QSnvdo+maigzvuTTvHjecplwm4sNqY006A54JeOqgXf4v9eT2NmtlfwScrO\n+iV4vHmzNwKBgQDIVojHPWiXPTGWCIgzBHOy535dhtJRuq6muWR0Kih1wlSL8ZpN\n7FYzAbL8GlaZ/yOPrcwNEpojmktYNSyfvOLlECQxw/A9WEemRIo2b4YmGM6jSZev\n3rEj14rzpbNLxoPqSwg/KCsVe5mjr/x4BhflAZ5kYF2zLH82BAwXnSWY/wKBgFBb\nu3sviWAKcrfL1MvuHlUZqivSOoh6wUpYdguKRnZ0NhYqJMlxOf+4B5E/6hrCX9TH\npb2VsWobibnKImbzsMHUnweBoFNMG6dTLpR+VNMvT0UN8SXAn6pM0EO6G4n/tB0P\nyZZNjo+aIzvZtHDb5SMi/bhG88eT82STh7b0HngfAoGBAJ1MLOpxVYxVg8zkLocQ\n5EDPQmHGDVy6+vkpFYyVkWYfCSvfM3X6sdicikr2W7WKgiJvQagrOJpWAFqFLFYH\nrn65cRdS42IiRFgtcW41wRQKVFNXOt0UfRHuetIDEkmFthCPUDTwvxT1fgBVdvBa\namFJEr2px+1QxBTicRQbvBS/\n-----END PRIVATE KEY-----\n","cert":"Certificate:\n    Data:\n        Version: 1 (0x0)\n        Serial Number:\n            9c:80:15:60:a9:41:cb:ba\n    Signature Algorithm: NULL\n        Issuer: CN = dbhost.yourdomain.com\n        Validity\n            Not Before: Jun 29 23:29:30 2018 GMT\n            Not After : Jun 29 23:29:30 2019 GMT\n        Subject: CN = dbhost.yourdomain.com\n        Subject Public Key Info:\n            Public Key Algorithm: rsaEncryption\n                Public-Key: (2048 bit)\n                Modulus:\n                    00:dc:62:02:9f:ba:bf:05:f4:e4:1c:b7:6c:77:ae:\n                    12:7b:c5:9c:36:ad:02:20:62:aa:59:44:3d:25:46:\n                    3b:48:56:07:c8:bf:e9:f9:96:a1:5a:67:7d:c7:a1:\n                    74:50:e0:00:01:8e:9a:2c:0f:aa:98:30:1b:34:9e:\n                    ed:48:30:01:32:3e:73:42:85:2b:16:b8:26:14:e3:\n                    7c:59:91:e5:6a:1f:8a:a7:fe:63:a9:7e:d2:6a:03:\n                    f5:3e:af:58:4a:45:82:31:8a:4d:3c:d8:ab:f6:06:\n                    35:c7:ce:92:bc:ea:d4:9d:1b:f3:f4:fd:4b:9f:8c:\n                    7a:e0:51:fc:ea:89:22:a6:73:7a:f0:a9:ef:05:47:\n                    73:5a:67:18:aa:56:b8:36:88:5f:f6:99:4d:8f:72:\n                    b3:eb:75:a2:1c:1c:3e:3e:e1:33:fb:35:8a:6c:2b:\n                    c3:ee:19:92:e5:2b:3c:6e:59:bd:09:79:4f:8b:a3:\n                    66:3b:bc:4c:c6:b9:d0:9a:b2:ae:c4:a2:71:b3:ab:\n                    aa:5d:36:9b:4e:2e:c6:cf:ec:98:8c:cf:66:55:d7:\n                    15:4f:31:7f:80:99:1f:e5:83:22:09:3d:34:93:67:\n                    4e:43:7e:49:b1:80:04:1e:77:fa:fc:71:13:ce:40:\n                    c8:d7:67:69:7f:5e:4e:f4:69:88:4f:10:67:b3:52:\n                    38:2d\n                Exponent: 65537 (0x10001)\n    Signature Algorithm: NULL\n-----BEGIN CERTIFICATE-----\nMIICtjCCAZ4CCQCALyykN+oKFTANBgkqhkiG9w0BAQsFADAaMRgwFgYDVQQDDA90\nb21ANS4zOS43Ny4xODQwHhcNMTgwNjI5MjMyOTMwWhcNMTkwNjI5MjMyOTMwWjAg\nMR4wHAYDVQQDDBVkYmhvc3QueW91cmRvbWFpbi5jb20wggEiMA0GCSqGSIb3DQEB\nAQUAA4IBDwAwggEKAoIBAQDcYgKfur8F9OQct2x3rhJ7xZw2rQIgYqpZRD0lRjtI\nVgfIv+n5lqFaZ33HoXRQ4AABjposD6qYMBs0nu1IMAEyPnNChSsWuCYU43xZkeVq\nH4qn/mOpftJqA/U+r1hKRYIxik082Kv2BjXHzpK86tSdG/P0/UufjHrgUfzqiSKm\nc3rwqe8FR3NaZxiqVrg2iF/2mU2PcrPrdaIcHD4+4TP7NYpsK8PuGZLlKzxuWb0J\neU+Lo2Y7vEzGudCasq7EonGzq6pdNptOLsbP7JiMz2ZV1xVPMX+AmR/lgyIJPTST\nZ05DfkmxgAQed/r8cRPOQMjXZ2l/Xk70aYhPEGezUjgtAgMBAAEwDQYJKoZIhvcN\nAQELBQADggEBAKQytu1ab/XLUI+HwuOoE0/Awj2gsHsQxpcQ1ZpkzEnLDobqosIR\ntP5+1nlnrqROn0b1ZFK0gL7CCCPbcuXWVZaEIcD5YTi0PwRLyiPDaZbwNHHkYdry\n3DovDT6EwghSE4E5g7eO2pcnnLv1Dh6jS1lzNDhyfGLxE67FugveuZ1ztncMCPmI\n5IpF6Jl/RMikTy+CEKzYiPu/gBlvW1X7WP+SaMc6tZgTMt6nURWM+hkZMN6SIDoW\nOZuotkJv/xif2uf/ZmEJQnzfHwCWNVMGHluesU0cTSzwTHHiv3FGb2ZuxF31hiUI\nDBdEfKCfV5CWXR7l7Y6WXZD4t3TXnp1J+yI=\n-----END CERTIFICATE-----\n"}}
+
+19:15:53 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+19:53:56 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+20:06:59 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+20:11:23 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+22:14:37 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+22:38:31 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      
+
+17:31:32 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      

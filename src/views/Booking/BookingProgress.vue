@@ -11,18 +11,18 @@
         </li>
         <li class="step" @click="gotBackToStep(1)">
           <h5 class="step-title">Quoi ?</h5>
-          <p class="step-body">{{steps.massage ? steps.massage.name : null}}</p>
+          <p  v-if="steps.massage" class="step-body">Massage <strong>{{steps.massage.name}}</strong></p>
         </li>
         <li class="step" @click="gotBackToStep(2)">
           <h5 class="step-title">Quand ?</h5>
           <p v-if="steps.date" class="step-body">
-            {{steps.date.formattedDate}} <br>
-            <span v-if="steps.timeslot">{{steps.timeslot.time}}</span>
+            {{steps.date.formattedDate | capitalize }} <br>
+            <span v-if="steps.timeslot">A {{steps.timeslot.time}}</span>
           </p>
         </li>
         <li class="step" @click="gotBackToStep(3)">
           <h5 class="step-title">Qui ?</h5>
-          <p v-if="steps.therapist" class="step-body">{{steps.therapist.name}}</p>
+          <p v-if="steps.therapist" class="step-body">{{steps.therapist.fullname}}</p>
         </li>
         <li class="step" @click="gotBackToStep(4)">
           <h5 class="step-title">Confirmation</h5>
@@ -34,8 +34,12 @@
 </template>
 <script>
 import {mapGetters, mapState} from 'vuex';
+import {capitalize} from '@/filters';
 export default {
   name: 'BookingProgress',
+  filters: {
+    capitalize,
+  },
   computed: {
     ...mapGetters({
       steps: 'getSteps',
@@ -82,15 +86,15 @@ export default {
       -webkit-box-shadow: rgba(0, 0, 0, 0.23) 0px 3px 13px 1px;
       -moz-box-shadow: rgba(0, 0, 0, 0.23) 0px 3px 13px 1px;
       box-shadow: rgba(0, 0, 0, 0.23) 0px 3px 13px 1px;
-      h5,
       p {
-        margin: 0;
+        margin: 0 0.2rem;
       }
       h5 {
-        font-family: 'Oswald', Arial, sans-serif;
-        font-weight: 600;
-        font-size: 1.2em;
+        font-weight: 700;
+        font-size: 1rem;
         text-decoration: underline;
+        padding-bottom: 0;
+        letter-spacing: 0.05rem;
       }
     }
   }

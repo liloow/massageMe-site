@@ -32,10 +32,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import url(https://fonts.googleapis.com/css?family=Oswald);
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-@import url(https://fonts.googleapis.com/css?family=Quattrocento);
-
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+@import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 .scale {
   > .card {
     left: calc(50% - 200px) !important;
@@ -44,8 +42,7 @@ export default {
 }
 
 .card {
-  font-family: 'Quattrocento', Arial, sans-serif;
-  position: relative;
+  font-family: 'Roboto', Arial, sans-serif;
   overflow: hidden;
   margin: 10px 0.7vw;
   min-width: 230px;
@@ -53,19 +50,20 @@ export default {
   width: 100%;
   color: #141414;
   text-align: left;
-  line-height: 1.4em;
-  font-size: 0.8em;
+  line-height: 1.5;
+  font-size: 0.8rem;
   justify-content: center;
   background-color: #ffffff;
   border-radius: 0.5em;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
   text-rendering: optimizeLegibility;
-
+  display: flex;
+  flex-flow: column;
+  flex: 1;
   .close {
     opacity: 0.5;
     color: black;
     font-family: sans-serif;
-
     &:hover {
       opacity: 1;
     }
@@ -82,18 +80,10 @@ export default {
   }
 }
 
-.cards {
-  &.card-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    flex-direction: row;
-    flex-basis: 0;
-    height: auto;
-    margin: 0 0.5em;
-    flex-shrink: 0;
-  }
+.card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.1rem;
 }
 
 .card img {
@@ -105,19 +95,11 @@ export default {
 }
 
 .card figcaption {
-  width: 100%;
-  padding: 0 0.5em 0.5em;
+  width: 95%;
   position: relative;
   margin: auto;
-  height: 12.5em;
-}
-
-.card h5 {
-  font-weight: 300;
-  font-size: 1.5em;
-  line-height: 1.2em;
-  font-family: 'Oswald', Arial, sans-serif;
-  text-transform: uppercase;
+  flex: 1;
+  margin-bottom: 0.5rem;
 }
 
 .card p {
@@ -131,11 +113,10 @@ export default {
 .card-footer {
   display: flex;
   justify-content: center;
-  margin: auto;
+  margin: 0 auto;
   padding: 0;
-}
-
-.btn.btn-filled {
-  margin: 0 auto 1em;
+  .btn {
+    margin: 0.2rem auto 1rem;
+  }
 }
 </style>

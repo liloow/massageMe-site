@@ -18,6 +18,7 @@ const traceEvents = require('trace_events');
 const tracing = traceEvents.createTracing({
   categories: ['async.hooks', 'v8'],
 });
+const Mollie = require('mollie-api-node');
 
 if (process.env.NODE_ENV !== 'production') tracing.enable();
 
@@ -30,6 +31,9 @@ function reportQueryError(err, req, level, httpStatus) {
 }
 
 const app = express();
+
+const mollie = new Mollie.API.Client();
+mollie.setApiKey('test_PCCVybQ2kwPcahnawjBmhPgAbNyfAr');
 
 db.proc('version')
   .then(data => console.log('\n Good work, DB is up! \n'.bold.yellow))
