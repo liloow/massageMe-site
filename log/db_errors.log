@@ -615,3 +615,11 @@
         WHERE user_id = 30
             AND lock_released IS FALSE
       
+
+18:13:48 error: operator does not exist: text = integer
+         query: 
+        UPDATE slots_prebooked
+        SET lock_released = TRUE
+        WHERE user_id = 30
+            AND lock_released IS FALSE
+      

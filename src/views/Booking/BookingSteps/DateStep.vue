@@ -187,7 +187,7 @@ export default {
       }
       for (let i = 0; i < this.NUMBER_OF_MONTH; i++) {
         let date = {
-          day: this.gDay(this.currentConstructorMonth),
+          day: i === 0 ? this.gDay(this.currentConstructorMonth) : 1,
           monthNumber: this.gMonth(this.currentConstructorMonth),
           fullYear: this.gYear(this.currentConstructorMonth),
         };
