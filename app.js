@@ -32,6 +32,11 @@ function reportQueryError(err, req, level, httpStatus) {
 
 const app = express();
 
+app.set('trust proxy', [
+  // self
+  '127.0.0.1/32',
+]);
+
 const mollie = new Mollie.API.Client();
 mollie.setApiKey('test_PCCVybQ2kwPcahnawjBmhPgAbNyfAr');
 

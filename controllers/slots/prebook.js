@@ -2,8 +2,9 @@ const db = require('../db');
 
 module.exports = async function getSlots(req, res, next) {
   console.log(req);
-  const userId = req.user ? req.user.id : req.ip;
+  const userId = `${req.user ? req.user.id : req.ip}`;
   const {therapistId, fullDate} = req.body;
+  console.log(fullDate);
 
   const timestamp = await db.task('getInsertUserId', async t => {
     await db.none(

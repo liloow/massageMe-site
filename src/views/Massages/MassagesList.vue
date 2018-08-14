@@ -30,7 +30,7 @@ export default {
       style: {
         'max-width': '350px',
         'font-family': 'Quattrocento, Arial, sans-serif',
-        // position: 'absolute',
+        position: 'relative',
         overflow: 'hidden',
         margin: '10px 0.7vw',
         'min-width': '230px',
@@ -54,7 +54,7 @@ export default {
   methods: {
     handleClick(e, massage) {
       console.log(e);
-      this.style.left = `${-window.screenX / 2 + e.clientX - 200}px`;
+      this.style.left = `${-window.screenX / 2 + e.clientX + 200}px`;
       this.modalOpen = !this.modalOpen;
       this.pickedCard = massage;
       setTimeout(() => {

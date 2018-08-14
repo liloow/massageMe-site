@@ -36,7 +36,7 @@ export default {
 @import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 .scale {
   > .card {
-    left: calc(50% - 200px) !important;
+    left: calc((50% + 200px) * 0.9) !important;
     transform: scale(1) !important;
   }
 }
