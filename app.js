@@ -8,7 +8,7 @@ const cookieSession = require('cookie-session');
 const index = require('./routes/index');
 const locals = require('./middlewares/locals');
 const auth = require('./routes/auth');
-const securityHeaders = require('./middlewares/securityHeaders');
+// const securityHeaders = require('./middlewares/securityHeaders');
 const sessionId = require('./middlewares/sessionId');
 const fetchUserInfos = require('./middlewares/fetchUserInfos');
 const cors = require('cors');
@@ -82,7 +82,7 @@ if (process.env.NODE_ENV === 'DEV') {
 /* ========================================================================== */
 
 // Add HSTS and other security headers
-app.use(securityHeaders);
+// app.use(securityHeaders);
 
 // Initialize session id
 app.use(sessionId.middleware);
