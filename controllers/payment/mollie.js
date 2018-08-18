@@ -2,7 +2,7 @@ const mollie = require('@mollie/api-client')({apiKey: 'test_PCCVybQ2kwPcahnawjBm
 
 async function createPayment(req, res) {
   const {value, currency, description, redirectUrl, webhookUrl} = req.body;
-  await mollie.payments.create({
+  const p = await mollie.payments.create({
     amount: {
       value: value,
       currency: currency,
@@ -11,6 +11,7 @@ async function createPayment(req, res) {
     redirectUrl: redirectUrl,
     webhookUrl: webhookUrl,
   });
+  console.log('CREATE RES:', p);
   return res.json('OK');
 }
 
@@ -21,10 +22,10 @@ async function getPayment(req, res) {
 }
 
 async function parseData(req, res) {
+  console.log('RECIEVED RESPONSE : ', req.body);
   return res.json(req.body);
 }
 
 exports.createPayment = createPayment;
 exports.getPayment = getPayment;
 exports.parseData = parseData;
-
