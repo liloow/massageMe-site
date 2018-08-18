@@ -10,7 +10,6 @@ import Services from '@/views/Homepage/Services';
 import ReservationRow from '@/views/Homepage/ReservationRow';
 import PictoRow from '@/views/Homepage/PictoRow';
 import GiftRow from '@/views/Homepage/GiftRow';
-
 export default {
   name: 'HomePage',
   data() {
@@ -23,6 +22,5 @@ export default {
 };
 </script>
 <style lang="css" scoped>
-@import '../assets/stylesheets/typo.css';
 
 </style>

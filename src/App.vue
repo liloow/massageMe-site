@@ -37,7 +37,6 @@ export default {
 };
 </script>
 <style lang="scss">
-@import './assets/stylesheets/typo.css';
 body.frozen {
   height: 100%;
   overflow: hidden;

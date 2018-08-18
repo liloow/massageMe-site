@@ -11,5 +11,8 @@ router.post('/prebook', ifErr(require('../controllers/slots/prebook')));
 router.post('/addMassage', ifErr(require('../controllers/massages/addMassage')));
 router.post('/addTherapist', ifErr(require('../controllers/therapists/addTherapist')));
 
-module.exports = router;
+router.post('/createPayment', ifErr(require('../controllers/payment/mollie').createPayment));
+router.post('/getPayment', ifErr(require('../controllers/payment/mollie').getPayment));
+router.post('/webhookUrl', ifErr(require('../controllers/payment/mollie').parseData));
 
+module.exports = router;

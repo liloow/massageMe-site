@@ -120,7 +120,7 @@
 $up: uppercase;
 $mm: #044169;
 
-:root {
+* {
   @include responsive-font(2vw, 10px, 16px, 16px);
 }
 
