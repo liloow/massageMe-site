@@ -34,8 +34,6 @@
     "stripe": "^6.3.0",
     "update": "^0.7.4",
     "vue": "^2.5.16",
-    "vue-cal": "^0.6.1",
-    "vue-draggable-cal": "^1.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
@@ -61,22 +59,12 @@
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.16"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "*.js": ["vue-cli-service lint", "git add"],
+    "*.vue": ["vue-cli-service lint", "git add"]
   }
 }
