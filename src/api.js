@@ -46,6 +46,14 @@ export const appendToUserHistory = async state => api.post(`/bookingPostProcessi
 
 export const fetchTherapists = async () => await api.get('/getTherapists'); //.then(r => r.data);
 
+export const createPayment = async data => await api.post('/createPayment', data); //.then(r => r.data);
+
+export const storePaymentAttempt = async data => await api.post('/storePaymentAttempt', data); //.then(r => r.data);
+
+export const fetchPayment = async id => await api.get('/fetchPayment', {params: {id}}); //.then(r => r.data);
+
+export const getPaymentStatus = async id => await api.post('/getPaymentStatus', {id}); //.then(r => r.data);
+
 export const fetchSlotsAvailable = async raw =>
   await api.get('/getSlotsAvailable', {params: {raw}}); //.then(r => r.data);
 

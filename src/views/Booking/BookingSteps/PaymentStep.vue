@@ -1,197 +1,53 @@
 <template>
   <section>
     <div class="container">
-      <summary-step @clientAgreed="agreed = true"></summary-step>
-      <div class="container">
-        <div class="accordion" :class="{notAgreed: agreed ? false : true}">
-          <header @click="handleOpenClose($event)">
-            <a href="#accordion1" aria-expanded="false" aria-controls="accordion1" class="accordion-title accordionTitle js-accordionTrigger is-collapsed">Carte de Credit</a>
-          </header>
-          <div class="accordion-content accordionItem is-expanded" :class="agreed ? '' : 'is-collapsed' " id="accordion1" aria-hidden="false">
-            <div class="container">
-              <div id="credit-card" class="payment-method ">
-                <stripe-elements></stripe-elements>
-              <!--   <form @input="check($event)">
-                  <div data-locale-reversible>
-                    <div class="row">
-                      <div class="field">
-                        <input id="fullName" :class="{input: true, empty: fullname ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="fullname" @blur="check($event)" autocomplete="fullName">
-                        <label for="fullName" data-tid="elements_examples.form.address_label">Name</label>
-                        <div class="baseline"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <input id="card-number" :class="{input: true, empty: cardNumber ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="cardNumber" autocomplete="address-line1">
-                      <label for="card-number" data-tid="elements_examples.form.card_number_label">Card number</label>
-                      <div class="baseline"></div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field half-width">
-                      <input id="card-expiry" :class="{input: true, empty: expirationDate ? false : true}" type="text" placeholder="185 Berry St" required="" v-model="expirationDate" autocomplete="address-line1">
-                      <label for="card-expiry" data-tid="elements_examples.form.card_expiry_label">Expiration</label>
-                      <div class="baseline"></div>
-                    </div>
-                    <div class="field half-width">
-                      <input id="card-cvc" :class="{input: true, empty: address ? false : true}" type="number" placeholder="" required="" v-model="cvc" autocomplete="address-line1">
-                      <label for="card-cvc" data-tid="elements_examples.form.card_cvc_label">CVC</label>
-                      <div class="baseline"></div>
-                    </div>
-                  </div>
-                  <button v-if="state === 'processing'" id="loader" class="btn btn-loading" aria-busy="true" aria-label="Loading" role="progressbar">
-                    <div class="spinner">
-                      <div class="bounce1"></div>
-                      <div class="bounce2"></div>
-                      <div class="bounce3"></div>
-                      <span>Processing...</span>
-                    </div>
-                  </button>
-                  <button v-else class="btn btn-filled" type="submit" data-tid="elements_examples.form.pay_button" @click.prevent="">Payer {{order.price}} EUR</button>
-                </form> -->
-              </div>
-            </div>
-          </div>
-          <header @click="handleOpenClose($event)">
-            <a href="#accordion1" aria-expanded="false" aria-controls="accordion2" class="accordion-title accordionTitle js-accordionTrigger is-collapsed">Paypal</a>
-          </header>
-          <div class="accordion-content accordionItem is-collapsed" id="accordion2" aria-hidden="false">
-            <div class="container">
-              <!-- <div id="bancontact" class="payment-method">
-                <form @input="check($event)">
-                  <div data-locale-reversible>
-                    <div class="row">
-                      <div class="field">
-                        <input id="name" :class="{input: true, empty: fullname ? false : true}" type="text" v-model="fullname" placeholder="185 Berry St" required="" autocomplete="name">
-                        <label for="name" data-tid="elements_examples.form.address_label">Name</label>
-                        <div class="baseline"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="field">
-                        <input id="email" :class="{input: true, empty: email ? false : true}" type="email" placeholder="185 Berry St" required="" autocomplete="email">
-                        <label for="email" data-tid="elements_examples.form.address_label">Email</label>
-                        <div class="baseline"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field">
-                      <input id="address" :class="{input: true, empty: address ? false : true}" type="text" placeholder="185 Berry St" required="" autocomplete="address-line1">
-                      <label for="address" data-tid="elements_examples.form.card_number_label">Adresse</label>
-                      <div class="baseline"></div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="field half-width">
-                      <input id="postal-code" :class="{input: true, empty: postalCode ? false : true}" type="text" placeholder="185 Berry St" required="" autocomplete="postal">
-                      <label for="postal-code" data-tid="elements_examples.form.card_expiry_label">Code Postal</label>
-                      <div class="baseline"></div>
-                    </div>
-                    <div class="field half-width">
-                      <input id="city" :class="{input: true, empty: city ? false : true}" type="text" placeholder="Bruxelles" required="" autocomplete="city">
-                      <label for="city" data-tid="elements_examples.form.card_cvc_label">Ville</label>
-                      <div class="baseline"></div>
-                    </div>
-                  </div>
-                  <button class="btn btn-filled" id="bancontact-button">Payer {{order.price}} EUR</button>
-                </form>
-              </div> -->
-<form id="payment-form" method="POST" action="https://merchant.com/charge-card">
-    <div class="frames-container">
-      <!-- form will be added here -->
-    </div>
-    <!-- add submit button -->
-    <button id="pay-now-button" type="submit" disabled>Pay now</button>
-  </form>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <summary-step :status="state" @clientAgreed="initPayment($event)" />
     </div>
   </section>
 </template>
 <script>
 import SummaryStep from './SummaryStep';
-import StripeElements from '@/components/StripeElements';
 import {mapGetters} from 'vuex';
+import {createPayment, storePaymentAttempt, fetchPayment, getPaymentStatus} from '@/api';
 export default {
   name: 'PaymentStep',
   computed: {
     ...mapGetters({
       user: 'getUser',
+      steps: 'getSteps',
     }),
   },
   data() {
     return {
-      agreed: false,
-      order: {
-        price: 60,
-      },
-      fullname: null,
-      email: null,
-      cardNumber: null,
-      cvc: null,
-      expirationDate: null,
-      address: null,
-      city: null,
-      postalCode: null,
       state: 'idle',
     };
   },
   methods: {
-    check(e) {
-      console.log(e.target);
-      if (e.target.value.length === 0) e.target.classList.add('empty');
-      else e.target.classList.remove('empty');
-    },
-    handleFocus(e) {
-      if (e.target.nodeName === 'INPUT') {
-        if (e.type === 'focus') e.target.classList.add('focused');
-        else e.target.classList.remove('focused');
-      }
-    },
-    handleOpenClose(e) {
-      let fc = e.target.firstChild.classList;
-      let ns = e.target.nextSibling.classList;
-      let exist = document.querySelector('.accordion-content.is-expanded');
-      if (exist) {
-        exist.classList.toggle('is-expanded');
-        exist.classList.toggle('is-collapsed');
-        exist.previousSibling.firstChild.classList.toggle('is-expanded');
-        exist.previousSibling.firstChild.classList.toggle('is-collapsed');
-        console.log(e.target, exist);
-        if (e.target === exist.previousSibling) return;
-      }
-      fc.toggle('is-collapsed');
-      fc.toggle('is-expanded');
-      ns.toggle('is-collapsed');
-      ns.toggle('is-expanded');
-      e.target.nextSibling.setAttribute(
-        'aria-hidden',
-        !e.target.nextSibling.getAttribute('aria-hidden')
-      );
+    async initPayment(e) {
+      await storePaymentAttempt({order: this.steps, paymentId: this.steps.payment.paymentId});
+      window.location.href = this.steps.payment._links.checkout.href;
     },
   },
-  mounted() {
-    if (this.user) {
-      this.email = this.user.email;
-      this.fullname = this.user.fullname;
+  async mounted() {
+    if (this.$route.query.id) {
+      this.state = 'loading';
+      const steps = (await fetchPayment(this.$route.query.id)).data.full_order;
+      this.$store.commit('storeStep', steps);
+      const status = (await getPaymentStatus(steps.payment.id)).data.status;
+      if (status === 'paid') this.state = 'success';
+      else this.state = 'failure';
     }
-    // Floating labels
-    const inputs = [...document.querySelectorAll('.payment-method .input')];
-    inputs.forEach(input => {
-      input.addEventListener('focus', e => this.handleFocus(e));
-      input.addEventListener('blur', e => this.handleFocus(e));
-      this.check({target: input});
-    });
+    const payment = (await createPayment({
+      value: this.steps.massage.price.toFixed(2),
+      currency: 'EUR',
+      description: this.steps.massage.description,
+      redirectUrl: window.location.href,
+      webhookUrl: `${window.location.protocol}//5.39.77.184/webhookUrl`,
+    })).data;
+    this.$store.commit('storeStep', {payment});
   },
   components: {
     SummaryStep,
-    StripeElements,
   },
 };
 </script>

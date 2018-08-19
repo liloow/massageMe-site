@@ -19,6 +19,7 @@ import HomemadeModal from '@/components/HighCompo/HomemadeModal';
 import EnterAddress from '@/components/EnterAddress';
 import AskIfContinue from '@/components/AskIfContinue';
 import {mapGetters} from 'vuex';
+import {fetchPayment, getPaymentStatus} from '../../api';
 export default {
   name: 'BookingSteps',
   computed: {
@@ -63,9 +64,11 @@ export default {
       } else this.dyno = null;
     },
   },
-  mounted() {
+  async mounted() {
+    if (this.$route.query.id) {
+      this.$store.commit('backToStep', 4);
+    }
     const sessionProgress = JSON.parse(window.sessionStorage.getItem('steps')) || {};
-    console.log(sessionProgress);
     sessionProgress.BOOKING_STEP = JSON.parse(window.sessionStorage.getItem('BOOKING_STEP'));
     this.appendDyno(sessionProgress);
   },

@@ -1,4 +1,4 @@
-const {getRandomBytes} = require('./crypto');
+const {getRandomBytes} = require('../controllers/utils/crypto');
 
 exports.middleware = function(req, res, next) {
   if (req.session.id != null) return next();
