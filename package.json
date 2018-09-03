@@ -11,7 +11,7 @@
     "test:unit": "vue-cli-service test:unit",
     "ssr": "vue-cli-service serve",
     "dev": "nodemon --exec 'node --inspect ./bin/www'",
-    "start": "NODE_ENV=production node ./start"
+    "start": "nodemon --exec 'node ./bin/www'"
   },
   "dependencies": {
     "@mollie/api-client": "^2.0.1",
@@ -36,8 +36,7 @@
     "vue-router": "^3.0.1",
     "vue-server-renderer": "^2.5.16",
     "vuex": "^3.0.1",
-    "vuex-router-sync": "^5.0.0",
-    "webpack": "^4.17.1"
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.1",
@@ -63,24 +62,15 @@
     "prettier": "^1.14.2",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.17.1",
     "webpack-node-externals": "^1.7.2"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": [
-      "vue-cli-service lint",
-      "git add"
-    ],
-    "*.vue": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "*.js": ["vue-cli-service lint", "git add"],
+    "*.vue": ["vue-cli-service lint", "git add"]
   }
 }
