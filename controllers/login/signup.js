@@ -2,7 +2,6 @@ const db = require('../db');
 const {hashPass} = require('../utils');
 
 const params = param => {
-  console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', param);
   const notNull = ['fullname', 'email', 'phone', 'password']; // Params which must be defined
   const canBeNull = []; // Params which must appear
   return notNull.every(p => Boolean(param[p])) && canBeNull.every(p => p !== undefined);

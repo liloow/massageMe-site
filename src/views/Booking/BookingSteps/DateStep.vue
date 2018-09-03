@@ -257,11 +257,11 @@ export default {
   },
   created() {
     this.toAppend = this.buildCalendar();
+  },
+  mounted() {
     document.body.onmouseup = e => this.handleDrag(e);
     document.body.onmouseleave = e => this.handleDrag(e);
     document.body.ontouchend = e => this.handleDrag(e);
-  },
-  mounted() {
     if (!this.steps.date) {
       document.querySelector('div:not(.past).month-cell.cell').click(); //.setAttribute('selected', true);
     }

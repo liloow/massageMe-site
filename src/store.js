@@ -9,12 +9,14 @@ Vue.use(Vuex);
 
 const debug = process.env.NODE_ENV !== 'production';
 
-export default new Vuex.Store({
-  modules: {
-    booking,
-    users,
-    data,
-  },
-  strict: debug,
-  plugins: debug ? [createLogger()] : [],
-});
+export function createStore() {
+  return new Vuex.Store({
+    modules: {
+      booking,
+      users,
+      data,
+    },
+    strict: debug,
+    plugins: debug ? [createLogger()] : [],
+  });
+}

@@ -37,7 +37,6 @@ export default {
 }
 
 .card {
-  font-family: 'Quattrocento', Arial, sans-serif;
   position: relative;
   margin: 10px 1%;
   width: 100%;

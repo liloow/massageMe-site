@@ -14,6 +14,7 @@ router.post('/addTherapist', ifErr(require('../controllers/therapists/addTherapi
 
 router.post('/createPayment', ifErr(require('../controllers/payment/mollie').createPayment));
 router.post('/getPaymentStatus', ifErr(require('../controllers/payment/mollie').getPaymentStatus));
+router.post('/checkVoucher', ifErr(require('../controllers/payment/vouchers').checkVoucher));
 router.post(
   '/storePaymentAttempt',
   ifErr(require('../controllers/payment/payments').storePaymentAttempt)

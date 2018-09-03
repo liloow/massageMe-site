@@ -76,10 +76,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped="">
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-@import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
-@import url('https://fonts.googleapis.com/css?family=Quattrocento');
-
 .container {
 }
 
@@ -92,7 +88,6 @@ export default {
     flex-wrap: wrap;
     margin: 0.1rem;
     .card {
-      font-family: 'Quattrocento', Arial, sans-serif;
       position: relative;
       overflow: hidden;
       margin: 10px 0.5em;

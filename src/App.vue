@@ -11,7 +11,6 @@
 import NavBar from '@/components/HighCompo/NavBar';
 import FooterVue from '@/components/HighCompo/FooterVue';
 import {mapGetters} from 'vuex';
-
 export default {
   name: 'app',
   computed: {
@@ -21,12 +20,10 @@ export default {
     }),
   },
   data() {
-    return {
-      dyno: null,
-    };
+    return {};
   },
   methods: {},
-  created() {
+  mounted() {
     this.$store.dispatch('init');
     this.$store.dispatch('fetchData');
   },
@@ -43,7 +40,7 @@ body.frozen {
   position: absolute;
 }
 
-#app {
+body {
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -52,12 +49,9 @@ body.frozen {
   --mm: #044169;
   --nav: 8vh;
   --foot: 10vh;
-
-  font-family: PT Sans, Consolas, Menlo, monospace;
-}
-
-.main {
-  margin-top: var(--nav);
-  min-height: calc(100vh - var(--nav) - var(--foot));
+  .main {
+    padding-top: var(--nav);
+    min-height: calc(100vh - var(--nav) - var(--foot));
+  }
 }
 </style>

@@ -13,6 +13,7 @@ html {
   /* 1 */
   -webkit-text-size-adjust: 100%;
   /* 2 */
+  box-sizing: border-box;
 }
 
 /* Sections
@@ -31,12 +32,6 @@ body {
  * Correct the font size and margin on `h1` elements within `section` and
  * `article` contexts in Chrome, Firefox, and Safari.
  */
-
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
 /* Grouping content
    ========================================================================== */
 
@@ -46,12 +41,17 @@ h1 {
  */
 
 hr {
-  box-sizing: content-box;
+  box-sizing: border-box;
   /* 1 */
   height: 0;
   /* 1 */
   overflow: visible;
   /* 2 */
+}
+
+figure,
+p {
+  margin: 0;
 }
 
 /**
@@ -177,6 +177,11 @@ textarea {
   /* 1 */
   margin: 0;
   /* 2 */
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 /**
@@ -373,63 +378,6 @@ template {
   display: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-ul {
-  padding: 0;
-  margin: 0;
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
-  -webkit-padding-start: 0px;
-}
-
-h2 {
-  font-weight: 300;
-  font-size: 2.2em;
-  line-height: 1.2em;
-  /*font-family: 'Oswald', Arial, sans-serif;*/
-  font-family: 'Oxygen', sans-serif;
-  text-transform: uppercase;
-  text-align: center;
-}
-
-h3 {
-  margin: 0;
-  -webkit-margin-before: 0;
-  -webkit-margin-after: 0;
-  text-decoration: underline;
-}
-
-h3,
-h4 {
-  display: block;
-  letter-spacing: 0;
-  text-rendering: optimizeLegibility;
-}
-
-h6.checkout-subheader {
-  font-size: 20px;
-  letter-spacing: 1px;
-  line-height: 30px;
-  text-align: left;
-  text-transform: uppercase;
-  margin: 10px 0 10px 0;
-}
-
-h4 {
-  font-size: 18px;
-  line-height: 22px;
-  margin: 0;
-  text-align: left;
-  padding: 0;
-}
-
 /* ========================================================================== */
 
 /* ========================================================================== */
@@ -447,7 +395,7 @@ h4 {
 .container {
   max-width: 1500px;
   width: 95%;
-  margin: 2em auto;
+  margin: 2rem auto;
 }
 .container-flex {
   max-width: 1500px;
@@ -474,34 +422,27 @@ h4 {
   justify-content: space-between;
 }
 
-@media print, screen and (min-width: 769px) {
-  .hero.is-small .hero-body {
-    padding-bottom: 1.5rem;
-    padding-top: 1.5rem;
-  }
-
-  @media print, screen and (min-width: 769px) {
-    .hero.is-medium .hero-body {
-      padding-bottom: 9rem;
-      padding-top: 9rem;
-    }
-  }
-
-  @media print, screen and (min-width: 769px) {
-    .hero.is-large .hero-body {
-      padding-bottom: 18rem;
-      padding-top: 18rem;
-    }
-  }
+.hero.is-small .hero-body {
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem;
 }
+.hero.is-medium .hero-body {
+  padding-bottom: 6rem;
+  padding-top: 6rem;
+}
+.hero.is-large .hero-body {
+  padding-bottom: 12rem;
+  padding-top: 12rem;
+}
+
 /* ========================================================================== */
 /*                                CONTAINERS                                  */
 /* ========================================================================== */
 
 .btn {
-  padding: 10px;
+  padding: 0.8rem 1rem;
   border: 0;
-  border-radius: 5px;
+  border-radius: 0.5rem;
   cursor: pointer;
   overflow: hidden;
   color: #fff;
@@ -511,6 +452,8 @@ h4 {
   display: block;
   font-size: 1rem;
   margin: 1em auto;
+  font-family: 'Raleway', 'Roboto', 'Arial', sans-serif;
+  font-weight: 500;
 }
 
 .btn.btn-filled {
@@ -532,14 +475,21 @@ h4 {
 }
 
 /* ========================================================================== */
-/*                                    419px                                   */
+/*                                    769px                                   */
 /* ========================================================================== */
 
-@media (max-width: 419px) {
-  .content pre,
-  .content pre[class*='language-'] {
-    margin: 0.85rem 0;
-    border-radius: 0;
+@media print, screen and (max-width: 769px) {
+  .hero.is-small .hero-body {
+    padding-bottom: 1rem;
+    padding-top: 1rem;
+  }
+  .hero.is-medium .hero-body {
+    padding-bottom: 6rem;
+    padding-top: 6rem;
+  }
+  .hero.is-large .hero-body {
+    padding-bottom: 12rem;
+    padding-top: 12rem;
   }
 }
 

@@ -5,11 +5,11 @@
     </div>
     <div class="container">
       <div class="cards">
-        <prez-cards v-if="massages" v-for="massage in massages" :key="massage.title" :card-img="massage.img_url" :card-title="massage.name" :card-body="massage.short" @cardLinkClicked="handleClick($event, massage)" :data-card="massage.id"></prez-cards>
+        <prez-cards v-if="massages" v-for="(massage, index) in massages" :key="massage.title" :card-img="massage.img_url" :card-title="massage.name" :card-body="massage.short" @cardLinkClicked="handleClick($event, massage)" :data-card="massage.id" :card-link=true :hack="!h4ck3d && index + 1 === massages.length ? setHeight() : null"></prez-cards>
       </div>
     </div>
     <homemade-modal @close="handleClose($event)" v-if="pickedCard" >
-        <prez-cards id="picked" :card-img="pickedCard.img_url" :card-title="pickedCard.name" :card-body="pickedCard.description" @cardLinkClicked="handleClick($event, pickedCard)"  :card-button="'Je reserve !'" :card-style="style" :close-icon="true" @close="handleClose($event)" @cardButtonClicked="handleButtonClick"></prez-cards>
+        <prez-cards id="picked" :card-img="pickedCard.img_url" :card-title="pickedCard.name" :card-body="pickedCard.description" @cardLinkClicked="handleClick($event, pickedCard)"  :card-button="'Je reserve !'" :card-style="style" :close-icon="true" @close="handleClose($event)" @cardButtonClicked="handleButtonClick" ></prez-cards>
     </homemade-modal>
   </section>
 </template>
@@ -27,6 +27,7 @@ export default {
   data() {
     return {
       pickedCard: null,
+      h4ck3d: false,
       style: {
         'max-width': '350px',
         'font-family': 'Quattrocento, Arial, sans-serif',
@@ -53,7 +54,6 @@ export default {
   },
   methods: {
     handleClick(e, massage) {
-      console.log(e);
       this.style.left = `${-window.screenX / 2 + e.clientX + 200}px`;
       this.modalOpen = !this.modalOpen;
       this.pickedCard = massage;
@@ -71,15 +71,23 @@ export default {
       this.$store.dispatch('nextStep');
       this.$router.push('/book');
     },
+    setHeight() {
+      if (this['h4ck3d'] || !this.$el) return false;
+      const cards = [...this.$el.querySelectorAll('.card-wrapper')];
+      const max = `${Math.max(...cards.map(el => el.clientHeight))}px`;
+      cards.forEach(card => (card.style.minHeight = max));
+      this['h4ck3d'] = !!cards.length;
+      return true;
+    },
+  },
+  mounted() {
+    if (!this.massages) this.$store.dispatch('fetchMassages');
+    if (!this.h4ck3d) this.setHeight();
   },
   components: {PrezCards, HomemadeModal},
 };
 </script>
 <style lang="scss" scoped="">
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-@import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
-@import url('https://fonts.googleapis.com/css?family=Quattrocento');
-
 .title {
   margin: 3.5vh 5% 5vh;
   h2 {

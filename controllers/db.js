@@ -1,7 +1,7 @@
 const colors = require('colors');
 const pgp = require('pg-promise');
 const promise = require('bluebird');
-const diagnostics = require('./dbDiag');
+// const diagnostics = require('./dbDiag');
 // const fs = require('fs');
 {
   colors; // To shut up eslint
@@ -29,6 +29,6 @@ const config = {
 const db = pgp(initOptions)(config);
 
 // Load and initialize optional diagnostics:
-diagnostics.init(initOptions);
+// diagnostics.init(initOptions);
 
 module.exports = db;

@@ -1,4 +1,4 @@
-import {login, logout, fetchUserInfos} from '../api';
+import {logout, fetchUserInfos} from '../api';
 
 export default {
   state: {
@@ -27,29 +27,26 @@ export default {
   },
   actions: {
     async init(context) {
-      const userInfos = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
-      console.log(userInfos);
+      // const userInfos = JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user'));
       const user = await fetchUserInfos();
       context.commit('storeUser', user);
       context.commit('setLoginState', !!user);
-      return;
     },
     async registerLogin(context, body) {
-      const {session, userInfos} = await login(body);
+      const {session, userInfos, persist} = body;
       context.commit('setLoginState', session.extra_secret);
       context.commit('storeUser', userInfos);
-      console.log(body, body.persist);
-      if (body.persist) {
-        window.localStorage.setItem('user', JSON.stringify(userInfos));
+      if (persist) {
+        // window.localStorage.setItem('user', JSON.stringify(userInfos));
       } else {
-        window.localStorage.removeItem('user', JSON.stringify(userInfos));
-        window.sessionStorage.addItem('user', JSON.stringify(userInfos));
+        // window.localStorage.removeItem('user', JSON.stringify(userInfos));
+        // window.sessionStorage.addItem('user', JSON.stringify(userInfos));
       }
     },
     async registerLogout(context, body) {
       await logout(body);
-      const user = await fetchUserInfos();
-      window.localStorage.setItem('user', JSON.stringify(user));
+      // const user = await fetchUserInfos();
+      // window.localStorage.setItem('user', JSON.stringify(user));
       context.commit('cleanLoginState');
     },
   },

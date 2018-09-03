@@ -3,68 +3,84 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "npm run build:server && mv dist/vue-ssr-server-bundle.json bundle && npm run build:client && mv bundle dist/vue-ssr-server-bundle.json",
+    "build:client": "vue-cli-service build",
+    "build:server": "WEBPACK_TARGET=node vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "serve": "npm run build && node --inspect=2998 ./serve",
     "test:unit": "vue-cli-service test:unit",
+    "ssr": "vue-cli-service serve",
     "dev": "nodemon --exec 'node --inspect ./bin/www'",
-    "start": "NODE_ENV=production node --use-strict bin/www"
+    "start": "NODE_ENV=production node ./start"
   },
   "dependencies": {
     "@mollie/api-client": "^2.0.1",
-    "async": "^2.6.1",
     "axios": "^0.18.0",
     "bcrypt": "^2.0.1",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
-    "colors": "^1.3.1",
+    "colors": "^1.3.2",
+    "compression": "^1.7.3",
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-history-api-fallback": "^2.2.1",
-    "luxon": "^1.3.2",
-    "mollie-api-node": "^1.4.0",
-    "mollie-es6": "^3.1.0",
-    "morgan": "^1.9.0",
+    "luxon": "^1.3.3",
     "path": "^0.12.7",
     "pg": "^7.4.3",
     "pg-monitor": "^1.0.0",
-    "pg-promise": "^8.4.5",
-    "places.js": "^1.7.3",
-    "stripe": "^6.3.0",
+    "pg-promise": "^8.4.6",
+    "places.js": "^1.9.1",
     "update": "^0.7.4",
-    "vue": "^2.5.16",
+    "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vue-server-renderer": "^2.5.16",
+    "vuex": "^3.0.1",
+    "vuex-router-sync": "^5.0.0",
+    "webpack": "^4.17.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-beta.15",
-    "@vue/cli-plugin-eslint": "^3.0.0-beta.15",
-    "@vue/cli-plugin-unit-jest": "^3.0.0-beta.15",
-    "@vue/cli-service": "^3.0.0-beta.15",
-    "@vue/eslint-config-prettier": "^3.0.0-rc.3",
-    "@vue/test-utils": "^1.0.0-beta.21",
+    "@vue/cli-plugin-babel": "^3.0.1",
+    "@vue/cli-plugin-eslint": "^3.0.1",
+    "@vue/cli-plugin-unit-jest": "^3.0.1",
+    "@vue/cli-service": "^3.0.1",
+    "@vue/eslint-config-prettier": "^3.0.1",
+    "@vue/test-utils": "^1.0.0-beta.24",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.0.1",
+    "babel-jest": "^23.4.2",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "eslint": "^5.2.0",
+    "cross-env": "^5.1.6",
+    "eslint": "^5.4.0",
     "eslint-config-google": "^0.9.1",
     "eslint-loader": "^2.1.0",
     "eslint-plugin-html": "^4.0.5",
     "eslint-plugin-prettier": "^2.6.2",
     "lint-staged": "^6.0.0",
-    "node-sass": "^4.9.0",
-    "nodemon": "^1.18.3",
-    "prettier": "^1.14.0",
-    "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.16"
+    "lodash.merge": "^4.6.1",
+    "morgan": "^1.9.0",
+    "node-sass": "^4.9.3",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.14.2",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.17",
+    "webpack-node-externals": "^1.7.2"
   },
-  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"],
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["vue-cli-service lint", "git add"],
-    "*.vue": ["vue-cli-service lint", "git add"]
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }

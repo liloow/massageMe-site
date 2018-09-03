@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '/' : 'http://localhost:3000/',
+  baseURL:
+    process.env.NODE_ENV === 'production' ? 'http://localhost:3000/' : 'http://localhost:3000/',
   withCredentials: true,
   responseType: 'json',
 });
@@ -13,34 +14,6 @@ export const prebook = async (therapistId, fullDate) =>
   (await api.post('/prebook', {therapistId, fullDate})).data; //.then(r => r.data);
 
 export const fetchUserInfos = async () => (await api.get('/fetchUserInfos')).data; //.then(r => r.data);
-
-// function saveUserInfo({ token, user }) {
-//   axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-//   localStorage.setItem('token', token);
-//   localStorage.setItem('user', JSON.stringify(user));
-// }
-
-// export function logout(vm) {
-//   localStorage.removeItem('token');
-//   localStorage.removeItem('user')
-//   vm.user = null;
-//   delete axios.defaults.headers.common['Authorization'];
-// }
-
-// export function checkUser(vm) {
-//   const token = localStorage.getItem('token');
-//   const userInfo = localStorage.getItem('user');
-//   if (token && userInfo) {
-//     const user = JSON.parse(userInfo);
-//     saveUserInfo({
-//       token,
-//       user,
-//     });
-//     vm.user = user;
-//   } else {
-//     vm.user = null
-//   }
-// }
 
 export const appendToUserHistory = async state => api.post(`/bookingPostProcessing`, state).data;
 

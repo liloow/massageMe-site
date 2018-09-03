@@ -26,17 +26,16 @@ export default {
   },
   methods: {
     handleSelection(e, massage) {
-      console.log(e, massage);
       this.$store.commit('storeStep', {massage: massage});
       this.$store.dispatch('nextStep');
     },
+  },
+  mounted() {
+    if (!this.massages) this.$store.dispatch('fetchMassages');
   },
   components: {PrezCards},
 };
 </script>
 <style lang="css" scoped="">
-@import url(https://fonts.googleapis.com/css?family=Oswald);
-@import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
-@import url(https://fonts.googleapis.com/css?family=Quattrocento);
 
 </style>

@@ -30,7 +30,7 @@ export default {
   ref: 'dynoComp',
   methods: {
     dispatchEvent(e) {
-      if (e.key === 'Escape') return this.close(e);
+      if (e.key === 'Escape') return this.$emit('close');
       if (e.key === 'Tab') return this.handleTab(e);
       return false;
     },
@@ -40,11 +40,9 @@ export default {
       return this.$emit('close', e);
     },
     handleTab(e) {
-      console.log(e);
       e.preventDefault();
       if (this.tabbable.length === 0) return false;
       if (e.shiftKey) {
-        console.log(this.prevTab);
         this.currentTab.blur();
         this.prevTab.focus();
         this.tabbable.push(this.tabbable.shift());
@@ -64,9 +62,7 @@ export default {
     window.removeEventListener('keydown', this.dispatchEvent, false);
     document.body.classList.remove('frozen');
   },
-  components: {
-    // ModalForm,
-  },
+  components: {},
 };
 </script>
 <style lang="scss" scoped>
@@ -91,5 +87,6 @@ export default {
   transform: translate(-50%, -50%);
   display: flex;
   align-items: flex-start;
+  pointer-events: none;
 }
 </style>

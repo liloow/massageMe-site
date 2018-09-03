@@ -48,36 +48,36 @@ export default {
     },
   },
   actions: {
-    nextStep({commit, state}) {
+    nextStep({commit /*state*/}) {
       // console.log(JSON.stringify(state.steps));
-      window.sessionStorage.setItem('steps', JSON.stringify(state.steps));
-      if (state.BOOKING_STEP > window.sessionStorage.getItem('BOOKING_STEP')) {
-        window.sessionStorage.setItem('BOOKING_STEP', JSON.stringify(state.BOOKING_STEP));
-      }
+      // window.sessionStorage.setItem('steps', JSON.stringify(state.steps));
+      // if (state.BOOKING_STEP > window.sessionStorage.getItem('BOOKING_STEP')) {
+      //   window.sessionStorage.setItem('BOOKING_STEP', JSON.stringify(state.BOOKING_STEP));
+      // }
       commit('nextStep');
       commit('refreshABS');
     },
-    previousStep({commit, state}) {
+    previousStep({commit /*state*/}) {
       // console.log(JSON.stringify(state.steps));
-      window.sessionStorage.setItem('steps', JSON.stringify(state.steps));
-      window.sessionStorage.setItem('BOOKING_STEP', JSON.stringify(state.BOOKING_STEP - 1));
+      // window.sessionStorage.setItem('steps', JSON.stringify(state.steps));
+      // window.sessionStorage.setItem('BOOKING_STEP', JSON.stringify(state.BOOKING_STEP - 1));
       commit('previousStep');
       commit('refreshABS');
     },
     cleanSlate({commit}) {
       commit('clearProgress');
-      window.sessionStorage.setItem('BOOKING_STEP', 0);
-      window.sessionStorage.setItem(
-        'steps',
-        JSON.stringify({
-          address: null,
-          massage: null,
-          date: null,
-          timeslot: null,
-          therapist: null,
-          payment: null,
-        })
-      );
+      // window.sessionStorage.setItem('BOOKING_STEP', 0);
+      // window.sessionStorage.setItem(
+      // 'steps',
+      // JSON.stringify({
+      //   address: null,
+      //   massage: null,
+      //   date: null,
+      //   timeslot: null,
+      //   therapist: null,
+      //   payment: null,
+      // })
+      // );
       commit('refreshABS');
     },
     async processBooking({dispatch, commit, state}) {

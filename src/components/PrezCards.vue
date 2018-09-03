@@ -2,15 +2,15 @@
   <div class="card-wrapper">
     <figure class="card" :style="cardStyle">
       <div v-if="closeIcon" @click="$emit('close', $event)" class="close"></div>
-      <div class="image">
-        <img :src="cardImg" />
+      <div class="image" :style="pictureStyle">
+        <img :src="cardImg" :style="roundPic ? {borderRadius:'100%', margin: 'auto', border: 'solid 0.5rem #044169'} : {}"/>
       </div>
       <figcaption>
         <h5>{{cardTitle}}</h5>
-        <p>{{cardBody}}<a v-if="!cardButton" href="#" @click.prevent="$emit('cardLinkClicked', $event)">voir la suite</a></p>
+        <p>{{cardBody}}<a v-if="cardLink" href="#" @click.prevent="$emit('cardLinkClicked', $event)">voir la suite</a></p>
       </figcaption>
-      <div class="card-footer">
-        <button v-if="cardButton" class="btn btn-filled" @click="$emit('cardButtonClicked', $event)"> {{cardButton}}</button>
+      <div class="card-footer" v-if="cardButton">
+        <button class="btn btn-filled" @click="$emit('cardButtonClicked', $event)"> {{cardButton}}</button>
       </div>
     </figure>
   </div>
@@ -22,18 +22,23 @@ export default {
     cardTitle: String,
     cardBody: String,
     cardButton: String,
+    cardLink: Boolean,
     cardImg: String,
     cardStyle: Object,
     closeIcon: Boolean,
+    pictureStyle: {
+      type: Object,
+      default: () => ({}),
+    },
+    roundPic: Boolean,
   },
   data() {
     return {};
   },
+  mounted() {},
 };
 </script>
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css?family=Oswald');
-@import url('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 .scale {
   > .card {
     left: calc((50% + 200px) * 0.9) !important;
@@ -44,7 +49,6 @@ export default {
 .card {
   font-family: 'Roboto', Arial, sans-serif;
   overflow: hidden;
-  margin: 10px 0.7vw;
   min-width: 230px;
   max-width: 250px;
   width: 100%;
@@ -83,7 +87,8 @@ export default {
 .card-wrapper {
   display: flex;
   flex-wrap: wrap;
-  margin: 0.1rem;
+  padding: 0.5rem;
+  margin: 0.01rem;
 }
 
 .card img {
@@ -98,16 +103,25 @@ export default {
   width: 95%;
   position: relative;
   margin: auto;
-  flex: 1;
+  display: flex;
+  flex-flow: column;
+  flex: 1.3;
   margin-bottom: 0.5rem;
-}
-
-.card p {
-  font-size: 0.9em;
-  letter-spacing: 1px;
-  opacity: 1;
-  margin: auto;
-  width: 95%;
+  a {
+    font-size: 0.8rem;
+  }
+  h5 {
+    flex: 0;
+    padding: 1rem;
+  }
+  p {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    opacity: 1;
+    margin: auto;
+    width: 95%;
+    flex: 5;
+  }
 }
 
 .card-footer {

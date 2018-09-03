@@ -2,26 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 @import url('https://fonts.googleapis.com/css?family=Dosis|Roboto:300,400');
-
 @import url('https://fonts.googleapis.com/css?family=Raleway:700,500');
-@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
-/*/*/
-/*/ Viewport sized typography with minimum and maximum values*/
-/*/*/
-/*/ @author Eduardo Boucas (@eduardoboucas)*/
-/*/*/
-/*/ @param {Number}   $responsive  - Viewport-based size*/
-/*/ @param {Number}   $min         - Minimum font size (px)*/
-/*/ @param {Number}   $max         - Maximum font size (px)*/
-/*/                                  (optional)*/
-/*/ @param {Number}   $fallback    - Fallback for viewport-*/
-/*/                                  based units (optional)*/
-/*/*/
-/*/ @example scss - 5vw font size (with 50px fallback),*/
-/*/                 minumum of 35px and maximum of 150px*/
-/*/  @include responsive-font(5vw, 35px, 150px, 50px);*/
-/*/*/
 @mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
   $responsive-unitless: $responsive / ($responsive - $responsive + 1);
   $dimension: if(unit($responsive) == 'vh', 'height', 'width');
@@ -121,7 +104,10 @@ $up: uppercase;
 $mm: #044169;
 
 * {
-  @include responsive-font(2vw, 10px, 16px, 16px);
+  @include responsive-font(2.5vw, 11px, 16px, 14px);
+}
+body {
+  font-family: 'Roboto', Arial, sans-serif;
 }
 
 h1,
@@ -130,12 +116,14 @@ h3,
 h4,
 h5,
 h6 {
-  @include font-set(1.75rem, $mm, 600, 2);
+  @include font-set(1.5rem, $mm, 600, 1.15);
+  margin: 0;
+  padding: 0.5rem;
 }
 
 h1 {
   font-family: 'Dosis';
-  font-size: 50px;
+  font-size: 3rem;
   text-transform: uppercase;
   letter-spacing: 0.2rem;
   line-height: normal;
@@ -143,18 +131,40 @@ h1 {
 }
 
 h2 {
-  padding: 1rem 0 0.5rem;
+  font-family: 'Oswald', Arial, sans-serif;
+  padding: 1rem 0.5rem;
   font-weight: 500;
+  font-size: 1.8rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 h3 {
   text-transform: $up;
+  padding: 1rem 0.5rem;
+}
+
+h4 {
+  font-family: 'Railway', Arial, sans-serif;
+  padding: 1rem;
+  font-weight: 500;
+  font-size: 3rem;
+  line-height: 1.5;
+  text-transform: uppercase;
+  text-align: center;
 }
 
 h5 {
   font-family: 'Dosis';
   text-transform: uppercase;
+  letter-spacing: 0.05rem;
+  line-height: normal;
+}
+
+h6 {
+  font-family: 'Dosis';
+  text-transform: uppercase;
   letter-spacing: 0.1rem;
   line-height: normal;
-  padding: 0.5rem;
 }

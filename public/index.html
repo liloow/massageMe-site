@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang= fr-FR>
 
 <head>
   <meta charset="utf-8">
@@ -12,18 +12,80 @@
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" async defer>
+  <!-- COMMON TAGS -->
+  <meta charset="utf-8">
   <title>Massage-Me</title>
+  <!-- Search Engine -->
+  <meta name="description" content="Il est temps que l'on prenne soin de vous. Massage-me est un service de massage à domicile par des professionnels. Laissez-le massage venir à vous !">
+  <meta name="image" content="/logofull.svg">
+  <!-- Schema.org for Google -->
+  <meta itemprop="name" content="Massage-Me">
+  <meta itemprop="description" content="Il est temps que l'on prenne soin de vous. Massage-me est un service de massage à domicile par des professionnels. Laissez-le massage venir à vous !">
+  <meta itemprop="image" content="/logofull.svg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Massage-Me">
+  <meta name="twitter:description" content="Il est temps que l'on prenne soin de vous. Massage-me est un service de massage à domicile par des professionnels. Laissez-le massage venir à vous !">
+  <meta name="twitter:image:src" content="/logofull.svg">
+  <!-- Open Graph general (Facebook, Pinterest & Google+) -->
+  <meta name="og:title" content="Massage-Me">
+  <meta name="og:description" content="Il est temps que l'on prenne soin de vous. Massage-me est un service de massage à domicile par des professionnels. Laissez-le massage venir à vous !">
+  <meta name="og:image" content="/logofull.svg">
+  <meta name="og:url" content="https://www.massage-me.be">
+  <meta name="og:site_name" content="Massage-Me">
+  <meta name="og:locale" content="fr-FR">
+  <meta name="og:type" content="website">
+  <title>Massage-Me</title>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125028163-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-125028163-1');
+</script>
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 </head>
 
 <body>
-  <noscript>
-    <strong>We're sorry but massageme doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-  </noscript>
   <div id="app"></div>
   <!-- built files will be auto injected -->
-  <script src="https://js.stripe.com/v3/" async defer></script>
+  <noscript>
+    <section>
+      <section class="containter" style="margin: auto;width: 90%">
+        <div class="logo" style="margin: auto;width: 90%; display: flex">
+          <img src="logofull.svg" style="max-width: 500px; margin:auto" />
+        </div>
+        <div class="message" style="margin: auto;width: 90%">
+          <h1 style="margin: auto; text-align: center;">Pour profiter de l'application, il est necessaire d'activer javascript !</h1>
+        </div>
+      </section>
+    </section>
+  </noscript>
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js" async defer></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#f5ed32",
+      "text": "#044169"
+    },
+    "button": {
+      "background": "#044169"
+    }
+  },
+  "theme": "classic",
+  "content": {
+    "message": "Ce site Web utilise des cookies afin de vous offrir la meilleure experience possible sur notre site.",
+    "dismiss": "Je comprends",
+    "link": "En savoir plus"
+  },
+  "law": {
+    "countryCode": "BE"
+  }
+})});
+</script>
 </body>
 
 </html>

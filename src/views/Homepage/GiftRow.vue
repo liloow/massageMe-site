@@ -1,146 +1,24 @@
-<style lang="css" scoped>
-.picto {
-  display: flex;
-  justify-content: space-around;
-  flex-grow: 0;
-  text-align: center;
-  font-weight: bold;
-  font-size: 0.9rem;
-}
-
-.padding-2 {
-  margin: 3vh;
-}
-
-
-
-.raise:hover,
-.raise:focus {
-  box-shadow: 1 1.5em 1.5em -0.4em var(--hover);
-  -webkit-transform: translateY(-0.25em);
-  transform: translateY(-0.25em);
-}
-
-.pulse:hover,
-.pulse:focus {
-  -webkit-animation: pulse 1s;
-  animation: pulse 1s;
-  box-shadow: 0 0 0 3em rgba(255, 255, 255, 0);
-}
-
-
-
-@-webkit-keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 var(--hover);
-  }
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 var(--hover);
-  }
-}
-
-.pulse {
-  --color: #FCA17D;
-  --hover: #FFB27F;
-}
-
-.raise {
-  --color: #FCA17D;
-  --hover: #FFB27F;
-}
-
-button {
-  color: var(--color);
-  -webkit-transition: 0.25s;
-  transition: 0.25s;
-}
-
-button:hover,
-button:focus {
-  border-color: var(--hover);
-  color: #fff;
-
-  -webkit-transition: all 0.1s;
-  -moz-transition: all 0.1s;
-  transition: all 0.1s;
-
-  -webkit-box-shadow: 0px 6px 0px #d35400;
-  -moz-box-shadow: 0px 6px 0px #d35400;
-  box-shadow: 0px 6px 0px #d35400;
-}
-
-.reserve:active {
-  -webkit-box-shadow: 0px 2px 0px #d35400;
-  -moz-box-shadow: 0px 2px 0px #d35400;
-  box-shadow: 0px 2px 0px #d35400;
-  position: relative;
-  top: 4px;
-}
-
-
-
-button.reserve {
-  background-color: rgb(255, 0, 0, 0.5);
-  line-height: 1;
-  margin: 0vw;
-  display: flex;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: ghostwhite;
-  border-radius: 1vh;
-  border: solid 1px #f39c12;
-  background: var(--mm);
-  text-align: center;
-}
-
-.text-snip {
-  padding: 10vh;
-  margin: auto;
-}
-
-.content {
-  margin: 5vh auto;
-}
-
-.row-footer {
-  text-align: right;
-  margin-top: 5vh;
-}
-
-.motto {
-
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  font-style: italic;
-}
-
-</style>
 <template>
-  <section class="hero">
-        <div class="motto hero-body hero is-primary ">
-          <h1 class="title is-1">"Laissez le massage venir a vous"</h1>
-        </div>
-    <div class="columns is-multiline is-gapless">
-      <div class="column is-4-desktop is-12-tablet content">
+  <section class="hero is-medium">
+    <div class="columns-fluid">
+      <div class="column-fluid hero-body">
         <div class="row ">
-          <article class="text-snip">
-            <h2 class="title is-2 bold">Offrez un massage</h2>
-            <p class="content ">Envie de faire plaisir de manière originale à un ami ou à un proche ? Offrez lui l'expérience MassageMe à domicile.</p>
-            <div class="row-footer">
-              <router-link to="/vouchers">
-                <button class="button reserve">Offrir un massage</button>
-              </router-link>
-            </div>
-          </article>
+          <div class="body-content">
+            <h6 class="body faded">Envie de faire plaisir de manière originale à un ami ou à un proche ?</h6>
+            <h6 class="spacy faded">...</h6>
+            <h6 class="biggie faded">Offrez lui l'expérience Massage-Me à domicile.</h6>
+          </div>
+          <div class="body-footer">
+            <button @click.prevent="$router.push('/vouchers')" class="button btn btn-filled faded">Offrir un massage</button>
+          </div>
         </div>
       </div>
-      <div class="column is-8-desktop is-12-tablet ">
-        <img src="../../assets/img/large/tshirt.jpg" alt="">
+      <div class="column-fluid">
+        <div class="row">
+          <figcaption>
+            <img class="cover" src="../../assets/img/large/tshirt.jpg" alt="">
+          </figcaption>
+        </div>
       </div>
     </div>
   </section>
@@ -148,9 +26,148 @@ button.reserve {
 <script>
 export default {
   name: 'GiftRow',
-
+  computed: {},
   data() {
-    return {};
+    return {
+      breakpoints: [],
+      lock: null,
+    };
+  },
+  methods: {
+    handleScroll(e) {
+      while (
+        !this.lock &&
+        this.faded[0] &&
+        window.scrollY + window.innerHeight > this.faded[0].offsetTop + this.faded[0].clientHeight
+      ) {
+        console.log('NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
+        this.faded[0].classList.remove('faded');
+        this.faded.splice(0, 1);
+        this.lock = 'locked';
+        setTimeout(() => {
+          this.lock = null;
+          this.handleScroll();
+        }, 1000);
+      }
+    },
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll, false);
+    this.faded = [...this.$el.querySelectorAll('.faded')];
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll, false);
   },
 };
 </script>
+<style lang="scss" scoped>
+@mixin absolutecenter($axis: 'both') {
+  position: absolute;
+  @if $axis == 'y' {
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  @if $axis == 'x' {
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+  @if $axis == 'both' {
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+}
+
+.columns-fluid {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin: 0;
+  flex: 1;
+  min-width: 20rem;
+  .column-fluid {
+    display: flex;
+    min-width: 400px;
+    width: 50%;
+    flex: 1;
+    .row {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      img.cover {
+        max-width: 100%;
+        pointer-events: none;
+      }
+      h6,
+      button {
+        opacity: 1;
+        transition: opacity 1.5s ease;
+        &.faded {
+          opacity: 0;
+        }
+      }
+      .body-title {
+        display: flex;
+        flex: 1;
+        text-align: center;
+        margin: auto;
+      }
+      .body-content {
+        width: 85%;
+        display: flex;
+        flex: 1.8;
+        margin: auto;
+        flex-flow: column nowrap;
+        h6 {
+          text-align: center;
+          margin: auto;
+          font-size: 1.4rem;
+          width: 90%;
+          &.spacy {
+            letter-spacing: 1rem;
+          }
+          &.biggie {
+            font-size: 2rem;
+            margin-top: 3rem;
+            width: 100%;
+          }
+        }
+      }
+      .body-footer {
+        text-align: center;
+        margin: auto;
+        position: relative;
+        flex: 1.3;
+        .btn {
+          font-size: 1.5rem;
+          font-family: 'Raleway';
+          padding: 1rem 2rem;
+          white-space: nowrap;
+          text-transform: uppercase;
+          margin: auto;
+          top: 75%;
+          // @include absolutecenter(x);
+          &:not(.faded) {
+            animation: emphase 2s ease 0s;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes emphase {
+  0% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

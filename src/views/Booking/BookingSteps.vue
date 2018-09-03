@@ -64,16 +64,13 @@ export default {
       } else this.dyno = null;
     },
   },
-  async mounted() {
+  mounted() {
     if (this.$route.query.id) {
       this.$store.commit('backToStep', 4);
     }
     const sessionProgress = JSON.parse(window.sessionStorage.getItem('steps')) || {};
     sessionProgress.BOOKING_STEP = JSON.parse(window.sessionStorage.getItem('BOOKING_STEP'));
     this.appendDyno(sessionProgress);
-  },
-  updated() {
-    // this.appendDyno();
   },
   components: {
     MassageStep,

@@ -15,26 +15,20 @@
 import EnterAddress from '@/components/EnterAddress';
 export default {
   name: 'ReservationRow',
-
   data() {
     return {};
   },
-  components: { EnterAddress },
+  components: {EnterAddress},
 };
 </script>
-<style lang="css" scoped>
-
-
-</style>
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .hero {
-  background: url(../../assets/img/large/massage-no-face.jpg);
+  background: url(../../assets/img/large/massage-no-face.webp);
   background-size: cover;
   background-position: center;
 }
 
 .is-light {
-
   z-index: 8;
 }
 
@@ -50,14 +44,20 @@ export default {
   background-color: white;
 }
 
-.columns>.column.background-image {
+.columns > .column.background-image {
   background-size: cover;
   background-position: center;
 }
 
-
-.columns>.content {
-  padding: 60px;
+.columns > .content {
+  padding: 4rem;
 }
 
+@media screen and (max-width: 800px) {
+  .hero {
+    background: url(../../assets/img/large/massage-no-face.small.webp);
+    background-size: cover;
+    background-position: center;
+  }
+}
 </style>

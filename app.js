@@ -1,24 +1,26 @@
 'use strict';
-const history = require('express-history-api-fallback');
-const express = require('express');
+const fs = require('fs');
 const path = require('path');
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
-const index = require('./routes/index');
-const locals = require('./middlewares/locals');
+const express = require('express');
 const auth = require('./routes/auth');
-// const securityHeaders = require('./middlewares/securityHeaders');
+const index = require('./routes/index');
+const bodyParser = require('body-parser');
+const locals = require('./middlewares/locals');
+const cookieSession = require('cookie-session');
 const sessionId = require('./middlewares/sessionId');
+const history = require('express-history-api-fallback');
+const {createBundleRenderer} = require('vue-server-renderer');
 const fetchUserInfos = require('./middlewares/fetchUserInfos');
+// const securityHeaders = require('./middlewares/securityHeaders');
 const cors = require('cors');
 const colors = require('colors');
 const db = require('./controllers/db');
 const traceEvents = require('trace_events');
+const compression = require('compression');
 const tracing = traceEvents.createTracing({
   categories: ['async.hooks', 'v8'],
 });
-const Mollie = require('mollie-api-node');
 
 if (process.env.NODE_ENV !== 'production') tracing.enable();
 
@@ -32,13 +34,32 @@ function reportQueryError(err, req, level, httpStatus) {
 
 const app = express();
 
+function createRenderer(bundle, options) {
+  return createBundleRenderer(
+    bundle,
+    Object.assign(options, {
+      runInNewContext: false,
+    })
+  );
+}
+
+let renderer;
+const templatePath = path.resolve(__dirname, './src/index.template.html');
+
+const bundle = require('./dist/vue-ssr-server-bundle.json');
+const template = fs.readFileSync(templatePath, 'utf-8');
+const clientManifest = require('./dist/vue-ssr-client-manifest.json');
+
+renderer = createRenderer(bundle, {
+  template,
+  clientManifest,
+});
+
+app.use(compression());
 app.set('trust proxy', [
   // self
   '127.0.0.1/32',
 ]);
-
-const mollie = new Mollie.API.Client();
-mollie.setApiKey('test_PCCVybQ2kwPcahnawjBmhPgAbNyfAr');
 
 db.proc('version')
   .then(data => console.log('\n Good work, DB is up! \n'.bold.yellow))
@@ -95,10 +116,10 @@ app.use(bodyParser.json());
 
 app.use(locals);
 
-app.use((req, res, next) => {
-  // console.log('USERS =>', req.user);
-  return next();
-});
+// app.use((req, res, next) => {
+//   // console.log('USERS =>', req.user);
+//   return next();
+// });
 
 /* ========================================================================== */
 /*                               MIDDLEWARES                                  */
@@ -169,8 +190,28 @@ app.use('/', index);
 
 const clientRoot = path.join(__dirname, 'dist');
 app.use('/', express.static(clientRoot));
+// app.use('/', express.static(path.resolve(__dirname, './dist/ ')));
 app.use(history('index.html', {root: clientRoot}));
 
+app.get('*', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  const context = {
+    title: 'Vue HN 2.0', // default title
+    url: req.url,
+  };
+
+  renderer.renderToString(context, (err, html) => {
+    if (err) {
+      if (err.code === 404) {
+        res.status(404).end('Page not found');
+      } else {
+        res.status(500).end('Internal Server Error');
+      }
+    } else {
+      res.end(html);
+    }
+  });
+});
 /* ========================================================================== */
 /*                               ERROR HANDLER                                */
 /* ========================================================================== */

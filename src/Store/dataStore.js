@@ -23,7 +23,10 @@ export default {
     },
   },
   actions: {
-    async fetchData({commit}) {
+    async fetchData({dispatch}) {
+      await Promise.all([dispatch('fetchMassages'), dispatch('fetchTherapists')]);
+    },
+    async fetchMassages({commit}) {
       const massages = (await fetchMassages()).data.map(el => {
         el.short =
           el.description.length > 175
@@ -31,11 +34,13 @@ export default {
             : el.description;
         return el;
       });
+      commit('storeMassages', massages);
+    },
+    async fetchTherapists({commit}) {
       const therapists = (await fetchTherapists()).data.map(el => {
         el.short = el.bio.length > 175 ? `${el.bio.match(/(^([^]{175}))[^\W]*/g)[0]}...` : el.bio;
         return el;
       });
-      commit('storeMassages', massages);
       commit('storeTherapists', therapists);
     },
     async fetchSlotsAvailable({commit}, raw) {

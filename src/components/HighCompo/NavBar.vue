@@ -10,7 +10,8 @@
         <label id="burger" for="menu-toggle" class="navbar-burger"></label>
         <ul id="menu" class="navbar-burger">
           <li class="nav" @click="closeBurger">
-            <router-link class="nav" to="/book"> > Reserver un massage < </router-link>
+            <router-link class="nav" to="/book"> > Reserver un massage
+              < </router-link>
           </li>
           <li v-for="(link, index) in navbarLinks" class="nav" @click="closeBurger">
             <router-link class="nav" :key="index" :to="link.location"> {{ link.text }}</router-link>
@@ -27,23 +28,30 @@
           <router-link class="btn btn" to="/book">Reserver</router-link>
         </div>
         <div class="navbar-start">
-          <router-link v-for="(link, index) in navbarLinks" :key="index" :to="link.location" :class="{'is-page': $route.path === link.location, 'navbar-item': true}">
-            {{ link.text }}
-          </router-link>
+          <ul class="navbar-start">
+            <li v-for="(link, index) in navbarLinks" class="navbar-item" :key="index">
+              <router-link :to="link.location" :class="{'is-page': $route.path === link.location, 'navbar-item': true}">
+                {{ link.text }}
+              </router-link>
+            </li>
+          </ul>
         </div>
         <div class="navbar-end">
-          <router-link class="navbar-item" v-if="!isLoggedIn" to="/signup">Sign In/Up</router-link>
+          <a class="navbar-item" v-if="!isLoggedIn" @click.prevent="openModal">Sign In/Up</a>
           <a class="navbar-item" @click.prevent="logout()" v-if="isLoggedIn">Logout</a>
         </div>
       </div>
     </nav>
+    <HomemadeModal @close="close" v-if="dyno">
+      <component @login-successful="close()" :is="dyno" />
+    </HomemadeModal>
   </header>
 </template>
 <script>
-import { logout } from '@/api';
-// import HomemadeModal from '@/components/HomemadeModal';
-import { mapGetters } from 'vuex';
-
+import {logout} from '@/api';
+import {mapGetters} from 'vuex';
+import SignupLogin from '@/components/SignupLogin';
+import HomemadeModal from '@/components/HighCompo/HomemadeModal';
 export default {
   name: 'NavBar',
   computed: {
@@ -64,7 +72,7 @@ export default {
           text: 'Entreprises',
         },
         {
-          location: '/team',
+          location: '/therapists',
           text: "L'équipe",
         },
         {
@@ -90,23 +98,17 @@ export default {
   props: {
     rule: String,
   },
-  mounted() {
-    document.addEventListener('keyup', this.escape);
-  },
-  unmount() {
-    document.removeEventListener('keyup', this.escape);
-  },
   methods: {
     logout() {
       this.$store.dispatch('registerLogout');
       this.closeBurger();
       this.$router.push('/');
     },
-    close(e) {
+    close() {
       this.closeBurger();
       this.dyno = null;
     },
-    escape(event) {
+    escape(e) {
       if (event.keyCode == 27) {
         this.close();
       }
@@ -114,10 +116,19 @@ export default {
     closeBurger() {
       this.burgerState = false;
     },
+    openModal() {
+      this.dyno = SignupLogin;
+    },
   },
-  created() {},
+  mounted() {
+    window.addEventListener('keydown', this.escape);
+  },
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.escape);
+  },
   components: {
-    // HomemadeModal
+    HomemadeModal,
+    SignupLogin,
   },
 };
 </script>
@@ -138,18 +149,22 @@ header {
 }
 
 .navbar-item.book {
-  margin-left: -2vw;
-  flex: 0;
+  margin: auto;
+  flex: 0.8;
+  display: flex;
   a {
     text-decoration: none;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     text-transform: uppercase;
-    border: 0;
+    border: solid 0.2rem $mm;
     color: $mm;
+    margin: auto;
   }
-  &:hover {
+  &:hover a {
     transform: scale(1.1);
+    background-color: $mm;
+    color: white;
   }
 }
 
@@ -208,11 +223,12 @@ input[type='checkbox'] {
   min-height: 7vh;
   position: relative;
   flex: 1 1 0px;
+  padding-left: 5%;
 }
 
 .navbar-brand {
   max-height: 100%;
-  margin: 0 4vw;
+  margin: 0;
   -webkit-box-align: stretch;
   -ms-flex-align: stretch;
   align-items: stretch;
@@ -220,17 +236,21 @@ input[type='checkbox'] {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-negative: 0;
-  flex-shrink: 2;
+  flex: 0.5;
   min-height: 7vh;
+  padding-right: 1rem;
 }
 
 .navbar-start {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  margin-left: auto;
-  > a {
-    margin: auto 1vw;
+  margin-left: 1rem;
+  flex: 3.5;
+  .navbar-item {
+    margin: auto;
+    display: block;
+    font-size: 1.2rem;
   }
 }
 
@@ -238,42 +258,41 @@ input[type='checkbox'] {
   display: none;
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
-  flex-grow: 1;
   -ms-flex-negative: 0;
-  flex-shrink: 1;
+  flex: 4;
 }
 
 .navbar-item {
   text-decoration: none;
   color: $mm;
   line-height: 1.5;
-  padding: 0.5rem 1.5vw;
+  padding: 0.5rem;
   font-size: 1rem;
   position: relative;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-flex: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 1;
-  -ms-flex-negative: 0;
-  flex-shrink: 1;
+  text-align: center;
+  &.brand {
+    padding: 0;
+  }
 }
 
 .navbar-end {
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
-  margin-left: auto;
-  margin-right: 1vw;
-}
-
-img.brand {
-  max-height: 6.8vh;
-  margin: auto;
+  flex: 1.5;
+  a {
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 0;
+    color: $mm;
+    margin: auto;
+    padding: 0;
+  }
 }
 
 .brand-burger {
@@ -281,7 +300,7 @@ img.brand {
 }
 
 .is-page {
-  border-bottom: solid 0.3vh var(--mm);
+  border-bottom: solid 0.2rem var(--mm);
   font-weight: bold;
   padding: 0 0.7vw 0.7vh;
   margin-bottom: 0.5vh;
@@ -490,63 +509,32 @@ a.nav:focus {
   .navbar-end,
   .navbar-menu,
   .navbar-start {
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
   }
 }
 
-@media screen and (min-width: 1024px) {
+.navbar {
+  min-height: 7vh;
+}
+
+.navbar-burger {
+  display: none;
+}
+
+@media screen and (max-width: 1324px) {
   .navbar,
   .navbar-end,
   .navbar-menu,
   .navbar-start {
-    -webkit-box-align: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .navbar {
-    min-height: 7vh;
-  }
-  .navbar-burger {
-    display: none;
-  }
-  .navbar-item {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .navbar-menu {
-    -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
-    -ms-flex-negative: 0;
-    flex-shrink: 1;
-    text-align: center;
-  }
-  .navbar-start {
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    margin-right: auto;
-    padding-right: 1vw;
-  }
-  .navbar-end {
-    -webkit-box-pack: end;
-    -ms-flex-pack: end;
-    justify-content: flex-end;
-    margin-left: auto;
-    padding-right: 1vw;
-    white-space: nowrap;
+    a.navbar-item,
+    .navbar-item {
+      &.book {
+        display: none;
+      }
+      a {
+        font-size: 0.9rem;
+      }
+    }
   }
 }
 </style>

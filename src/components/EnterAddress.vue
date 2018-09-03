@@ -29,8 +29,9 @@
   </section>
 </template>
 <script>
+// import PlacesAutocomplete from '@/components/PlacesAutocomplete';
 import PlacesAutocomplete from '@/components/PlacesAutocomplete';
-import {mapGetters, mapState} from 'vuex';
+import {mapGetters} from 'vuex';
 export default {
   name: 'EnterAddress',
   computed: {
@@ -71,9 +72,6 @@ export default {
       });
     },
   },
-  created() {
-    this.notYetThere = false;
-  },
   components: {
     PlacesAutocomplete,
   },
@@ -86,30 +84,31 @@ export default {
 
 .validator {
   text-align: center;
-  padding: 0.5em 5em 3em;
+  padding: 0.5rem 5rem 3rem;
   width: 90%;
   p {
     font-size: 1.1rem;
-    padding-bottom: 1.5em;
+    padding-bottom: 1rem;
   }
   input {
-    font-size: 2em;
-    font-weight: 550;
-    height: 2.5em;
+    font-size: 1.5rem;
+    font-weight: 400;
+    height: 2rem;
+    margin: 0 0.5rem;
   }
 }
 
 .card {
   position: relative;
-  margin: 10px 1%;
+  margin: 1rem;
   width: 100%;
   text-align: left;
-  line-height: 1.4em;
-  font-size: 0.8em;
+  line-height: 1.4;
+  font-size: 0.8rem;
   justify-content: center;
   background-color: #ffffff;
-  border-radius: 0.5em;
-  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  border-radius: 0.5rem;
+  box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.3), 0 1rem 0.75rem rgba(0, 0, 0, 0.22);
 }
 
 .cards .card-wrapper {
@@ -120,21 +119,16 @@ export default {
   flex-shrink: 0;
 }
 
-.card-title h2 {
-  font-weight: 300;
-  font-size: 2.2em;
-  line-height: 1.2em;
-  font-family: 'Oswald', Arial, sans-serif;
-  text-transform: uppercase;
-  text-align: center;
-}
-
 .card-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
   flex-direction: row;
+  .card-content {
+    max-width: 95%;
+    margin: auto;
+  }
 }
 
 .card-footer {
@@ -145,7 +139,7 @@ export default {
 }
 
 .address-input {
-  max-width: 800px;
+  max-width: 900px;
   width: 75%;
   text-align: center;
   margin: 0 auto;

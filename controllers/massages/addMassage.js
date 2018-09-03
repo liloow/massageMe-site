@@ -1,6 +1,6 @@
 const db = require('../db');
 
-module.exports = async function getMassages(req, res, next) {
+module.exports = async function getMassages(req, res) {
   const {name, description, price, imgUrl} = req.body;
 
   await db.none(

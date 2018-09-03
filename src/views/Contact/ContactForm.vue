@@ -162,7 +162,7 @@ export default {
   button.bottom {
     position: absolute;
     left: 50%;
-    bottom: 12.5vh;
+    margin-top: 10rem;
     transform: translateX(-50%);
   }
   .row {

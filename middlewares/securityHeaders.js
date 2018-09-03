@@ -15,18 +15,10 @@ module.exports = function(req, res, next) {
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
   // Add HSTS header (tells the browser to use HTTPS only)
-  if (
-    req.protocol === 'https' &&
-    (req.hostname === 'www.doctrine.fr' ||
-      req.hostname === 'doctrine.fr' ||
-      req.hostname === 'preprod-search.doctrine.fr' ||
-      req.hostname === 'preprod-pages.doctrine.fr' ||
-      req.hostname === 'preprod-real-data.doctrine.fr' ||
-      req.hostname === 'api.doctrine.fr')
-  ) {
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000');
-    return next();
-  } else {
-    return next();
-  }
+  // if (req.protocol === 'https' && req.hostname) {
+  //   res.setHeader('Strict-Transport-Security', 'max-age=31536000');
+  //   return next();
+  // } else {
+  //   return next();
+  // }
 };
