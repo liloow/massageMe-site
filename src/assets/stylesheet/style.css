@@ -426,13 +426,14 @@ template {
   padding-bottom: 1.5rem;
   padding-top: 1.5rem;
 }
+
 .hero.is-medium .hero-body {
-  padding-bottom: 6rem;
-  padding-top: 6rem;
+  min-height: 30vh;
+  padding: 5% 0;
 }
 .hero.is-large .hero-body {
-  padding-bottom: 12rem;
-  padding-top: 12rem;
+  height: 700px;
+  padding: 2.5% 0;
 }
 
 /* ========================================================================== */
@@ -440,7 +441,7 @@ template {
 /* ========================================================================== */
 
 .btn {
-  padding: 0.8rem 1rem;
+  /* padding: 0.8rem 1rem; */
   border: 0;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -451,7 +452,7 @@ template {
   position: relative;
   display: block;
   font-size: 1rem;
-  margin: 1em auto;
+  /* margin: 1em auto; */
   font-family: 'Raleway', 'Roboto', 'Arial', sans-serif;
   font-weight: 500;
 }
@@ -484,12 +485,11 @@ template {
     padding-top: 1rem;
   }
   .hero.is-medium .hero-body {
-    padding-bottom: 6rem;
-    padding-top: 6rem;
+    height: 30vh;
   }
   .hero.is-large .hero-body {
-    padding-bottom: 12rem;
-    padding-top: 12rem;
+    height: 390px;
+    padding: 5%;
   }
 }
 

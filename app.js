@@ -17,9 +17,8 @@ const cors = require('cors');
 const colors = require('colors');
 const db = require('./controllers/db');
 const traceEvents = require('trace_events');
-const compression = require('compression');
 const tracing = traceEvents.createTracing({
-  categories: ['async.hooks', 'v8'],
+  categories: ['async.hooks'],
 });
 
 if (process.env.NODE_ENV !== 'production') tracing.enable();
@@ -55,7 +54,6 @@ renderer = createRenderer(bundle, {
   clientManifest,
 });
 
-app.use(compression());
 app.set('trust proxy', [
   // self
   '127.0.0.1/32',

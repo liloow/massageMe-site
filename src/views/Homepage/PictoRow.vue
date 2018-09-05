@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-small">
+  <section class="hero is-large">
     <div class="hero-body">
       <div class="container picto">
         <div class="picto-card">
@@ -22,12 +22,10 @@
             Vous n'avez plus qu'a vous détendre et profiter de votre séance en toute quiétude. Jamais se détendre n'a été aussi facile </div>
         </div>
       </div>
-      <div class="columns is-half is-centered no-gap">
-        <div class="column picto">
+        <div class="row">
             <button class="btn btn-filled" @click="scrollToAddress($event)">
              RESERVER MAINTENANT
            </button>
-        </div>
       </div>
     </div>
   </section>
@@ -53,12 +51,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.hero-body {
-  padding: 3rem 1.5rem;
-}
-
 .picto {
-  max-width: 90%;
+  max-width: 95%;
   margin-right: auto;
   margin-left: auto;
   display: -webkit-flex;
@@ -67,22 +61,27 @@ export default {
   -webkit-flex-flow: row wrap;
   -ms-flex-flow: row wrap;
   flex-flow: row wrap;
+  padding: 1% 0;
+  .row {
+    width: 95%;
+    margin: auto;
+  }
   img {
-    max-width: 90%;
+    max-width: 85%;
   }
   h5 {
     font-size: 2rem;
-    padding: 1rem 0;
+    padding: 1.5rem 0;
   }
 }
 
 .picto-card {
+  display: table-cell;
   flex: 1 0 0px;
-  padding-right: 3rem;
-  padding-left: 3rem;
+  padding: 2%;
   min-width: initial;
   text-align: center;
-  margin: 1.5rem;
+  margin: 0 2%;
   line-height: 1.5;
   min-width: 7rem;
 }

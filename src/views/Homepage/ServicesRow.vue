@@ -2,58 +2,56 @@
   <section class="hero is-large">
     <div class="columns-fluid">
       <div class="column-fluid hero-body">
-        <div class="row is-text">
-          <div class="body-content">
-            <h6 class="body faded">Envie de faire plaisir de manière originale à un ami ou à un proche ?</h6>
-            <h6 class="spacy faded">...</h6>
-            <h6 class="biggie faded">Offrez lui l'expérience Massage-Me à domicile.</h6>
-          </div>
-          <div class="body-footer">
-            <button @click.prevent="$router.push('/vouchers')" class="button btn btn-filled faded">Offrir un massage</button>
-          </div>
+        <div class="row is-picture">
         </div>
       </div>
       <div class="column-fluid hero-body">
-        <div class="row is-picture">
+        <div class="row is-table">
+          <div class="is-title-row">
+            <h6>Nos Massages</h6>
+          </div>
+          <div class="is-table-row" v-for="(massage, index) in featured" :key="`featured-${massage.id}`">
+            <div v-if="index === 1" class="pic-cell">
+              <img class="cover" :src="massage.img_url" />
+            </div>
+            <figcaption class="text-cell" :class="index === 1 ? 'left' : 'right'">
+              <h6>{{massage.name}}</h6>
+              <p>{{massage.short}}</p>
+              <button class="btn btn-filled">Book now</button>
+            </figcaption>
+            <div v-if="index !== 1" class="pic-cell">
+              <img class="cover" :src="massage.img_url" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
 <script>
+import {mapGetters} from 'vuex';
 export default {
-  name: 'GiftRow',
-  computed: {},
-  data() {
-    return {
-      breakpoints: [],
-      lock: null,
-    };
-  },
-  methods: {
-    handleScroll(e) {
-      while (
-        !this.lock &&
-        this.faded[0] &&
-        window.scrollY + window.innerHeight > this.faded[0].offsetTop + this.faded[0].clientHeight
-      ) {
-        this.faded[0].classList.remove('faded');
-        this.faded.splice(0, 1);
-        this.lock = 'locked';
-        setTimeout(() => {
-          this.lock = null;
-          this.handleScroll();
-        }, 1000);
+  name: 'ServicesRow',
+  computed: {
+    ...mapGetters({
+      massages: 'getMassages',
+    }),
+    featured() {
+      if (this.massages) {
+        const copy = [...this.massages];
+        const arr = [];
+        for (let i = 1; i <= 3; i++) {
+          const index = Math.round(Math.random() * copy.length - i);
+          arr.push(copy.splice(index, 1)[0]);
+        }
+        return arr;
       }
     },
   },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll, false);
-    this.faded = [...this.$el.querySelectorAll('.faded')];
+  data() {
+    return {};
   },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll, false);
-  },
+  methods: {},
 };
 </script>
 <style lang="scss" scoped>
@@ -74,8 +72,48 @@ export default {
       display: flex;
       flex-flow: column nowrap;
       position: relative;
-      &.is-text {
-        margin: 7% 5%;
+      margin: 1% 0;
+      &.is-table {
+        display: flex;
+        flex-flow: column;
+        margin: 0 1rem 1rem;
+        padding-left: 20%;
+        .is-title-row {
+          height: 10%;
+          text-align: center;
+          font-size: 1.2rem;
+        }
+        .is-table-row {
+          display: flex;
+          max-height: 30%;
+          padding-top: 1%;
+          .pic-cell {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            width: auto;
+          }
+          figcaption.left {
+            padding-right: 10%;
+          }
+          .rigth {
+            padding-left: 10%;
+          }
+          .text-cell {
+            flex: 4;
+            display: flex;
+            flex-flow: column nowrap;
+            width: unset;
+            p {
+              font-size: 0.8rem;
+              padding: 0.5rem;
+            }
+            button {
+              margin: auto;
+              padding: 2% 5%;
+              width: 50%;
+            }
+          }
+        }
       }
       &.is-picture {
         background-image: url('../../assets/img/large/tshirt.jpg');
@@ -97,7 +135,6 @@ export default {
         flex: 1.8;
         margin: auto;
         flex-flow: column nowrap;
-        padding: 10% 0 5%;
         h6 {
           text-align: center;
           margin: auto;
@@ -117,7 +154,7 @@ export default {
       .body-footer {
         text-align: center;
         margin: auto;
-        bottom: 10%;
+        bottom: 5%;
         position: relative;
         .btn {
           font-size: 1.4vw;
