@@ -1,7 +1,7 @@
 <template>
   <section class="hero is-large">
     <div class="columns-fluid">
-      <div class="column-fluid hero-body">
+      <div class="column-fluid hero-body desktop">
         <div class="row is-picture">
         </div>
       </div>
@@ -10,14 +10,14 @@
           <div class="is-title-row">
             <h6>Nos Massages</h6>
           </div>
-          <div class="is-table-row" v-for="(massage, index) in featured" :key="`featured-${massage.id}`">
+          <div class="is-table-row faded" v-for="(massage, index) in featured" :key="`featured-${massage.id}`" :hack="index === 2 ? fetchElems() : ''">
             <div v-if="index === 1" class="pic-cell">
               <img class="cover" :src="massage.img_url" />
             </div>
             <figcaption class="text-cell" :class="index === 1 ? 'left' : 'right'">
               <h6>{{massage.name}}</h6>
-              <p>{{massage.short}}</p>
-              <button class="btn btn-filled">Book now</button>
+              <p>{{massage.short | firstSentence}}</p>
+              <button class="btn btn-filled" @click="scrollToAddress()">Book now</button>
             </figcaption>
             <div v-if="index !== 1" class="pic-cell">
               <img class="cover" :src="massage.img_url" />
@@ -25,13 +25,21 @@
           </div>
         </div>
       </div>
+      <div class="column-fluid hero-body mobile">
+        <div class="row is-picture">
+        </div>
+      </div>
     </div>
   </section>
 </template>
 <script>
 import {mapGetters} from 'vuex';
+import {firstSentence} from '@/filters';
+import {smoothAppear, scrollToAddress} from '@/Mixins';
 export default {
   name: 'ServicesRow',
+  filters: {firstSentence},
+  mixins: [smoothAppear, scrollToAddress],
   computed: {
     ...mapGetters({
       massages: 'getMassages',
@@ -56,56 +64,79 @@ export default {
 </script>
 <style lang="scss" scoped>
 .columns-fluid {
-  display: flex;
   flex-flow: row nowrap;
   width: 100%;
   margin: 0;
   flex: 1;
   min-width: 20rem;
   .column-fluid {
-    display: table-cell;
     display: flex;
-    width: 50%;
     flex: 1;
+    .mobile {
+      display: none;
+    }
     .row {
       flex: 1;
       display: flex;
       flex-flow: column nowrap;
       position: relative;
-      margin: 1% 0;
+      &.is-picture {
+        background-image: url('../../assets/img/large/tshirt.jpg');
+        background-size: cover;
+        background-position: center 0;
+        pointer-events: none;
+      }
       &.is-table {
         display: flex;
         flex-flow: column;
-        margin: 0 1rem 1rem;
-        padding-left: 20%;
+        margin: 0 5% 0 10%;
         .is-title-row {
-          height: 10%;
+          height: 7%;
           text-align: center;
           font-size: 1.2rem;
+          background-color: var(--mm);
+          padding: 0 -5%;
+          h6 {
+            color: white;
+          }
         }
         .is-table-row {
+          border-top: solid 1px rgba(4, 65, 105, 0.1);
           display: flex;
-          max-height: 30%;
-          padding-top: 1%;
+          max-height: 31%;
+          padding: 4% 7%;
+          transition: opacity 1.5s ease;
+          &.faded {
+            opacity: 0;
+          }
           .pic-cell {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            width: auto;
+            display: flex;
+            flex: 0;
+            background-size: cover;
+            background-position: center 0;
+            width: fit-content;
+            img {
+              border-radius: 0.5rem;
+            }
           }
-          figcaption.left {
-            padding-right: 10%;
+          .left {
+            padding-left: 5%;
+            margin-left: auto;
           }
-          .rigth {
-            padding-left: 10%;
+          .right {
+            margin-right: auto;
+            padding-right: 5%;
           }
           .text-cell {
-            flex: 4;
             display: flex;
             flex-flow: column nowrap;
-            width: unset;
+            text-align: center;
+            flex: 1;
             p {
               font-size: 0.8rem;
               padding: 0.5rem;
+              font-weight: bold;
+              font-style: italic;
             }
             button {
               margin: auto;
@@ -114,12 +145,6 @@ export default {
             }
           }
         }
-      }
-      &.is-picture {
-        background-image: url('../../assets/img/large/tshirt.jpg');
-        background-size: cover;
-        background-position: center 0;
-        pointer-events: none;
       }
       h6,
       button {
@@ -190,14 +215,27 @@ export default {
 
 @media (max-width: 1024px) {
   .columns-fluid {
+    flex-flow: column-reverse;
     .column-fluid {
-      &.hero-body.is-picture {
-        padding: 0;
-        height: auto;
+      &.hero-body {
+        &.mobile {
+          display: flex;
+        }
+        &.desktop {
+          display: none;
+        }
+        .is-picture {
+          padding: 0;
+          height: auto;
+        }
       }
       .row {
         figcaption {
           flex: 1;
+        }
+        &.is-table {
+          margin-left: 5%;
+          margin-right: 5%;
         }
         .body-content {
           padding-top: 1rem;

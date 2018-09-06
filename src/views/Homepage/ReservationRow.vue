@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-medium is-light">
+  <section class="hero is-large">
     <div class="hero-body">
       <div class="container">
         <div class="columns address-row">
@@ -28,7 +28,7 @@ export default {
   background-position: center;
 }
 
-.is-light {
+.is-large {
   z-index: 8;
 }
 

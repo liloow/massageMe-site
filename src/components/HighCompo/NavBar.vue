@@ -517,10 +517,6 @@ a.nav:focus {
   min-height: 7vh;
 }
 
-.navbar-burger {
-  display: none;
-}
-
 @media screen and (max-width: 1324px) {
   .navbar,
   .navbar-end,
@@ -535,6 +531,70 @@ a.nav:focus {
         font-size: 0.9rem;
       }
     }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .navbar,
+  .navbar-end,
+  .navbar-menu,
+  .navbar-start {
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .navbar,
+  .navbar-end,
+  .navbar-menu,
+  .navbar-start {
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .navbar {
+    min-height: 7vh;
+  }
+  .navbar-burger {
+    display: none;
+  }
+  .navbar-item {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .navbar-menu {
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-negative: 0;
+    flex-shrink: 1;
+    text-align: center;
+  }
+  .navbar-start {
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    margin-right: auto;
+    padding-right: 1vw;
+  }
+  .navbar-end {
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    margin-left: auto;
+    padding-right: 1vw;
+    white-space: nowrap;
   }
 }
 </style>

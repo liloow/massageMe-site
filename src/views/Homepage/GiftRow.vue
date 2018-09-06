@@ -21,53 +21,25 @@
   </section>
 </template>
 <script>
+import {smoothAppear} from '@/Mixins';
 export default {
   name: 'GiftRow',
+  mixins: [smoothAppear],
   computed: {},
   data() {
-    return {
-      breakpoints: [],
-      lock: null,
-    };
-  },
-  methods: {
-    handleScroll(e) {
-      while (
-        !this.lock &&
-        this.faded[0] &&
-        window.scrollY + window.innerHeight > this.faded[0].offsetTop + this.faded[0].clientHeight
-      ) {
-        this.faded[0].classList.remove('faded');
-        this.faded.splice(0, 1);
-        this.lock = 'locked';
-        setTimeout(() => {
-          this.lock = null;
-          this.handleScroll();
-        }, 1000);
-      }
-    },
-  },
-  mounted() {
-    window.addEventListener('scroll', this.handleScroll, false);
-    this.faded = [...this.$el.querySelectorAll('.faded')];
-  },
-  beforeDestroy() {
-    window.removeEventListener('scroll', this.handleScroll, false);
+    return {};
   },
 };
 </script>
 <style lang="scss" scoped>
 .columns-fluid {
-  display: flex;
   flex-flow: row nowrap;
   width: 100%;
   margin: 0;
   flex: 1;
   min-width: 20rem;
   .column-fluid {
-    display: table-cell;
     display: flex;
-    width: 50%;
     flex: 1;
     .row {
       flex: 1;
@@ -78,7 +50,7 @@ export default {
         margin: 7% 5%;
       }
       &.is-picture {
-        background-image: url('../../assets/img/large/tshirt.jpg');
+        background-image: url('../../assets/img/large/story1.700.webp');
         background-size: cover;
         background-position: center 0;
         pointer-events: none;

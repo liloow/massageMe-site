@@ -436,12 +436,20 @@ template {
   padding: 2.5% 0;
 }
 
+.columns-fluid {
+  display: flex;
+}
+
+.columns-fluid .column-fluid {
+  width: 50%;
+}
+
 /* ========================================================================== */
 /*                                CONTAINERS                                  */
 /* ========================================================================== */
 
 .btn {
-  /* padding: 0.8rem 1rem; */
+  padding: 0.7rem 1rem;
   border: 0;
   border-radius: 0.5rem;
   cursor: pointer;
@@ -452,7 +460,7 @@ template {
   position: relative;
   display: block;
   font-size: 1rem;
-  /* margin: 1em auto; */
+  margin: 1em auto;
   font-family: 'Raleway', 'Roboto', 'Arial', sans-serif;
   font-weight: 500;
 }
@@ -488,8 +496,15 @@ template {
     height: 30vh;
   }
   .hero.is-large .hero-body {
-    height: 390px;
-    padding: 5%;
+    height: auto;
+  }
+  .columns-fluid {
+    display: block;
+  }
+  .hero.is-large .columns-fluid .column-fluid {
+    height: 700px;
+    max-height: 700px;
+    width: 100%;
   }
 }
 

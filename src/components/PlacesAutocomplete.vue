@@ -1,6 +1,6 @@
 <template>
   <label>
-    <input ref="places">
+    <input id="address-input" ref="places">
   </label>
 </template>
 <script>
@@ -38,7 +38,6 @@ export default {
       this.$emit('addressIsChosen', e.suggestion);
     });
     this.$refs.places.addEventListener('focus', e => {
-      console.log('boo');
       if (this.config.useDeviceLocation) return false;
       this.config.useDeviceLocation = true;
       navigator.geolocation.watchPosition(() => places(...this.config));

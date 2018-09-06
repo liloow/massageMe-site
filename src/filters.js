@@ -16,3 +16,8 @@ export const toBytes = value => {
   value = value.toFixed(2);
   return `${value}${units[0]}b`;
 };
+
+export const firstSentence = value => {
+  if (!value) return '';
+  return value.split('.')[0] + '.';
+};
