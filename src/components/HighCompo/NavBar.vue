@@ -236,7 +236,6 @@ input[type='checkbox'] {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-negative: 0;
-  flex: 0.5;
   min-height: 7vh;
   padding-right: 1rem;
 }

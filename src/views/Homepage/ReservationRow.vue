@@ -1,12 +1,8 @@
 <template>
   <section class="hero is-large">
     <div class="hero-body">
-      <div class="container">
-        <div class="columns address-row">
-          <div class="column">
+      <div class="container-fluid centered">
             <enter-address></enter-address>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -31,26 +27,14 @@ export default {
 .is-large {
   z-index: 8;
 }
-
-.red {
-  background-color: red;
-}
-
-.green {
-  background-color: green;
-}
-
-.white {
-  background-color: white;
-}
-
-.columns > .column.background-image {
-  background-size: cover;
-  background-position: center;
-}
-
-.columns > .content {
-  padding: 4rem;
+.hero-body {
+  position: relative;
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 @media screen and (max-width: 800px) {

@@ -72,7 +72,7 @@ export default {
   .column-fluid {
     display: flex;
     flex: 1;
-    .mobile {
+    &.mobile {
       display: none;
     }
     .row {

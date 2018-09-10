@@ -7,19 +7,19 @@ export const smoothAppear = {
   },
   methods: {
     handleScroll() {
+      this.fetchElems();
       while (
         !this.lock &&
         this.faded[0] &&
         this.faded[0].getBoundingClientRect().top - window.innerHeight * 0.8 < 0
       ) {
-        console.log(this.faded[0].getBoundingClientRect().y);
         this.faded[0].classList.remove('faded');
         this.faded.splice(0, 1);
         this.lock = 'locked';
         setTimeout(() => {
           this.lock = null;
           this.handleScroll();
-        }, 1000);
+        }, 700);
       }
     },
     fetchElems() {

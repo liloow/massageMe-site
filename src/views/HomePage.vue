@@ -5,6 +5,8 @@
         <moto-banner></moto-banner class="table-row">
         <gift-row></gift-row class="table-row">
         <services-row></services-row class="table-row">
+        <therapists-row></therapists-row class="table-row">
+        <talking-about></talking-about class="table-row">
     </section>
 </template>
 <script>
@@ -14,6 +16,8 @@ import ReservationRow from '@/views/Homepage/ReservationRow';
 import PictoRow from '@/views/Homepage/PictoRow';
 import GiftRow from '@/views/Homepage/GiftRow';
 import MotoBanner from '@/views/Homepage/MotoBanner';
+import TherapistsRow from '@/views/Homepage/TherapistsRow';
+import TalkingAbout from '@/views/Homepage/TalkingAbout';
 export default {
   name: 'HomePage',
   data() {
@@ -25,6 +29,8 @@ export default {
     MotoBanner,
     GiftRow,
     ServicesRow,
+    TherapistsRow,
+    TalkingAbout,
   },
 };
 </script>
