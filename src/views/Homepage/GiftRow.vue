@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body">
-        <div class="row is-picture">
+        <div v-if="loaded" class="row is-picture">
         </div>
       </div>
     </div>
@@ -27,7 +27,12 @@ export default {
   mixins: [smoothAppear],
   computed: {},
   data() {
-    return {};
+    return {
+      loaded: false,
+    };
+  },
+  mounted() {
+    this.loaded = true;
   },
 };
 </script>

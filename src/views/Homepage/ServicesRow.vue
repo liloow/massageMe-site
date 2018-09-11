@@ -12,7 +12,7 @@
           </div>
           <div class="is-table-row faded" v-for="(massage, index) in featured" :key="`featured-${massage.id}`" :hack="index === 2 ? fetchElems() : ''">
             <div v-if="index === 1" class="pic-cell">
-              <img class="cover" :src="massage.img_url" />
+              <img class="cover" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="  :data-src="massage.img_url" />
             </div>
             <figcaption class="text-cell" :class="index === 1 ? 'left' : 'right'">
               <h6>{{massage.name}}</h6>
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body mobile">
-        <div class="row is-picture">
+        <div v-if="loaded" class="row is-picture">
         </div>
       </div>
     </div>
@@ -57,9 +57,16 @@ export default {
     },
   },
   data() {
-    return {};
+    return {
+      loaded: false,
+    };
   },
   methods: {},
+  mounted() {
+    this.loaded = true;
+    const imgs = this.$el.querySelectorAll('img');
+    imgs.forEach(img => img.setAttribute('src', img.getAttribute('data-src')));
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -81,7 +88,7 @@ export default {
       flex-flow: column nowrap;
       position: relative;
       &.is-picture {
-        background-image: url('../../assets/img/large/tshirt.jpg');
+        background-image: url('../../assets/img/large/tshirt.jpg.sd.webp');
         background-size: cover;
         background-position: center 0;
         pointer-events: none;

@@ -7,7 +7,7 @@
       <div>
         <ul>
           <li>
-            <img src="../../assets/img/logo/logoCCIMAG.jpg">
+            <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
           </li>
         </ul>
       </div>
@@ -19,7 +19,12 @@ export default {
   name: 'TalkingAbout',
 
   data() {
-    return {};
+    return {
+      loaded: false,
+    };
+  },
+  mounted() {
+    this.loaded = true;
   },
 };
 </script>
