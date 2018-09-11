@@ -48,7 +48,7 @@ export default {
     MiniCard,
   },
   mounted() {
-    this.loaded = true;
+    this.$nextTick(() => (this.loaded = true));
   },
 };
 </script>

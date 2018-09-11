@@ -41,7 +41,7 @@ export default {
     };
   },
   mounted() {
-    this.loaded = true;
+    this.$nextTick(() => (this.loaded = true));
   },
 };
 </script>

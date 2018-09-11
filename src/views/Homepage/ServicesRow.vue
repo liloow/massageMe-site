@@ -63,7 +63,7 @@ export default {
   },
   methods: {},
   mounted() {
-    this.loaded = true;
+    this.$nextTick(() => (this.loaded = true));
   },
 };
 </script>
