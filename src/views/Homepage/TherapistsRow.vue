@@ -48,7 +48,7 @@ export default {
     MiniCard,
   },
   mounted() {
-    window.onload = () => (this.loaded = true);
+    window.addEventListener('load', () => (this.loaded = true));
   },
 };
 </script>
