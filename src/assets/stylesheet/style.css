@@ -420,6 +420,10 @@ template {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  max-width: 100%;
+}
+.hero .hero-body {
+  max-width: 100%;
 }
 
 .hero.is-small .hero-body {

@@ -7,7 +7,24 @@
       <div>
         <ul>
           <li>
-            <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
+            <div class="img-wrapper">
+              <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
+            </div>
+          </li>
+          <li>
+            <div class="img-wrapper">
+              <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
+            </div>
+          </li>
+          <li>
+            <div class="img-wrapper">
+              <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
+            </div>
+          </li>
+          <li>
+            <div class="img-wrapper">
+              <img v-if="loaded" src="../../assets/img/logo/logoCCIMAG.webp">
+            </div>
           </li>
         </ul>
       </div>
@@ -48,11 +65,16 @@ export default {
     }
     ul {
       margin: auto;
+      display: flex;
+      flex-flow: row;
+      width: 95%;
       li {
         list-style: none;
-        padding: 1rem;
-        img {
-          max-width: 20%;
+        margin: 2rem 5%;
+        .img-wrapper {
+          img {
+            max-width: 100%;
+          }
         }
       }
     }
