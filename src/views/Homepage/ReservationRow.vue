@@ -2,7 +2,7 @@
   <section class="hero is-large">
     <div class="hero-body">
       <div class="container-fluid centered">
-            <enter-address></enter-address>
+        <enter-address></enter-address>
       </div>
     </div>
   </section>
@@ -37,11 +37,14 @@ export default {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 769px) {
   .hero {
     background: url(../../assets/img/large/massage-no-face.small.webp);
     background-size: cover;
     background-position: center;
+    .hero-body {
+      height: 70vh;
+    }
   }
 }
 </style>

@@ -140,7 +140,6 @@ export default {
 
 .address-input {
   max-width: 900px;
-  width: 75%;
   text-align: center;
   margin: 0 auto;
   flex: 1 0 0px;
@@ -148,7 +147,18 @@ export default {
 }
 @media screen and (max-width: 1023px) {
   .address-input {
-    width: 100%;
+    max-width: 95vw;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .appointment {
+    margin: 1rem;
+    .card-title {
+      .title {
+        font-size: 1.3rem;
+      }
+    }
   }
 }
 </style>

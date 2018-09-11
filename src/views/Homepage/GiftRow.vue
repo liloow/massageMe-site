@@ -32,7 +32,7 @@ export default {
     };
   },
   mounted() {
-    this.loaded = true;
+    window.addEventListener('load', () => (this.loaded = true));
   },
 };
 </script>

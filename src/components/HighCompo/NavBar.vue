@@ -356,8 +356,8 @@ a.nav:focus {
 #burger:before,
 #trigger {
   text-align: right;
-  width: 30px;
-  height: 5px;
+  width: 7vw;
+  height: 1.2vw;
   transition: 0.5s ease;
   cursor: pointer;
   z-index: 100;

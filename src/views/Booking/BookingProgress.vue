@@ -248,4 +248,18 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 769px) {
+  .step-wrapper {
+    ul.steps {
+      li.step:last-child {
+        width: 23%;
+        opacity: 0.7;
+      }
+      h5 {
+        font-size: 1rem;
+      }
+    }
+  }
+}
 </style>
