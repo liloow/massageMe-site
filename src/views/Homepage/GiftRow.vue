@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body">
-        <div v-if="loaded" class="row is-picture">
+        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/story1.700.webp')})`}">
         </div>
       </div>
     </div>
@@ -55,7 +55,6 @@ export default {
         margin: 7% 5%;
       }
       &.is-picture {
-        background-image: url('../../assets/img/large/story1.700.webp');
         background-size: cover;
         background-position: center 0;
         pointer-events: none;

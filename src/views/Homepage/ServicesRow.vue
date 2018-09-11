@@ -2,7 +2,7 @@
   <section class="hero is-large">
     <div class="columns-fluid">
       <div class="column-fluid hero-body desktop">
-        <div class="row is-picture">
+        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/tshirt.jpg.sd.webp')})`}">
         </div>
       </div>
       <div class="column-fluid hero-body">
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body mobile">
-        <div v-if="loaded" class="row is-picture">
+        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/paralax1low.700.webp')})`}">
         </div>
       </div>
     </div>
@@ -64,8 +64,6 @@ export default {
   methods: {},
   mounted() {
     this.loaded = true;
-    const imgs = this.$el.querySelectorAll('img');
-    imgs.forEach(img => img.setAttribute('src', img.getAttribute('data-src')));
   },
 };
 </script>
@@ -88,7 +86,6 @@ export default {
       flex-flow: column nowrap;
       position: relative;
       &.is-picture {
-        background-image: url('../../assets/img/large/tshirt.jpg.sd.webp');
         background-size: cover;
         background-position: center 0;
         pointer-events: none;
