@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body">
-        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/story1.700.webp')})`}">
+        <div v-if="img" class="row is-picture" :style="{'background-image': `url('${img}')`}">
         </div>
       </div>
     </div>
@@ -25,14 +25,21 @@ import {smoothAppear} from '@/Mixins';
 export default {
   name: 'GiftRow',
   mixins: [smoothAppear],
-  computed: {},
   data() {
     return {
       loaded: false,
+      img: null,
     };
+  },
+  methods: {
+    async fetchImg() {
+      const img = (await import('../../assets/img/large/story1.700.webp')).default;
+      this.img = img;
+    },
   },
   mounted() {
     window.addEventListener('load', () => (this.loaded = true));
+    this.fetchImg();
   },
 };
 </script>

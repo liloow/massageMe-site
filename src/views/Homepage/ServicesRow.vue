@@ -2,7 +2,7 @@
   <section class="hero is-large">
     <div class="columns-fluid">
       <div class="column-fluid hero-body desktop">
-        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/tshirt.jpg.sd.webp')})`}">
+        <div v-if="img" class="row is-picture" :style="{'background-image': `url('${img}')`}">
         </div>
       </div>
       <div class="column-fluid hero-body">
@@ -12,7 +12,7 @@
           </div>
           <div class="is-table-row faded" v-for="(massage, index) in featured" :key="`featured-${massage.id}`" :hack="index === 2 ? fetchElems() : ''">
             <div v-if="index === 1" class="pic-cell">
-              <img class="cover" src="data:image/png;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="  :data-src="massage.img_url" />
+              <img class="cover" :src="massage.img_url" />
             </div>
             <figcaption class="text-cell" :class="index === 1 ? 'left' : 'right'">
               <h6>{{massage.name}}</h6>
@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="column-fluid hero-body mobile">
-        <div v-if="loaded" class="row is-picture" :style="{'background-image': `url(${require('../../assets/img/large/paralax1low.700.webp')})`}">
+        <div v-if="img" class="row is-picture" :style="{'background-image': `url('${img}')`}">
         </div>
       </div>
     </div>
@@ -59,11 +59,18 @@ export default {
   data() {
     return {
       loaded: false,
+      img: null,
     };
   },
-  methods: {},
+  methods: {
+    async fetchImg() {
+      const img = (await import('../../assets/img/large/story1.700.webp')).default;
+      this.img = img;
+    },
+  },
   mounted() {
     window.addEventListener('load', () => (this.loaded = true));
+    this.fetchImg();
   },
 };
 </script>

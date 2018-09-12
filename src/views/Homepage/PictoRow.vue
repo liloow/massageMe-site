@@ -1,6 +1,9 @@
 <template>
   <section class="hero is-large">
     <div class="hero-body">
+      <div class="title">
+        <h1>La formule Massage-Me</h1>
+      </div>
       <div class="container picto">
         <div class="picto-card">
           <img src="../../assets/img/picto/step1.png" alt="">
@@ -21,11 +24,11 @@
           <div class="desc">
             Vous n'avez plus qu'a vous détendre et profiter de votre séance en toute quiétude. Jamais se détendre n'a été aussi facile </div>
         </div>
-      </div>
         <div class="row">
-            <button class="btn btn-filled" @click="scrollToAddress($event)">
-             RESERVER MAINTENANT
-           </button>
+          <button class="btn btn-filled" @click="scrollToAddress($event)">
+            RESERVER MAINTENANT
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -51,8 +54,16 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title {
+  margin: auto;
+  text-align: center;
+  h1 {
+    font-size: 2.8rem;
+  }
+}
 .picto {
   max-width: 95%;
+  margin-top: 1rem;
   margin-right: auto;
   margin-left: auto;
   display: -webkit-flex;
@@ -65,6 +76,10 @@ export default {
   .row {
     width: 95%;
     margin: auto;
+    .btn {
+      margin: 1rem auto 0;
+      font-size: 1.2rem;
+    }
   }
   img {
     max-width: 85%;
