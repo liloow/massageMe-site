@@ -97,7 +97,6 @@ export default {
 .container {
   max-width: none;
   width: 60%;
-  min-width: 500px;
 }
 
 .collapsed {
@@ -107,7 +106,6 @@ export default {
 
 .step-wrapper {
   width: 95%;
-  min-width: 400px;
   max-width: 600px;
   margin-top: 0.5em;
   margin: auto;

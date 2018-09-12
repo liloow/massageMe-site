@@ -77,7 +77,6 @@ export default {
 }
 
 .modal-wrapper {
-  min-width: 400px;
   width: 95vw;
   min-height: 35vh;
   top: 50%;

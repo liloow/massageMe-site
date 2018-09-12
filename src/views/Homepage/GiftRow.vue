@@ -49,7 +49,6 @@ export default {
   width: 100%;
   margin: 0;
   flex: 1;
-  min-width: 20rem;
   .column-fluid {
     display: flex;
     flex: 1;

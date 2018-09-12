@@ -80,7 +80,6 @@ export default {
   width: 100%;
   margin: 0;
   flex: 1;
-  min-width: 20rem;
   .column-fluid {
     display: flex;
     flex: 1;
@@ -115,7 +114,7 @@ export default {
           border-top: solid 1px rgba(4, 65, 105, 0.1);
           display: flex;
           max-height: 31%;
-          padding: 4% 7%;
+          padding: 2% 7%;
           transition: opacity 1.5s ease;
           &.faded {
             opacity: 0;

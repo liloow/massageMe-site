@@ -6,10 +6,10 @@
           <div class="body-content">
             <h6 class="biggie faded">Des masseurs mobiles professionnels</h6>
             <p class="spacy faded">Tous les thérapeutes de notre plate-forme sont des spécialistes qualifiés, assurés et spécialisés dans les massages. Ceci afin de vous garantir un niveau professionnel de connaissances et de soins, tout en vous offrant une expérience de premiere classe.</p>
-              <mini-card v-if="featured" class="faded" v-for="(therapist, index) in featured" :index="index + 1" :cardTitle="therapist.fullname" :cardImg="therapist.profile_pic" :cardBody="therapist.bio"></mini-card>
+              <mini-card v-if="featured" class="faded" v-for="(therapist, index) in featured" key="featured" :index="index + 1" :cardTitle="therapist.fullname" :cardImg="therapist.profile_pic" :cardBody="therapist.bio"></mini-card>
           </div>
           <div class="body-footer">
-            <button @click.prevent="$router.push('/vouchers')" class="button btn btn-filled faded">Voir nos Masseurs</button>
+            <button @click.prevent="$router.push('/therapists')" class="button btn btn-filled faded">Voir nos Masseurs</button>
           </div>
         </div>
       </div>
@@ -66,7 +66,6 @@ export default {
   width: 100%;
   margin: 0;
   flex: 1;
-  min-width: 20rem;
   .column-fluid {
     display: flex;
     flex: 1;
@@ -76,7 +75,7 @@ export default {
       flex-flow: column nowrap;
       position: relative;
       &.is-text {
-        margin: 7% 5%;
+        margin: 5%;
       }
       &.is-picture {
         background-size: cover;
@@ -97,6 +96,8 @@ export default {
         flex: 1.8;
         margin: auto;
         flex-flow: column nowrap;
+        margin-bottom: 1rem;
+        justify-content: space-evenly;
         .visible {
           opacity: 1;
         }
@@ -124,8 +125,6 @@ export default {
       .body-footer {
         text-align: center;
         margin: auto;
-        bottom: 10%;
-        position: relative;
         .btn {
           font-size: 1.4vw;
           font-family: 'Raleway';

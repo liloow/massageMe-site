@@ -76,6 +76,7 @@ export default {
           border-radius: 2%;
           img {
             max-width: 100%;
+            pointer-events: none;
           }
         }
       }

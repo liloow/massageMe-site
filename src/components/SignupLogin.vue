@@ -540,7 +540,7 @@ form {
   text-align: center;
   height: 100%;
   background: ghostwhite;
-  min-width: 380px;
+  min-width: 250px;
   width: 100%;
   border-radius: 5px;
   box-shadow: 0 10px 50px 0 rgba(0, 0, 0, 0.25);

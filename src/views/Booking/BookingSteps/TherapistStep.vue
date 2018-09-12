@@ -15,7 +15,6 @@
             </figcaption>
           </figure>
         </div>
-      <!-- <div class="ui-helper"></div> -->
       </div>
     </div>
   </section>

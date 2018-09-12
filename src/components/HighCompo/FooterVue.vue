@@ -96,6 +96,7 @@ export default {
       h3 {
         margin-bottom: 1em;
         color: #0086de;
+        font-size: 1.2rem;
       }
       ul {
         list-style: none;
@@ -105,7 +106,7 @@ export default {
           a {
             color: white;
             font-weight: 200;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-decoration: none;
           }
         }
